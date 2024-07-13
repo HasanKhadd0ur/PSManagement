@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -6,12 +6,19 @@
 
 	<ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="EntitiesConfiguration\" />
+    <Folder Include="Persistence\EntitiesConfiguration\" />
   </ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
 	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+	  <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
+	  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.7.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\PSManagement.Application\PSManagement.Application.csproj" />
+	  <ProjectReference Include="..\PSManagement.Contracts\PSManagement.Contracts.csproj" />
 	</ItemGroup>
 
 </Project>
