@@ -8,6 +8,18 @@ namespace PSManagement.SharedKernel.Entities
         public int Id { get; set; }
 
         public List<BaseDomainEvent> Events = new List<BaseDomainEvent>();
+	
+	public void AddDomainEvent(BaseDomainEvent eventItem)
+        {
+            Events = Events?? new List<BaseDomainEvent>();
+            Events.Add(eventItem);
+        }    
+             
+        public void RemoveDomainEvent(BaseDomainEvent eventItem)
+        {
+            Events?.Remove(eventItem);
+        } 
+
         public static bool operator ==(BaseEntity first, BaseEntity second)
         {
             if (first is null && second is null)
