@@ -1,14 +1,11 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PSManagement.Application.Common.Services;
-using PSManagement.Application.Contracts.Authentication;
+using PSManagement.Application.Contracts.Authorization;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PSManagement.Infrastructure.Authentication
 {
@@ -22,7 +19,7 @@ namespace PSManagement.Infrastructure.Authentication
             _jwtSetting = jwtOptions.Value;
         }
 
-        public string GenerateToken(Guid id, string firstName, string lastName, string email)
+        public string GenerateToken(int  id, string firstName, string lastName, string email)
         {
             var signingCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSetting.Secret)),
