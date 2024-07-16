@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using PSManagement.Application.Contracts.Authentication;
 using PSManagement.Contracts.Authentication;
+using PSManagement.SharedKernel.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AuthenticationResponse = PSManagement.Contracts.Authentication.AuthenticationResponse;
 
 namespace PSManagement.Api.Controllers.Authentication
 {
@@ -22,33 +24,42 @@ namespace PSManagement.Api.Controllers.Authentication
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
-            AuthenticationResult result = await  _authenticationService.Login(loginRequest.Email,loginRequest.PassWorrd);
+            Result<AuthenticationResult> result = await _authenticationService.Login(loginRequest.Email, loginRequest.PassWorrd);
 
-            AuthenticationResponse response = new AuthenticationResponse(
-                    result.Id,
-                    result.FirstName,
-                    result.LastName,
-                    result.Email,
-                    result.Token);
-            return  Ok(response);
+            if (result.IsSuccess) {
+                AuthenticationResponse response = new (
+                        result.Value.Id,
+                        result.Value.FirstName,
+                        result.Value.LastName,
+                        result.Value.Email,
+                        result.Value.Token);
+                return Ok(response);
+            }
+
+            return Problem(title:"An Errorr Occured",detail:result.Error.Name,statusCode:400);
         }
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody]  RegisterRequest registerRequest)
         {
 
-            AuthenticationResult result = await  _authenticationService.Register(
+            Result<AuthenticationResult> result = await _authenticationService.Register(
                     registerRequest.Email,
                     registerRequest.FirstName,
                     registerRequest.LastName,
                     registerRequest.Password);
+            
+            if (result.IsSuccess)
+            {
+                AuthenticationResponse response = new (
+                        result.Value.Id,
+                        result.Value.FirstName,
+                        result.Value.LastName,
+                        result.Value.Email,
+                        result.Value.Token);
+                return Ok(response);
+            }
 
-            AuthenticationResponse response = new AuthenticationResponse(
-                    result.Id,
-                    result.FirstName,
-                    result.LastName,
-                    result.Email,
-                    result.Token);
-            return Ok(response);
+            return Problem(title: "An Errorr Occured", detail: result.Error.Name, statusCode: 400);
         }
 
     }
