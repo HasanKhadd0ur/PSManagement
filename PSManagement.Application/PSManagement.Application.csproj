@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Abstraction\" />
+    <Folder Include="Behaviors\AuthorizationBehavior\" />
     <Folder Include="Services\" />
     <Folder Include="UseCases\" />
   </ItemGroup>

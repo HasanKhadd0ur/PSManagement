@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using PSManagement.Application.Abstraction.Messaging;
 using PSManagement.Application.Common.Exceptions;
 using System;
 using System.Collections.Generic;

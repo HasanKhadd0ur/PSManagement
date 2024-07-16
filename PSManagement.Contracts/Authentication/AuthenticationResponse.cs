@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace PSManagement.Contracts.Authentication
 {
     public record AuthenticationResponse(
-        Guid Id ,
+        int Id ,
         String FirstName,
         String LastName ,
         String Email ,
