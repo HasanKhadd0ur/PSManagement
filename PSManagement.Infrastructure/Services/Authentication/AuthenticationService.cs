@@ -1,6 +1,9 @@
 ﻿using FluentResults;
 using PSManagement.Application.Contracts.Authentication;
 using PSManagement.Application.Contracts.Authorization;
+using PSManagement.Domain.Identity.Aggregate;
+using PSManagement.Domain.Identity.DomainErrors;
+using PSManagement.Domain.Identity.Repositories;
 //using PSManagement.SharedKernel.Utilities;
 using System;
 using System.Threading.Tasks;
@@ -21,8 +24,8 @@ namespace PSManagement.Infrastructure.Services.Authentication
         public async Task<Result<AuthenticationResult>>  Login(String email, String password) {
             
             User u = await _userRepository.GetByEmail(email);
-            if (u is null || u.Password != password) {
-                return Result.Fail<AuthenticationResult>(new Error( "the password or email maybe wrong!."));
+            if (u is null || u.HashedPassword != password) {
+                return Result.Fail<AuthenticationResult>(new InvalidLoginDataError());
 
             }
             String token = _jwtTokenGenerator.GenerateToken(u.Id,u.FirstName,u.LastName,u.Email);
@@ -38,21 +41,21 @@ namespace PSManagement.Infrastructure.Services.Authentication
             // check if the user exist 
             var u = await _userRepository.GetByEmail(email);
             if (u is not null) {
-                return Result.Fail<AuthenticationResult>(new Error("the user already exist "));
+                return Result.Fail<AuthenticationResult>(new AlreadyExistError());
             }
-            await _userRepository.AddAsync(
+            var user = await _userRepository.AddAsync(
                 new User{
                     Email=email ,
                     FirstName=firstName,
                     LastName=lastName,
-                    Password=password
+                    HashedPassword=password
                 });
             // generate token 
-            String token = _jwtTokenGenerator.GenerateToken(2322323,firstName,lastName,email);
+            String token = _jwtTokenGenerator.GenerateToken(user.Id,firstName,lastName,email);
             return Result.Ok<AuthenticationResult>(
             new AuthenticationResult
             {
-                Id = 233233,
+                Id = user.Id,
                 Email = email,
                 FirstName = firstName,
                 LastName = lastName,

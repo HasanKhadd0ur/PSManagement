@@ -5,12 +5,11 @@
   </PropertyGroup>
 
 	<ItemGroup>
-    <Folder Include="Migrations\" />
-    <Folder Include="Persistence\EntitiesConfiguration\" />
-  </ItemGroup>
-
-	<ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.17" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.17" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
 	    <PrivateAssets>all</PrivateAssets>
@@ -24,6 +23,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\PSManagement.Application\PSManagement.Application.csproj" />
 	  <ProjectReference Include="..\PSManagement.Contracts\PSManagement.Contracts.csproj" />
+	  <ProjectReference Include="..\PSManagement.Domain\PSManagement.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

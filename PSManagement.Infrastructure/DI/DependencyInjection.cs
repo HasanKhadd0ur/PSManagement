@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PSManagement.Application.Common.Services;
 using PSManagement.Application.Contracts.Authentication;
 using PSManagement.Application.Contracts.Authorization;
+using PSManagement.Domain.Identity.Repositories;
 using PSManagement.Infrastructure.Authentication;
-using PSManagement.Infrastructure.Persistence.Repositories.UserRepository;
 using PSManagement.Infrastructure.Services;
 using PSManagement.Infrastructure.Services.Authentication;
 using PSManagement.Infrastructure.Tokens;
@@ -19,8 +20,7 @@ namespace PSManagement.Infrastructure.DI
             services
                 .AddAuthentication(configuration)
                 .AddAuthorization()
-                .AddServices()
-                .AddPersistence();
+                .AddServices();
 
             
             return services;
@@ -28,16 +28,6 @@ namespace PSManagement.Infrastructure.DI
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-
-            return services;
-        }
-
-        private static IServiceCollection AddPersistence(this IServiceCollection services)
-        {
-            //services.AddDbContext<AppDbContext>(options => options.UseSqlite("Data Source = CleanArchitecture.sqlite"));
-
-            //services.AddScoped<IRemindersRepository, RemindersRepository>();
-            services.AddScoped<IUsersRepository, UsersRepository>();
 
             return services;
         }
