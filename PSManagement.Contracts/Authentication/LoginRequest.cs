@@ -8,6 +8,6 @@ namespace PSManagement.Contracts.Authentication
 {
     public record LoginRequest(
         String Email ,
-        String PassWorrd
+        String PassWord
         );
 }
