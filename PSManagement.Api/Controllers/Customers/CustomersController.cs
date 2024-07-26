@@ -17,22 +17,22 @@ namespace PSManagement.Api.Controllers.Customers
     [Authorize]
     public class CustomersController : ControllerBase
     {
-        private readonly ISender _sender;
+        private readonly IMediator _sender;
 
-        public CustomersController(ISender sender)
+        public CustomersController(IMediator sender)
         {
             _sender = sender;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCustomer(Guid userId, Guid subscriptionId, CreateCustomerRequest request)
+        public async Task<IActionResult> CreateCustomer(CreateCustomerRequest request)
         {
             Address address = new Address(request.City,request.StreetName,request.ZipCode,request.StreetNumber);
             var command = new CreateCustomerCommand(request.CustomerName,address);
 
             var result = await _sender.Send(command);
 
-            return result;
+            return Ok(result);
         }
     }
 }

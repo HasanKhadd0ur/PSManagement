@@ -14,9 +14,9 @@ namespace PSManagement.Application.Customers.UseCases.Commands.CreateCustomer
     public class CreateCustomerCommandHandler : ICommandHandler<CreateCustomerCommand, Result<int>>
     {
         private readonly ICustomersRepository _customerRepository;
-        public CreateCustomerCommandHandler()
+        public CreateCustomerCommandHandler(ICustomersRepository customerRepository)
         {
-                
+            _customerRepository = customerRepository;
         }
         public async Task<Result<int>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
