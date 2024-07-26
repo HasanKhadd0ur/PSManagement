@@ -1,21 +1,23 @@
 ﻿using PSManagement.SharedKernel.Events;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PSManagement.SharedKernel.Entities
 {
     public class BaseEntity
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public List<BaseDomainEvent> Events = new List<BaseDomainEvent>();
+        public List<IDomainEvent> Events = new ();
 	
-	public void AddDomainEvent(BaseDomainEvent eventItem)
+	    public void AddDomainEvent(IDomainEvent eventItem)
         {
-            Events = Events?? new List<BaseDomainEvent>();
+            Events ??= new List<IDomainEvent>();
             Events.Add(eventItem);
         }    
              
-        public void RemoveDomainEvent(BaseDomainEvent eventItem)
+        public void RemoveDomainEvent(IDomainEvent eventItem)
         {
             Events?.Remove(eventItem);
         } 
