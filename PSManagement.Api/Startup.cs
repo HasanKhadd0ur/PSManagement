@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PSManagement.Infrastructure.Persistence.DI;
 
 namespace PSManagement.Api
 {
@@ -28,12 +29,27 @@ namespace PSManagement.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // adding dependency injection 
 
-            services.AddPresentation();
-            services.AddApplication();
-            services.AddInfrastructure(Configuration);
-
+            services
+                .AddPresentation()
+                .AddApplication()
+                .AddInfrastructure(Configuration)
+                .AddPersistence(Configuration);
+            
             services.AddControllers();
+            services.AddCors(options =>
+            {
+
+                options.AddPolicy("AllowFrontend",
+                    builder => builder
+                        .WithOrigins("http://localhost:4200") // Add your frontend URL here
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials());
+
+            });
+           
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "PSManagement.Api", Version = "v1" });
@@ -75,7 +91,7 @@ namespace PSManagement.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors("AllowFrontend");
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

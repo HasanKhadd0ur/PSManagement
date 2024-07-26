@@ -5,13 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="5.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PSManagement.Application\PSManagement.Application.csproj" />
+    <ProjectReference Include="..\PSManagement.Contracts\PSManagement.Contracts.csproj" />
+    <ProjectReference Include="..\PSManagement.Domain\PSManagement.Domain.csproj" />
+    <ProjectReference Include="..\PSManagement.Infrastructure.Persistence\PSManagement.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\PSManagement.Infrastructure\PSManagement.Infrastructure.csproj" />
     <ProjectReference Include="..\PSManagement.Presentation\PSManagement.Presentation.csproj" />
+    <ProjectReference Include="..\PSManagement.SharedKernel\PSManagement.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

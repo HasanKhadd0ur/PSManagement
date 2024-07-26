@@ -20,7 +20,7 @@ namespace PSManagement.Api.Controllers.Authentication
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
-            Result<AuthenticationResult> result = await _authenticationService.Login(loginRequest.Email, loginRequest.PassWorrd);
+            Result<AuthenticationResult> result = await _authenticationService.Login(loginRequest.Email, loginRequest.PassWord);
 
             if (result.IsSuccess) {
                 AuthenticationResponse response = new (
@@ -32,7 +32,7 @@ namespace PSManagement.Api.Controllers.Authentication
                 return Ok(response);
             }
 
-            return Problem(title: result.Reasons[0].Message,detail:result.Errors[0].Message,statusCode:400);
+            return Problem(title: result.Errors[0].Message,detail:result.Errors[0].Reasons[0].Message,statusCode:400);
         }
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody]  RegisterRequest registerRequest)
