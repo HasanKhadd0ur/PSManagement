@@ -1,7 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Customers\DomainErrors\" />
+    <Folder Include="Identity\Entities\" />
+    <Folder Include="Identity\ValueObjects\" />
+    <Folder Include="Projects\DomainErrors\" />
+    <Folder Include="Projects\Entities\" />
+    <Folder Include="Projects\ValueObjects\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PSManagement.SharedKernel\PSManagement.SharedKernel.csproj" />
+  </ItemGroup>
 
 </Project>
