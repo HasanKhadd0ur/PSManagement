@@ -8,7 +8,6 @@
     <Folder Include="Abstraction\" />
     <Folder Include="Behaviors\AuthorizationBehavior\" />
     <Folder Include="Services\" />
-    <Folder Include="UseCases\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PSManagement.Domain\PSManagement.Domain.csproj" />
     <ProjectReference Include="..\PSManagement.SharedKernel\PSManagement.SharedKernel.csproj" />
   </ItemGroup>
 
