@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using PSManagement.Application.Contracts.Authentication;
 using MediatR;
 using System.Reflection;
+using AutoMapper;
+using PSManagement.Application.Mappers;
 
 namespace PSManagement.Application.DI
 {
@@ -12,6 +14,8 @@ namespace PSManagement.Application.DI
         {
             //services.AddMediatR();
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            
+            services.AddAutoMapper(typeof(CustomerMapperConfiguration));
 
             return services;
         }

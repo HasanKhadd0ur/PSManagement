@@ -9,12 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PSManagement.Application.Customers.UseCases.Commands.CreateCustomer
+namespace PSManagement.Application.Customers.UseCases.Commands.UpdateCustomer
 {
-    public record CreateCustomerCommand(
-        string CustomerName,
-        string Email,
+    public record  UpdateCustomerCommand (
+        int CustomerId,
+        String CustomerName ,
+        String Email,
         AddressDTO Address
-        ) : ICommand<Result<int>>;
-
+        ) : ICommand<Result>;
+    
 }
