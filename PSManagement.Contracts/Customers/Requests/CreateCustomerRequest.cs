@@ -8,10 +8,8 @@ namespace PSManagement.Contracts.Customers.Requests
 {
     public record CreateCustomerRequest(
         String CustomerName, 
-        String StreetName,
-        int StreetNumber,
-        int ZipCode,
-        String City
+        AddressRecord Address ,
+        String Email
         );
 
      public record AddressRecord(
