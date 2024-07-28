@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PSManagement.Infrastructure.Persistence.DI;
+using PSManagement.Api.DI;
 
 namespace PSManagement.Api
 {
@@ -32,50 +33,12 @@ namespace PSManagement.Api
             // adding dependency injection 
 
             services
+                .AddAPI()
                 .AddPresentation()
                 .AddApplication()
                 .AddInfrastructure(Configuration)
                 .AddPersistence(Configuration);
             
-            services.AddControllers();
-            services.AddCors(options =>
-            {
-
-                options.AddPolicy("AllowFrontend",
-                    builder => builder
-                        .WithOrigins("http://localhost:4200") // Add your frontend URL here
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials());
-
-            });
-           
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "PSManagement.Api", Version = "v1" });
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-                {
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "Bearer"
-                });
-
-                            options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        Array.Empty<string>()
-                    }
-                });
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
