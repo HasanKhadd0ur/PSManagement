@@ -5,7 +5,7 @@ namespace PSManagement.SharedKernel.Events
 {
     public interface  IDomainEvent : INotification
     {
-        public DateTime DateOccurred { get; set; }
+//        public DateTime DateOccurred { get; set; }
         
     }
 }

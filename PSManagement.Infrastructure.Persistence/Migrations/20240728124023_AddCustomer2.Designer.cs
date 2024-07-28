@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PSManagement.Infrastructure.Persistence;
 
 namespace PSManagement.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240728124023_AddCustomer2")]
+    partial class AddCustomer2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,9 +29,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CustomerName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -73,10 +72,7 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                                 .HasColumnType("int")
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                            b1.Property<string>("ConatctValue")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("ContactType")
+                            b1.Property<string>("Email")
                                 .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("CustomerId", "Id");
@@ -85,6 +81,54 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("CustomerId");
+
+                            b1.OwnsOne("PSManagement.Domain.Customers.ValueObjects.ContactNumber", "MobileNumber", b2 =>
+                                {
+                                    b2.Property<int>("ContactInfoCustomerId")
+                                        .HasColumnType("int");
+
+                                    b2.Property<int>("ContactInfoId")
+                                        .ValueGeneratedOnAdd()
+                                        .HasColumnType("int")
+                                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                                    b2.Property<int>("Number")
+                                        .HasColumnType("int")
+                                        .HasColumnName("MobileNumber");
+
+                                    b2.HasKey("ContactInfoCustomerId", "ContactInfoId");
+
+                                    b2.ToTable("ContactInfo");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("ContactInfoCustomerId", "ContactInfoId");
+                                });
+
+                            b1.OwnsOne("PSManagement.Domain.Customers.ValueObjects.ContactNumber", "PhoneNumber", b2 =>
+                                {
+                                    b2.Property<int>("ContactInfoCustomerId")
+                                        .HasColumnType("int");
+
+                                    b2.Property<int>("ContactInfoId")
+                                        .ValueGeneratedOnAdd()
+                                        .HasColumnType("int")
+                                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                                    b2.Property<int>("Number")
+                                        .HasColumnType("int")
+                                        .HasColumnName("PhoneNumber");
+
+                                    b2.HasKey("ContactInfoCustomerId", "ContactInfoId");
+
+                                    b2.ToTable("ContactInfo");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("ContactInfoCustomerId", "ContactInfoId");
+                                });
+
+                            b1.Navigation("MobileNumber");
+
+                            b1.Navigation("PhoneNumber");
                         });
 
                     b.OwnsOne("PSManagement.Domain.Customers.ValueObjects.Address", "Address", b1 =>
