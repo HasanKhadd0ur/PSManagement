@@ -1,4 +1,5 @@
-﻿using PSManagement.Domain.Customers.Entities;
+﻿using PSManagement.Domain.Customers.DomainEvents;
+using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Customers.ValueObjects;
 using PSManagement.SharedKernel.Aggregate;
 using System;
@@ -11,7 +12,8 @@ namespace PSManagement.Domain.Customers.Aggregate
     public class Customer : IAggregateRoot
     {
         public String CustomerName { get; set; }
-        public Address      Address { get; set; }
+        public Address Address { get; set; }
+        public String Email { get; set; }
         public IEnumerable<ContactInfo> ContactInfo { get; private set; }
 
         public Customer()
@@ -19,10 +21,11 @@ namespace PSManagement.Domain.Customers.Aggregate
                 
         }
 
-        public Customer(String customerName, Address address)
+        public Customer(String customerName, Address address, string email)
         {
             CustomerName = customerName;
             Address = address;
+            Email = email;
         }
 
         public void AddContactInfo(ContactInfo contactInfo)
@@ -31,9 +34,10 @@ namespace PSManagement.Domain.Customers.Aggregate
             {
                 ContactInfo = new List<ContactInfo>();
             }
-
             ContactInfo= ContactInfo.Append(contactInfo);
+           
 
         }
+
     }
 }

@@ -12,21 +12,19 @@ namespace PSManagement.Domain.Customers.Entities
 {
     public sealed class ContactInfo : BaseEntity
     {
-        public ContactNumber PhoneNumber { get; set; }
-        public ContactNumber MobileNumber { get; set; }
-        public String Email { get; set; }
+        public String  ContactType { get; private set; }
+        public String ConatctValue { get; private set; }
+
+        public ContactInfo(string conatctValue, string contactType)
+        {
+            ConatctValue = conatctValue;
+            ContactType = contactType;
+        }
 
         public ContactInfo()
         {
 
         }
-        public ContactInfo(string email, ContactNumber mobileNumber, ContactNumber phoneNumer)
-        {
-            Email = email;
-            MobileNumber = mobileNumber;
-            PhoneNumber = phoneNumer;
-        }
 
-        
     }
 }
