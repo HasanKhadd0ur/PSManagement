@@ -21,7 +21,7 @@ namespace PSManagement.Api.DI
             services.AddApiCors();
 
             services.AddScoped<Mapper>();
-            services.AddAutoMapper(typeof(CustomerMapperConfiguration));
+            services.AddAutoMapper(typeof(CustomerMapperConfiguration),typeof(MapperConfigurations));
 
             return services;
         }

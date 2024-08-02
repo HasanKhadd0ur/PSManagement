@@ -27,7 +27,7 @@ namespace PSManagement.SharedKernel.Utilities
 
         public bool IsSuccess { get; }
 
-        public bool IsFailure => !IsSuccess;
+        public bool IsFail => !IsSuccess;
 
         public Error Error { get; }
 

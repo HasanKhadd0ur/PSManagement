@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿
+using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using PSManagement.Application.Contracts.Authentication;
 using PSManagement.Contracts.Authentication;
@@ -32,7 +33,7 @@ namespace PSManagement.Api.Controllers.Authentication
                 return Ok(response);
             }
 
-            return Problem(title: result.Errors[0].Message,detail:result.Errors[0].Reasons[0].Message,statusCode:400);
+            return Problem(title: result.Errors[0].Message,detail:result.Errors[0].Reasons[0]?.Message,statusCode:401);
         }
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody]  RegisterRequest registerRequest)
@@ -55,7 +56,7 @@ namespace PSManagement.Api.Controllers.Authentication
                 return Ok(response);
             }
 
-            return Problem(title: "An Errorr Occured "+result.Errors[0].Message , detail: result.Reasons[0].Message, statusCode: 400);
+            return Problem(title: "An Errorr Occured " , detail:"", statusCode: 400);
         }
 
     }

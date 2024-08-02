@@ -1,10 +1,12 @@
-﻿using FluentResults;
+﻿
+using FluentResults;
 using PSManagement.Application.Contracts.Authentication;
 using PSManagement.Application.Contracts.Authorization;
+using PSManagement.Domain.Customers.DomainErrors;
 using PSManagement.Domain.Identity.Aggregate;
 using PSManagement.Domain.Identity.DomainErrors;
 using PSManagement.Domain.Identity.Repositories;
-//using PSManagement.SharedKernel.Utilities;
+
 using System;
 using System.Threading.Tasks;
 
@@ -25,7 +27,7 @@ namespace PSManagement.Infrastructure.Services.Authentication
             
             User u = await _userRepository.GetByEmail(email);
             if (u is null || u.HashedPassword != password) {
-                return Result.Fail<AuthenticationResult>(new InvalidLoginDataError());
+                return Result.Fail<AuthenticationResult>(UserErrors.InvalidLoginAttempt);
 
             }
             String token = _jwtTokenGenerator.GenerateToken(u.Id,u.FirstName,u.LastName,u.Email);
@@ -41,7 +43,7 @@ namespace PSManagement.Infrastructure.Services.Authentication
             // check if the user exist 
             var u = await _userRepository.GetByEmail(email);
             if (u is not null) {
-                return Result.Fail<AuthenticationResult>(new AlreadyExistError());
+                return Result.Fail(UserErrors.AlreadyUserExist);
             }
             var user = await _userRepository.AddAsync(
                 new User{

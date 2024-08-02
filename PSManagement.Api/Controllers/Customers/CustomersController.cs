@@ -13,12 +13,16 @@ using AutoMapper;
 using PSManagement.Application.Customers.UseCases.Commands.AddContactInfo;
 using PSManagement.Application.Customers.UseCases.Commands.DeleteCustomer;
 using PSManagement.Application.Customers.UseCases.Commands.UpdateCustomer;
+using PSManagement.Application.Customers.UseCases.Queries.ListAllCustomers;
+using PSManagement.Contracts.Customers.Responses;
+using FluentResults;
+using PSManagement.Application.Customers.UseCases.Queries.GetCustomer;
 
 namespace PSManagement.Api.Controllers.Customers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+  //  [Authorize]
     public class CustomersController : ControllerBase
     {
         private readonly IMediator _sender;
@@ -30,6 +34,25 @@ namespace PSManagement.Api.Controllers.Customers
             _mapper = mapper;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ListCustomers()
+        {
+            var query = new ListAllCustomersQuery();
+
+            var result = _mapper.Map<Result<IEnumerable<CustomerRecord>>>( await _sender.Send(query));
+         
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCustomer(int id )
+        {
+            var query = new GetCustomerQuery(id);
+
+            var result = _mapper.Map<Result<CustomerRecord>>(await _sender.Send(query));
+
+            return Ok(result);
+        }
         [HttpPost]
         public async Task<IActionResult> CreateCustomer(CreateCustomerRequest request)
         {
@@ -50,9 +73,12 @@ namespace PSManagement.Api.Controllers.Customers
             return Ok(result);
 
         }
-        [HttpPut]
-        public async Task<IActionResult> UpdateCustomer(UpdateCustomerRequest request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCustomer(int id ,UpdateCustomerRequest request)
         {
+            if(id != request.CustomerId){
+                return Problem();
+            }
             var command = _mapper.Map<UpdateCustomerCommand>(request);
 
             var result = await _sender.Send(command);
