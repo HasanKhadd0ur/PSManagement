@@ -27,7 +27,7 @@ namespace PSManagement.Application.Customers.UseCases.Commands.AddContactInfo
                 return Result.Fail(CustomerErrors.InvalidEntryError);
             }
             
-            ContactInfo contact = new ContactInfo(request.ContactValue,request.ContactType);
+            ContactInfo contact = new (request.ContactValue,request.ContactType);
             customer.AddContactInfo(contact);
             await _customersRepository.UpdateAsync(customer);
             return Result.Ok();

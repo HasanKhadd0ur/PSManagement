@@ -6,7 +6,7 @@ namespace PSManagement.Application.Customers.Common
     public class ContactInfoDTO
     {
         public String ConatctValue { get; set; }
-        public String ContactTpe { get; set; }
+        public String ContactType { get; set; }
 
     }
 }

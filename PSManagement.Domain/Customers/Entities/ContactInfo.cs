@@ -13,17 +13,17 @@ namespace PSManagement.Domain.Customers.Entities
     public sealed class ContactInfo : BaseEntity
     {
         public String  ContactType { get; private set; }
-        public String ConatctValue { get; private set; }
+        public String ContactValue { get; private set; }
 
-        public ContactInfo(string conatctValue, string contactType)
+        public ContactInfo(string contactValue, string contactType)
         {
-            ConatctValue = conatctValue;
+            ContactValue = contactValue;
             ContactType = contactType;
         }
 
         public ContactInfo()
         {
-
+            
         }
 
     }

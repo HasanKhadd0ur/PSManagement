@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿
+using FluentResults;
 using PSManagement.Application.Customers.Common;
 using PSManagement.Domain.Customers.Aggregate;
 using PSManagement.Domain.Customers.ValueObjects;

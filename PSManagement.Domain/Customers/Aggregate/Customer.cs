@@ -14,7 +14,7 @@ namespace PSManagement.Domain.Customers.Aggregate
         public String CustomerName { get; set; }
         public Address Address { get; set; }
         public String Email { get; set; }
-        public IEnumerable<ContactInfo> ContactInfo { get; private set; }
+        public ICollection<ContactInfo> ContactInfo { get; private set; }
 
         public Customer()
         {
@@ -34,8 +34,7 @@ namespace PSManagement.Domain.Customers.Aggregate
             {
                 ContactInfo = new List<ContactInfo>();
             }
-            ContactInfo= ContactInfo.Append(contactInfo);
-           
+            ContactInfo.Add(contactInfo);           
 
         }
 

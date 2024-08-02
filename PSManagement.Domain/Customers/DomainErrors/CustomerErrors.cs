@@ -1,4 +1,4 @@
-﻿using FluentResults;
+﻿using PSManagement.SharedKernel.DomainErrors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,6 @@ namespace PSManagement.Domain.Customers.DomainErrors
 {
     public static class CustomerErrors 
     {
-        public static Error InvalidEntryError { get;  } = new Error("Customer Invalid Entry Erorr.");  
+        public static DomainError InvalidEntryError { get;  } = new DomainError("Invalid Customer Entry.",new DomainError("Invalid Customer Data"));  
     }
 }

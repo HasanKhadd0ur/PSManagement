@@ -1,5 +1,8 @@
-﻿using MediatR;
+﻿using FluentResults;
+using FluentValidation;
+using MediatR;
 using PSManagement.Application.Common.Exceptions;
+using PSManagement.SharedKernel.CQRS.Command;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,45 +13,41 @@ using ValidationException = PSManagement.Application.Common.Exceptions.Validatio
 
 namespace PSManagement.Application.Behaviors.ValidationBehavior
 {
-    public sealed class ValidationBehavior<TRequest, TResponse> //: IPipelineBehavior<TRequest, TResponse>
-//     where TRequest : class, ICommand<TResponse>
+
+    public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : IRequest<TResponse> where TResponse  : ResultBase  
     {
-        //private readonly IEnumerable<IValidator<TRequest>> _validators;
+        private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-        //public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators) => _validators = validators;
+        public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators = null)
+        {
+            _validators = validators;
+        }
 
-        //public async Task<TResponse> Handle(
-        //    TRequest request,
-        //    CancellationToken cancellationToken,
-        //    RequestHandlerDelegate<TResponse> next)
-        //{
-        //    if (!_validators.Any())
-        //    {
-        //        return await next();
-        //    }
+        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        {
+            var context = new ValidationContext<TRequest>(request);
+            if (_validators is null) {
 
-        //    var context = new ValidationContext<TRequest>(request);
+                return await next();
+            }
+            var failures = _validators
+                .Select(v => v.Validate(context))
+                .SelectMany(result => result.Errors)
+                .Where(f => f != null)
+                .ToList();
 
-        //    var errorsDictionary = _validators
-        //        .Select(x => x.Validate(context))
-        //        .SelectMany(x => x.Errors)
-        //        .Where(x => x != null)
-        //        .GroupBy(
-        //            x => x.PropertyName,
-        //            x => x.ErrorMessage,
-        //            (propertyName, errorMessages) => new
-        //            {
-        //                Key = propertyName,
-        //                Values = errorMessages.Distinct().ToArray()
-        //            })
-        //        .ToDictionary(x => x.Key, x => x.Values);
+            if (failures.Count != 0)
+            {
+                var result =Result.Fail("validation Error.");
+                foreach (var failure in failures)
+                {
+                    result.Reasons.Add(new Error(failure.ErrorMessage));
+                }
+                return (dynamic)result;
+            }
 
-        //    if (errorsDictionary.Any())
-        //    {
-        //        throw new ValidationException(errorsDictionary);
-        //    }
-
-        //    return await next();
-        //}
+            return await next();
+        }
     }
 }

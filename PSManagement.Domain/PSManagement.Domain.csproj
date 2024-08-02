@@ -7,14 +7,8 @@
   <ItemGroup>
     <Folder Include="Identity\Entities\" />
     <Folder Include="Identity\ValueObjects\" />
-    <Folder Include="Employees\" />
-    <Folder Include="Departments\" />
-    <Folder Include="Phases\" />
-    <Folder Include="ProjectTypes\" />
-    <Folder Include="Tracking\" />
     <Folder Include="Projects\DomainErrors\" />
     <Folder Include="Projects\Entities\" />
-    <Folder Include="Projects\ValueObjects\" />
   </ItemGroup>
 
   <ItemGroup>
