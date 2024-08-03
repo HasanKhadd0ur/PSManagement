@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PSManagement.Domain.Steps.Aggregate;
+using PSManagement.Domain.Steps.Entities;
 
 namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
 {
@@ -8,8 +8,12 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
     {
         public void Configure(EntityTypeBuilder<Step> builder)
         {
+            builder.HasOne(s => s.Project)
+            .WithMany(p => p.Steps)
+            .HasForeignKey(s => s.ProjectId);
 
-            
+            builder.HasMany(e => e.StepTracks);
         }
+        
     }
 }

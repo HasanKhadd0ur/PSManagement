@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PSManagement.Domain.Customers.Aggregate;
-using PSManagement.Domain.Departments.Aggregate;
-using PSManagement.Domain.Employees.Aggregate;
-using PSManagement.Domain.Identity.Aggregate;
+using PSManagement.Domain.Employees.Entities;
+using PSManagement.Domain.Identity.Entities;
 using PSManagement.Domain.Projects.Aggregate;
-using PSManagement.Domain.Steps.Aggregate;
 using PSManagement.Domain.Steps.Entities;
 using PSManagement.Domain.Tracking;
 using PSManagement.Domain.Tracking.Entities;
@@ -20,6 +18,8 @@ namespace PSManagement.Infrastructure.Persistence
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Permission> Permission { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
@@ -28,7 +28,7 @@ namespace PSManagement.Infrastructure.Persistence
 
         public DbSet<Item> Items { get; set; }
         public DbSet<Track> Tracks { get; set; }
-        public DbSet<EmployeeTrack> EmployeeTraks { get; set; }
+        public DbSet<EmployeeWork> EmployeeWorks { get; set; }
 
         public DbSet<StepTrack> StepTracks { get; set; }
 

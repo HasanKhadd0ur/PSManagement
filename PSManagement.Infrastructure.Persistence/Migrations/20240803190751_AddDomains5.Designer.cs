@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PSManagement.Infrastructure.Persistence;
 
 namespace PSManagement.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240803190751_AddDomains5")]
+    partial class AddDomains5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -280,9 +282,14 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.Property<string>("StepName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TrackId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
+
+                    b.HasIndex("TrackId");
 
                     b.ToTable("Steps");
                 });
@@ -682,6 +689,10 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PSManagement.Domain.Tracking.Track", null)
+                        .WithMany("Steps")
+                        .HasForeignKey("TrackId");
+
                     b.Navigation("Project");
                 });
 
@@ -809,6 +820,8 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("PSManagement.Domain.Tracking.Track", b =>
                 {
+                    b.Navigation("Steps");
+
                     b.Navigation("StepTracks");
                 });
 #pragma warning restore 612, 618

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PSManagement.Infrastructure.Persistence;
 
 namespace PSManagement.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240803180549_AddDomains4")]
+    partial class AddDomains4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,9 +163,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.Property<int?>("ExecuterId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProjectStatusId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("ProjectTypeId")
                         .HasColumnType("int");
 
@@ -177,8 +176,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ExecuterId");
 
-                    b.HasIndex("ProjectStatusId");
-
                     b.HasIndex("ProjectTypeId");
 
                     b.HasIndex("ProposerId");
@@ -186,53 +183,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.HasIndex("TeamLeaderId");
 
                     b.ToTable("Projects");
-                });
-
-            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.Attachment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AttachmenDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AttachmentName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AttachmentUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("Attachment");
-                });
-
-            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.ProjectStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Details")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProjectStatus");
                 });
 
             modelBuilder.Entity("PSManagement.Domain.Steps.Entities.Item", b =>
@@ -280,9 +230,14 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.Property<string>("StepName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TrackId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
+
+                    b.HasIndex("TrackId");
 
                     b.ToTable("Steps");
                 });
@@ -529,10 +484,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("ExecuterId");
 
-                    b.HasOne("PSManagement.Domain.Projects.Entities.ProjectStatus", "ProjectStatus")
-                        .WithMany()
-                        .HasForeignKey("ProjectStatusId");
-
                     b.HasOne("PSManagement.Domain.ProjectTypes.Entities.ProjectType", "ProjectType")
                         .WithMany("Projects")
                         .HasForeignKey("ProjectTypeId");
@@ -624,8 +575,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
 
                     b.Navigation("ProjectInfo");
 
-                    b.Navigation("ProjectStatus");
-
                     b.Navigation("ProjectType");
 
                     b.Navigation("ProposalInfo");
@@ -633,13 +582,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.Navigation("Proposer");
 
                     b.Navigation("TeamLeader");
-                });
-
-            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.Attachment", b =>
-                {
-                    b.HasOne("PSManagement.Domain.Projects.Aggregate.Project", null)
-                        .WithMany("Attachments")
-                        .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("PSManagement.Domain.Steps.Entities.Item", b =>
@@ -681,6 +623,10 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("PSManagement.Domain.Tracking.Track", null)
+                        .WithMany("Steps")
+                        .HasForeignKey("TrackId");
 
                     b.Navigation("Project");
                 });
@@ -786,8 +732,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("PSManagement.Domain.Projects.Aggregate.Project", b =>
                 {
-                    b.Navigation("Attachments");
-
                     b.Navigation("Steps");
 
                     b.Navigation("Tracks");
@@ -809,6 +753,8 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("PSManagement.Domain.Tracking.Track", b =>
                 {
+                    b.Navigation("Steps");
+
                     b.Navigation("StepTracks");
                 });
 #pragma warning restore 612, 618

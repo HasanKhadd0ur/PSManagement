@@ -1,6 +1,7 @@
 ﻿using PSManagement.Domain.Customers.DomainEvents;
 using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Customers.ValueObjects;
+using PSManagement.Domain.Projects.Aggregate;
 using PSManagement.SharedKernel.Aggregate;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace PSManagement.Domain.Customers.Aggregate
         public Address Address { get; set; }
         public String Email { get; set; }
         public ICollection<ContactInfo> ContactInfo { get; private set; }
+        public ICollection<Project> Projects { get; private set; }
 
         public Customer()
         {

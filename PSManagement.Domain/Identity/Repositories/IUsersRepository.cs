@@ -1,4 +1,4 @@
-﻿using PSManagement.Domain.Identity.Aggregate;
+﻿using PSManagement.Domain.Identity.Entities;
 using PSManagement.SharedKernel.Interfaces;
 using PSManagement.SharedKernel.Repositories;
 using System;

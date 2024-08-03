@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PSManagement.Domain.Identity.Aggregate;
+using PSManagement.Domain.Identity.Entities;
 using PSManagement.Domain.Identity.Repositories;
 using PSManagement.Infrastructure.Persistence.Repositories.Base;
 using PSManagement.SharedKernel.Interfaces;

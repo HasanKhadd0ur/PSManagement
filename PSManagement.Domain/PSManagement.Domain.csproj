@@ -5,10 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Identity\Entities\" />
     <Folder Include="Identity\ValueObjects\" />
     <Folder Include="Projects\DomainErrors\" />
-    <Folder Include="Projects\Entities\" />
   </ItemGroup>
 
   <ItemGroup>

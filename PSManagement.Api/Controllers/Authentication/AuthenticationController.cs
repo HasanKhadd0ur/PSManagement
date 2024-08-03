@@ -41,8 +41,7 @@ namespace PSManagement.Api.Controllers.Authentication
 
             Result<AuthenticationResult> result = await _authenticationService.Register(
                     registerRequest.Email,
-                    registerRequest.FirstName,
-                    registerRequest.LastName,
+                    registerRequest.Email,
                     registerRequest.Password);
             
             if (result.IsSuccess)

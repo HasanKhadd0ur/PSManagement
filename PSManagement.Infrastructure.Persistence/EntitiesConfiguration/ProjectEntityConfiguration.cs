@@ -24,14 +24,16 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
 
                 }
             );
-
+            builder.Property(e => e.Participants);
             builder.OwnsOne(c => c.ProposalInfo,
                     p => {
                         p.Property(e => e.ProposingBookDate).HasColumnName("ProposingBookDate");
                         p.Property(e => e.ProposingBookNumber).HasColumnName("ProposingBookNumber");
                     }
             );
-
+            builder.HasMany(e => e.Tracks).WithOne(e => e.Project).HasForeignKey(e => e.ProjectId);
+            builder.HasOne(e => e.ProjectType).WithMany(r => r.Projects);
+            builder.Ignore(e => e.Participants);
         }
     }
 }

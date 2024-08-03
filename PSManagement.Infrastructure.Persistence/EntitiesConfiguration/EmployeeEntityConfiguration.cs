@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PSManagement.Domain.Employees.Aggregate;
+using PSManagement.Domain.Employees.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
             builder.OwnsOne(c => c.Availability, 
                 p => {
                     p.Property(e => e.IsAvailable).HasColumnName("IsAvailable");
-                    p.Property(e => e.WorkingHours).HasColumnName("WorkingHours");
+                    p.Property(e => e.CurrentWorkingHours).HasColumnName("CurrentWorkingHours");
                 }
             );
             builder.OwnsOne(c => c.PersonalInfo,
@@ -26,6 +26,12 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                         p.Property(e => e.FirstName).HasColumnName("FirstName");
                     }
             );
+
+            builder.HasOne(e => e.User)
+                .WithOne(e=> e.Employee)
+                .HasForeignKey<Employee>(e => e.UserId); ;
+
+
             
         }
     }

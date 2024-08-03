@@ -25,7 +25,7 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
 
 
 
-           
+            builder.HasMany(e => e.Projects).WithOne(e => e.Proposer);
             builder.OwnsMany(c => c.ContactInfo);
             
         }
