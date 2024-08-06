@@ -1,4 +1,5 @@
-﻿using PSManagement.Domain.Projects.Aggregate;
+﻿using PSManagement.Domain.Employees.Entities;
+using PSManagement.Domain.Projects.Aggregate;
 using PSManagement.Domain.Steps.Entities;
 using PSManagement.Domain.Tracking.Entities;
 using PSManagement.SharedKernel.Aggregate;
@@ -18,7 +19,8 @@ namespace PSManagement.Domain.Tracking
         public int ProjectId { get; set; }
         public Project Project { get; set; }
         public ICollection<StepTrack> StepTracks { get; set; }
-
+        public ICollection<Employee> TrackedEmployees { get; set; }
+        public ICollection<EmployeeTrack> EmployeeTracks { get; set; }
         public Track()
         {
 

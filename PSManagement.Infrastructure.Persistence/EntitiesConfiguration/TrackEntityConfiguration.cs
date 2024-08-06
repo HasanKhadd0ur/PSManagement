@@ -7,8 +7,10 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
 {
     public class TrackEntityConfiguration : 
         IEntityTypeConfiguration<Track> , 
-        IEntityTypeConfiguration<StepTrack>, 
-        IEntityTypeConfiguration<EmployeeWork>
+        IEntityTypeConfiguration<StepTrack>,
+        IEntityTypeConfiguration<EmployeeTrack>
+        //, 
+        //IEntityTypeConfiguration<EmployeeWork>
 
 
     {
@@ -19,7 +21,16 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                 .WithMany(p => p.Tracks)
                 .HasForeignKey(t => t.ProjectId)
                 .OnDelete(DeleteBehavior.Restrict);
-
+            //builder.HasMany(e => e.TrackedEmployees)
+            //    .WithMany(e => e.trac)
+            //    .UsingEntity<EmployeeParticipate>(
+            //         l => l.HasOne<Employee>(e => e.Employee)
+            //             .WithMany(e => e.EmployeeParticipates)
+            //             .HasForeignKey(e => e.EmployeeId),
+            //         r => r.HasOne<Project>(e => e.Project)
+            //             .WithMany(e => e.EmployeeParticipates)
+            //             .HasForeignKey(e => e.ProjectId)
+            //  );
         }
         public void Configure(EntityTypeBuilder<StepTrack> builder)
         {
@@ -36,20 +47,30 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
 
 
         }
-        public void Configure(EntityTypeBuilder<EmployeeWork> builder)
+
+        public void Configure(EntityTypeBuilder<EmployeeTrack> builder)
         {
-            builder.HasOne(ew => ew.StepTrack)
-            .WithMany(st => st.EmployeeWorks)
-            .HasForeignKey(ew => ew.StepTrackId)
-             .OnDelete(DeleteBehavior.Restrict); ;
-
-
-            builder.HasOne(ew => ew.Employee)
-            .WithMany(e => e.EmployeeWorks)
-            .HasForeignKey(ew => ew.EmployeeId)
-             .OnDelete(DeleteBehavior.Restrict); ;
-
-
+            builder.HasOne(st => st.Employee)
+                .WithMany(s => s.EmployeeTracks)
+                .HasForeignKey(st => st.EmloyeeId)
+            ;
+            
         }
+
+        //public void Configure(EntityTypeBuilder<EmployeeWork> builder)
+        //{
+        //    //builder.HasOne(ew => ew.StepTrack)
+        //    //.WithMany(st => st.EmployeeWorks)
+        //    //.HasForeignKey(ew => ew.StepTrackId)
+        //    // .OnDelete(DeleteBehavior.Restrict); ;
+
+
+        //    builder.HasOne(ew => ew.Employee)
+        //    .WithMany(e => e.EmployeeWorks)
+        //    .HasForeignKey(ew => ew.EmployeeId)
+        //     .OnDelete(DeleteBehavior.Restrict); ;
+
+
+        //}
     }
 }

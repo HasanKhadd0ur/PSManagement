@@ -1,5 +1,7 @@
 ﻿using PSManagement.Domain.Identity.Entities;
 using PSManagement.Domain.Projects.Aggregate;
+using PSManagement.Domain.Projects.Entities;
+using PSManagement.Domain.Tracking;
 using PSManagement.Domain.Tracking.Entities;
 using PSManagement.SharedKernel.Aggregate;
 using PSManagement.SharedKernel.Entities;
@@ -17,9 +19,12 @@ namespace PSManagement.Domain.Employees.Entities
         public int UserId { get; set; }
         public User User { get; set; }
         public PersonalInfo PersonalInfo { get; set; }
-        //public ICollection<Project> Projects { get; set; }
+        public ICollection<Project> Projects { get; set; }
+        
+        public ICollection<EmployeeTrack> EmployeeTracks { get; set; }
         public Availability Availability { get; set; }
-        public ICollection<EmployeeWork> EmployeeWorks { get; set; }
+
+        public ICollection<EmployeeParticipate> EmployeeParticipates { get; set; }
         public Employee()
         {
 

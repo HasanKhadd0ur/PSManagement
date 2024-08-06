@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PSManagement.Infrastructure.Persistence;
 
 namespace PSManagement.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240806062155_AddDomainUpdate")]
+    partial class AddDomainUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,6 +132,27 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("PSManagement.Domain.ProjectTypes.Entities.ProjectType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("WorkerCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProjectType");
+                });
+
             modelBuilder.Entity("PSManagement.Domain.Projects.Aggregate.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -140,25 +163,25 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.Property<int?>("ExecuterId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProjectManagerId")
+                    b.Property<int?>("ProjectStatusId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProjectStatusId")
+                    b.Property<int?>("ProjectTypeId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ProposerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeamLeaderId")
+                    b.Property<int?>("TeamLeaderId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ExecuterId");
 
-                    b.HasIndex("ProjectManagerId");
-
                     b.HasIndex("ProjectStatusId");
+
+                    b.HasIndex("ProjectTypeId");
 
                     b.HasIndex("ProposerId");
 
@@ -571,14 +594,13 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("ExecuterId");
 
-                    b.HasOne("PSManagement.Domain.Employees.Entities.Employee", "ProjectManager")
-                        .WithMany()
-                        .HasForeignKey("ProjectManagerId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("PSManagement.Domain.Projects.Entities.ProjectStatus", "ProjectStatus")
                         .WithMany()
                         .HasForeignKey("ProjectStatusId");
+
+                    b.HasOne("PSManagement.Domain.ProjectTypes.Entities.ProjectType", "ProjectType")
+                        .WithMany("Projects")
+                        .HasForeignKey("ProjectTypeId");
 
                     b.HasOne("PSManagement.Domain.Customers.Aggregate.Customer", "Proposer")
                         .WithMany("Projects")
@@ -586,8 +608,7 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
 
                     b.HasOne("PSManagement.Domain.Employees.Entities.Employee", "TeamLeader")
                         .WithMany()
-                        .HasForeignKey("TeamLeaderId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("TeamLeaderId");
 
                     b.OwnsOne("PSManagement.Domain.Projects.Aggregate.Aggreement", "ProjectAggreement", b1 =>
                         {
@@ -603,29 +624,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                             b1.Property<int>("AggreementNumber")
                                 .HasColumnType("int")
                                 .HasColumnName("AggreementNumber");
-
-                            b1.HasKey("ProjectId");
-
-                            b1.ToTable("Projects");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProjectId");
-                        });
-
-                    b.OwnsOne("PSManagement.Domain.Projects.Aggregate.FinincialFund", "FinincialFund", b1 =>
-                        {
-                            b1.Property<int>("ProjectId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<string>("FinicialStatus")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("FinicialStatus");
-
-                            b1.Property<string>("Source")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("FinicialSource");
 
                             b1.HasKey("ProjectId");
 
@@ -687,15 +685,13 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
 
                     b.Navigation("Executer");
 
-                    b.Navigation("FinincialFund");
-
                     b.Navigation("ProjectAggreement");
 
                     b.Navigation("ProjectInfo");
 
-                    b.Navigation("ProjectManager");
-
                     b.Navigation("ProjectStatus");
+
+                    b.Navigation("ProjectType");
 
                     b.Navigation("ProposalInfo");
 
@@ -882,6 +878,11 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("PSManagement.Domain.Identity.Entities.User", b =>
                 {
                     b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("PSManagement.Domain.ProjectTypes.Entities.ProjectType", b =>
+                {
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("PSManagement.Domain.Projects.Aggregate.Project", b =>

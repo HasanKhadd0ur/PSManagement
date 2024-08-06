@@ -17,13 +17,15 @@ namespace PSManagement.Domain.Steps.Entities
         public string StepName { get; set; }
         public string Description { get; set; }
         public int Duration { get; set; }
+        public int CurrentCompletionRatio { get; set; }
+        public int Weight { get; set; }
         public DateTime StartDate { get; set; }
         public int ProjectId { get; set; }
         public Project Project { get; set; }
-        public ICollection<Item> Purchases { get; set; }
-
-        public ICollection<Employee> Participants { get; set; }
         public ICollection<StepTrack> StepTracks { get; set; }
+
+        //public ICollection<Item> Purchases { get; set; }
+        //public ICollection<Employee> Participants { get; set; }
 
         public Step()
         {
