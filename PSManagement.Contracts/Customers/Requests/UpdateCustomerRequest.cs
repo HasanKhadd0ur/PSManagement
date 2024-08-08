@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSManagement.Domain.Customers.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,6 @@ namespace PSManagement.Contracts.Customers.Requests
     public record  UpdateCustomerRequest(
         int CustomerId,
         String CustomerName,
-        AddressRecord Address,
+        Address Address,
         String Email);
 }

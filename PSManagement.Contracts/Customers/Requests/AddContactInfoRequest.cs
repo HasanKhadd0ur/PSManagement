@@ -6,5 +6,8 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Contracts.Customers.Requests
 {
-    public record  AddContactInfoRequest(int CustomerId, String ContactType, String ContactValue);
+    public record  AddContactInfoRequest(
+        int CustomerId,
+        String ContactType,
+        String ContactValue);
 }

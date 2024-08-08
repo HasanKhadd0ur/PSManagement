@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSManagement.Domain.Customers.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,8 @@ namespace PSManagement.Contracts.Customers.Requests
 {
     public record CreateCustomerRequest(
         String CustomerName, 
-        AddressRecord Address ,
+        Address Address ,
         String Email
         );
 
-     public record AddressRecord(
-        String StreetName ,
-        int StreetNumber,
-        int ZipCode ,
-        String City
-        );
 }
