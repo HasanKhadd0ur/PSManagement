@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSManagement.Domain.Customers.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace PSManagement.Application.Customers.Common
     {
         public int Id { get; set; }
         public String CustomerName { get; set; }
-        public AddressDTO Address { get; set; }
+        public Address Address { get; set; }
         public String Email { get; set; }
         public IEnumerable<ContactInfoDTO> ContactInfo { get; private set; }
 

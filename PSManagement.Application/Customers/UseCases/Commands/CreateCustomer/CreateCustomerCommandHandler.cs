@@ -17,16 +17,15 @@ namespace PSManagement.Application.Customers.UseCases.Commands.CreateCustomer
     public class CreateCustomerCommandHandler : ICommandHandler<CreateCustomerCommand, Result<int>>
     {
         private readonly ICustomersRepository _customerRepository;
-        private readonly IMapper _mapper;
-        public CreateCustomerCommandHandler(ICustomersRepository customerRepository, IMapper mapper)
+        
+        public CreateCustomerCommandHandler(ICustomersRepository customerRepository)
         {
             _customerRepository = customerRepository;
-            _mapper = mapper;
         }
         public async Task<Result<int>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
 
-            Customer customer = new (request.CustomerName ,_mapper.Map<Address>(request.Address),request.Email);
+            Customer customer = new (request.CustomerName ,request.Address,request.Email);
 
             customer =await _customerRepository.AddAsync(customer);
             

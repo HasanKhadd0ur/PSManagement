@@ -15,7 +15,7 @@ namespace PSManagement.Application.Customers.UseCases.Commands.CreateCustomer
     public record CreateCustomerCommand(
         string CustomerName,
         string Email,
-        AddressDTO Address
+        Address Address
         ) : ICommand<Result<int>>;
 
 }

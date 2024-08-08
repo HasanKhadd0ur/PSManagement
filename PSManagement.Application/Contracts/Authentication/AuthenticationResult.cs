@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PSManagement.Domain.Identity.Entities;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ namespace PSManagement.Application.Contracts.Authentication
         public String Email { get; set; }
         public String LastName { get; set; }
         public String FirstName { get; set; }
+        public ICollection<Role> Roles { get; set; } 
         public String Token { get; set; }
 
     }

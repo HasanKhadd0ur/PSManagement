@@ -1,15 +1,13 @@
 ﻿using FluentResults;
 using FluentValidation;
 using MediatR;
-using PSManagement.Application.Common.Exceptions;
-using PSManagement.SharedKernel.CQRS.Command;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ValidationException = PSManagement.Application.Common.Exceptions.ValidationException;
 
 namespace PSManagement.Application.Behaviors.ValidationBehavior
 {

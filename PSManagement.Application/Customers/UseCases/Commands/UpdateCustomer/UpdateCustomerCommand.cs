@@ -15,7 +15,7 @@ namespace PSManagement.Application.Customers.UseCases.Commands.UpdateCustomer
         int CustomerId,
         String CustomerName ,
         String Email,
-        AddressDTO Address
+        Address Address
         ) : ICommand<Result>;
     
 }

@@ -15,7 +15,6 @@ namespace PSManagement.Application.Mappers
     {
         public CustomerMapperConfiguration()
         {
-            CreateMap<AddressDTO, Address>().ReverseMap();
             CreateMap<CustomerDTO, Customer>().ReverseMap();
             CreateMap<ContactInfoDTO, ContactInfo>().ReverseMap();
 
