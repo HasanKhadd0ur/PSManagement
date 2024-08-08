@@ -20,6 +20,13 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                     p.Property(e => e.CurrentWorkingHours).HasColumnName("CurrentWorkingHours");
                 }
             );
+            builder.OwnsOne(c => c.WorkInfo,
+                p => {
+                    p.Property(e => e.WorkJob).HasColumnName("WorkJob");
+                    p.Property(e => e.WorkType).HasColumnName("WorkType");
+                }
+            );
+
             builder.OwnsOne(c => c.PersonalInfo,
                     p => {
                         p.Property(e => e.LastName).HasColumnName("LastName");

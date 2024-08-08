@@ -1,4 +1,4 @@
-﻿using PSManagement.Application.Common.Services;
+﻿using PSManagement.Application.Contracts.Providers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PSManagement.Application.Common.Services;
 using PSManagement.Application.Contracts.Authentication;
 using PSManagement.Application.Contracts.Authorization;
+using PSManagement.Application.Contracts.Providers;
 using PSManagement.Domain.Identity.Repositories;
 using PSManagement.Infrastructure.Authentication;
 using PSManagement.Infrastructure.Services;

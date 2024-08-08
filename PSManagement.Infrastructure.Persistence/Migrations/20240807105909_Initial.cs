@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PSManagement.Infrastructure.Persistence.Migrations
 {
-    public partial class AddDomains : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +39,23 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Role",
+                name: "Items",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ammount = table.Column<int>(type: "int", nullable: true),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Items", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Permission",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -48,7 +64,35 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Role", x => x.Id);
+                    table.PrimaryKey("PK_Permission", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProjectStatus",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Details = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectStatus", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,30 +132,27 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Permission",
+                name: "PermissionRole",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PermissionId = table.Column<int>(type: "int", nullable: true),
-                    RoleId = table.Column<int>(type: "int", nullable: true)
+                    PermissionsId = table.Column<int>(type: "int", nullable: false),
+                    RolesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Permission", x => x.Id);
+                    table.PrimaryKey("PK_PermissionRole", x => new { x.PermissionsId, x.RolesId });
                     table.ForeignKey(
-                        name: "FK_Permission_Permission_PermissionId",
-                        column: x => x.PermissionId,
+                        name: "FK_PermissionRole_Permission_PermissionsId",
+                        column: x => x.PermissionsId,
                         principalTable: "Permission",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Permission_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
+                        name: "FK_PermissionRole_Roles_RolesId",
+                        column: x => x.RolesId,
+                        principalTable: "Roles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -125,9 +166,9 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_RoleUser", x => new { x.RolesId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_RoleUser_Role_RolesId",
+                        name: "FK_RoleUser_Roles_RolesId",
                         column: x => x.RolesId,
-                        principalTable: "Role",
+                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -149,11 +190,15 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectStatusId = table.Column<int>(type: "int", nullable: true),
                     AggreementNumber = table.Column<int>(type: "int", nullable: true),
                     AggreementDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    TeamLeaderId = table.Column<int>(type: "int", nullable: true),
+                    TeamLeaderId = table.Column<int>(type: "int", nullable: false),
+                    ProjectManagerId = table.Column<int>(type: "int", nullable: false),
                     ExecuterId = table.Column<int>(type: "int", nullable: true),
-                    ProposerId = table.Column<int>(type: "int", nullable: true)
+                    ProposerId = table.Column<int>(type: "int", nullable: true),
+                    FinicialStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FinicialSource = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -170,6 +215,59 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                         principalTable: "Departments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Projects_ProjectStatus_ProjectStatusId",
+                        column: x => x.ProjectStatusId,
+                        principalTable: "ProjectStatus",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Attachment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AttachmentUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AttachmentName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AttachmenDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attachment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Attachment_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Steps",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StepName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Duration = table.Column<int>(type: "int", nullable: false),
+                    CurrentCompletionRatio = table.Column<int>(type: "int", nullable: false),
+                    Weight = table.Column<int>(type: "int", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Steps", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Steps_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -194,36 +292,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Steps",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StepName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Duration = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: false),
-                    TrackId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Steps", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Steps_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Steps_Tracks_TrackId",
-                        column: x => x.TrackId,
-                        principalTable: "Tracks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
                 {
@@ -235,22 +303,15 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CurrentWorkingHours = table.Column<int>(type: "int", nullable: true),
                     IsAvailable = table.Column<bool>(type: "bit", nullable: true),
-                    ProjectId = table.Column<int>(type: "int", nullable: true),
-                    StepId = table.Column<int>(type: "int", nullable: true)
+                    TrackId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Employees", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Employees_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Employees_Steps_StepId",
-                        column: x => x.StepId,
-                        principalTable: "Steps",
+                        name: "FK_Employees_Tracks_TrackId",
+                        column: x => x.TrackId,
+                        principalTable: "Tracks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -262,36 +323,14 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Items",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Ammount = table.Column<int>(type: "int", nullable: true),
-                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StepId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Items", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Items_Steps_StepId",
-                        column: x => x.StepId,
-                        principalTable: "Steps",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "StepTracks",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StepId = table.Column<int>(type: "int", nullable: false),
-                    TrackId = table.Column<int>(type: "int", nullable: false)
+                    TrackId = table.Column<int>(type: "int", nullable: false),
+                    ExecutionRatio = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -308,6 +347,63 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                         principalTable: "Tracks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeParticipate",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    PartialTimeRatio = table.Column<int>(type: "int", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeParticipate", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EmployeeParticipate_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeParticipate_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeTrack",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmloyeeId = table.Column<int>(type: "int", nullable: false),
+                    TrackId = table.Column<int>(type: "int", nullable: false),
+                    WorkingHours = table.Column<int>(type: "int", nullable: false),
+                    PerformedWork = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AssignedWork = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeTrack", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EmployeeTrack_Employees_EmloyeeId",
+                        column: x => x.EmloyeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeTrack_Tracks_TrackId",
+                        column: x => x.TrackId,
+                        principalTable: "Tracks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -331,30 +427,50 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EmployeeWorks_StepTracks_StepTrackId",
                         column: x => x.StepTrackId,
                         principalTable: "StepTracks",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employees_ProjectId",
-                table: "Employees",
+                name: "IX_Attachment_ProjectId",
+                table: "Attachment",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employees_StepId",
+                name: "IX_EmployeeParticipate_EmployeeId",
+                table: "EmployeeParticipate",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeParticipate_ProjectId",
+                table: "EmployeeParticipate",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_TrackId",
                 table: "Employees",
-                column: "StepId");
+                column: "TrackId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_UserId",
                 table: "Employees",
                 column: "UserId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeTrack_EmloyeeId",
+                table: "EmployeeTrack",
+                column: "EmloyeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeTrack_TrackId",
+                table: "EmployeeTrack",
+                column: "TrackId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeWorks_EmployeeId",
@@ -367,24 +483,24 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                 column: "StepTrackId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_StepId",
-                table: "Items",
-                column: "StepId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Permission_PermissionId",
-                table: "Permission",
-                column: "PermissionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Permission_RoleId",
-                table: "Permission",
-                column: "RoleId");
+                name: "IX_PermissionRole_RolesId",
+                table: "PermissionRole",
+                column: "RolesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_ExecuterId",
                 table: "Projects",
                 column: "ExecuterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_ProjectManagerId",
+                table: "Projects",
+                column: "ProjectManagerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_ProjectStatusId",
+                table: "Projects",
+                column: "ProjectStatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_ProposerId",
@@ -407,11 +523,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Steps_TrackId",
-                table: "Steps",
-                column: "TrackId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_StepTracks_StepId",
                 table: "StepTracks",
                 column: "StepId");
@@ -427,6 +538,14 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                 column: "ProjectId");
 
             migrationBuilder.AddForeignKey(
+                name: "FK_Projects_Employees_ProjectManagerId",
+                table: "Projects",
+                column: "ProjectManagerId",
+                principalTable: "Employees",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_Projects_Employees_TeamLeaderId",
                 table: "Projects",
                 column: "TeamLeaderId",
@@ -438,23 +557,20 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Projects_Customers_ProposerId",
-                table: "Projects");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Employees_Projects_ProjectId",
-                table: "Employees");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Steps_Projects_ProjectId",
-                table: "Steps");
-
-            migrationBuilder.DropForeignKey(
                 name: "FK_Tracks_Projects_ProjectId",
                 table: "Tracks");
 
             migrationBuilder.DropTable(
+                name: "Attachment");
+
+            migrationBuilder.DropTable(
                 name: "ContactInfo");
+
+            migrationBuilder.DropTable(
+                name: "EmployeeParticipate");
+
+            migrationBuilder.DropTable(
+                name: "EmployeeTrack");
 
             migrationBuilder.DropTable(
                 name: "EmployeeWorks");
@@ -463,7 +579,7 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                 name: "Items");
 
             migrationBuilder.DropTable(
-                name: "Permission");
+                name: "PermissionRole");
 
             migrationBuilder.DropTable(
                 name: "RoleUser");
@@ -472,13 +588,19 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                 name: "StepTracks");
 
             migrationBuilder.DropTable(
-                name: "Role");
+                name: "Permission");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Roles");
+
+            migrationBuilder.DropTable(
+                name: "Steps");
 
             migrationBuilder.DropTable(
                 name: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Departments");
@@ -487,13 +609,13 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                 name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "Steps");
-
-            migrationBuilder.DropTable(
-                name: "Users");
+                name: "ProjectStatus");
 
             migrationBuilder.DropTable(
                 name: "Tracks");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

@@ -2,8 +2,7 @@
 using PSManagement.Domain.Customers.Aggregate;
 using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.Identity.Entities;
-using PSManagement.Domain.Projects.Aggregate;
-using PSManagement.Domain.Steps.Entities;
+using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Tracking;
 using PSManagement.Domain.Tracking.Entities;
 
@@ -26,9 +25,7 @@ namespace PSManagement.Infrastructure.Persistence
         public DbSet<Project> Projects { get; set; }
         public DbSet<Step> Steps { get; set; }
 
-        public DbSet<Item> Items { get; set; }
         public DbSet<Track> Tracks { get; set; }
-        public DbSet<EmployeeWork> EmployeeWorks { get; set; }
 
         public DbSet<StepTrack> StepTracks { get; set; }
 

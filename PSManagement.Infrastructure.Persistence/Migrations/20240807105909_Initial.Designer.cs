@@ -10,8 +10,8 @@ using PSManagement.Infrastructure.Persistence;
 namespace PSManagement.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240806132941_AddDomainUpdate3")]
-    partial class AddDomainUpdate3
+    [Migration("20240807105909_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -576,8 +576,7 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("PSManagement.Domain.Employees.Entities.Employee", "ProjectManager")
                         .WithMany()
                         .HasForeignKey("ProjectManagerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("PSManagement.Domain.Projects.Entities.ProjectStatus", "ProjectStatus")
                         .WithMany()
@@ -590,8 +589,7 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("PSManagement.Domain.Employees.Entities.Employee", "TeamLeader")
                         .WithMany()
                         .HasForeignKey("TeamLeaderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.OwnsOne("PSManagement.Domain.Projects.Aggregate.Aggreement", "ProjectAggreement", b1 =>
                         {

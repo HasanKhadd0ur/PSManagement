@@ -63,15 +63,10 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.Property<int>("HIASTId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TrackId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TrackId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -130,43 +125,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("PSManagement.Domain.Projects.Aggregate.Project", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ExecuterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectManagerId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProjectStatusId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProposerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeamLeaderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExecuterId");
-
-                    b.HasIndex("ProjectManagerId");
-
-                    b.HasIndex("ProjectStatusId");
-
-                    b.HasIndex("ProposerId");
-
-                    b.HasIndex("TeamLeaderId");
-
-                    b.ToTable("Projects");
-                });
-
             modelBuilder.Entity("PSManagement.Domain.Projects.Entities.Attachment", b =>
                 {
                     b.Property<int>("Id")
@@ -221,46 +179,72 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.ToTable("EmployeeParticipate");
                 });
 
-            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.ProjectStatus", b =>
+            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.FinincialSpending", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Code")
+                    b.Property<string>("CostType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Details")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProjectStatus");
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("FinincialSpending");
                 });
 
-            modelBuilder.Entity("PSManagement.Domain.Steps.Entities.Item", b =>
+            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.Project", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ItemDescription")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ItemName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ExecuterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProjectStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProposerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamLeaderId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Items");
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ExecuterId");
+
+                    b.HasIndex("ProjectManagerId");
+
+                    b.HasIndex("ProjectStatusId");
+
+                    b.HasIndex("ProposerId");
+
+                    b.HasIndex("TeamLeaderId");
+
+                    b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("PSManagement.Domain.Steps.Entities.Step", b =>
+            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.Step", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -295,6 +279,27 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.ToTable("Steps");
                 });
 
+            modelBuilder.Entity("PSManagement.Domain.ProjectsStatus.Entites.ProjectStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProjectStatus");
+                });
+
             modelBuilder.Entity("PSManagement.Domain.Tracking.EmployeeTrack", b =>
                 {
                     b.Property<int>("Id")
@@ -324,40 +329,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.HasIndex("TrackId");
 
                     b.ToTable("EmployeeTrack");
-                });
-
-            modelBuilder.Entity("PSManagement.Domain.Tracking.Entities.EmployeeWork", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ContributingRatio")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EmployeeWorkId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HoursWorked")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StepTrackId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("StepTrackId");
-
-                    b.ToTable("EmployeeWorks");
                 });
 
             modelBuilder.Entity("PSManagement.Domain.Tracking.Entities.StepTrack", b =>
@@ -502,10 +473,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("PSManagement.Domain.Employees.Entities.Employee", b =>
                 {
-                    b.HasOne("PSManagement.Domain.Tracking.Track", null)
-                        .WithMany("TrackedEmployees")
-                        .HasForeignKey("TrackId");
-
                     b.HasOne("PSManagement.Domain.Identity.Entities.User", "User")
                         .WithOne("Employee")
                         .HasForeignKey("PSManagement.Domain.Employees.Entities.Employee", "UserId")
@@ -558,38 +525,157 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                                 .HasForeignKey("EmployeeId");
                         });
 
+                    b.OwnsOne("PSManagement.Domain.Employees.Entities.WorkInfo", "WorkInfo", b1 =>
+                        {
+                            b1.Property<int>("EmployeeId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<string>("WorkJob")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("WorkJob");
+
+                            b1.Property<string>("WorkType")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("WorkType");
+
+                            b1.HasKey("EmployeeId");
+
+                            b1.ToTable("Employees");
+
+                            b1.WithOwner()
+                                .HasForeignKey("EmployeeId");
+                        });
+
                     b.Navigation("Availability");
 
                     b.Navigation("PersonalInfo");
 
                     b.Navigation("User");
+
+                    b.Navigation("WorkInfo");
                 });
 
-            modelBuilder.Entity("PSManagement.Domain.Projects.Aggregate.Project", b =>
+            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.Attachment", b =>
                 {
+                    b.HasOne("PSManagement.Domain.Projects.Entities.Project", null)
+                        .WithMany("Attachments")
+                        .HasForeignKey("ProjectId");
+                });
+
+            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.EmployeeParticipate", b =>
+                {
+                    b.HasOne("PSManagement.Domain.Employees.Entities.Employee", "Employee")
+                        .WithMany("EmployeeParticipates")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PSManagement.Domain.Projects.Entities.Project", "Project")
+                        .WithMany("EmployeeParticipates")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.FinincialSpending", b =>
+                {
+                    b.HasOne("PSManagement.Domain.Projects.Entities.Project", null)
+                        .WithMany("FinincialSpending")
+                        .HasForeignKey("ProjectId");
+
+                    b.OwnsOne("PSManagement.SharedKernel.ValueObjects.Money", "ExternalPurchase", b1 =>
+                        {
+                            b1.Property<int>("FinincialSpendingId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<int>("Ammount")
+                                .HasColumnType("int")
+                                .HasColumnName("ExternalPurchaseAmmount");
+
+                            b1.Property<string>("Currency")
+                                .HasColumnType("nvarchar(max)")
+                                .HasDefaultValue("USD")
+                                .HasColumnName("ExternalPurchaseCurrency");
+
+                            b1.HasKey("FinincialSpendingId");
+
+                            b1.ToTable("FinincialSpending");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FinincialSpendingId");
+                        });
+
+                    b.OwnsOne("PSManagement.SharedKernel.ValueObjects.Money", "LocalPurchase", b1 =>
+                        {
+                            b1.Property<int>("FinincialSpendingId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<int>("Ammount")
+                                .HasColumnType("int")
+                                .HasColumnName("LocalPurchaseAmmount");
+
+                            b1.Property<string>("Currency")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("nvarchar(max)")
+                                .HasDefaultValue("SP")
+                                .HasColumnName("LocalPurchaseCurrency");
+
+                            b1.HasKey("FinincialSpendingId");
+
+                            b1.ToTable("FinincialSpending");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FinincialSpendingId");
+                        });
+
+                    b.Navigation("ExternalPurchase");
+
+                    b.Navigation("LocalPurchase");
+                });
+
+            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.Project", b =>
+                {
+                    b.HasOne("PSManagement.Domain.Customers.Aggregate.Customer", null)
+                        .WithMany("Projects")
+                        .HasForeignKey("CustomerId");
+
                     b.HasOne("PSManagement.Domain.Employees.Entities.Department", "Executer")
                         .WithMany()
-                        .HasForeignKey("ExecuterId");
+                        .HasForeignKey("ExecuterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PSManagement.Domain.Employees.Entities.Employee", "ProjectManager")
                         .WithMany()
                         .HasForeignKey("ProjectManagerId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("PSManagement.Domain.Projects.Entities.ProjectStatus", "ProjectStatus")
+                    b.HasOne("PSManagement.Domain.ProjectsStatus.Entites.ProjectStatus", "ProjectStatus")
                         .WithMany()
                         .HasForeignKey("ProjectStatusId");
 
                     b.HasOne("PSManagement.Domain.Customers.Aggregate.Customer", "Proposer")
-                        .WithMany("Projects")
-                        .HasForeignKey("ProposerId");
+                        .WithMany()
+                        .HasForeignKey("ProposerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PSManagement.Domain.Employees.Entities.Employee", "TeamLeader")
                         .WithMany()
                         .HasForeignKey("TeamLeaderId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.OwnsOne("PSManagement.Domain.Projects.Aggregate.Aggreement", "ProjectAggreement", b1 =>
+                    b.OwnsOne("PSManagement.Domain.Projects.ValueObjects.Aggreement", "ProjectAggreement", b1 =>
                         {
                             b1.Property<int>("ProjectId")
                                 .ValueGeneratedOnAdd()
@@ -612,7 +698,7 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                                 .HasForeignKey("ProjectId");
                         });
 
-                    b.OwnsOne("PSManagement.Domain.Projects.Aggregate.FinincialFund", "FinincialFund", b1 =>
+                    b.OwnsOne("PSManagement.Domain.Projects.ValueObjects.FinincialFund", "FinincialFund", b1 =>
                         {
                             b1.Property<int>("ProjectId")
                                 .ValueGeneratedOnAdd()
@@ -635,7 +721,7 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                                 .HasForeignKey("ProjectId");
                         });
 
-                    b.OwnsOne("PSManagement.Domain.Projects.Aggregate.ProjectInfo", "ProjectInfo", b1 =>
+                    b.OwnsOne("PSManagement.Domain.Projects.ValueObjects.ProjectInfo", "ProjectInfo", b1 =>
                         {
                             b1.Property<int>("ProjectId")
                                 .ValueGeneratedOnAdd()
@@ -662,7 +748,7 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                                 .HasForeignKey("ProjectId");
                         });
 
-                    b.OwnsOne("PSManagement.Domain.Projects.Aggregate.ProposalInfo", "ProposalInfo", b1 =>
+                    b.OwnsOne("PSManagement.Domain.Projects.ValueObjects.ProposalInfo", "ProposalInfo", b1 =>
                         {
                             b1.Property<int>("ProjectId")
                                 .ValueGeneratedOnAdd()
@@ -704,63 +790,9 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.Navigation("TeamLeader");
                 });
 
-            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.Attachment", b =>
+            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.Step", b =>
                 {
-                    b.HasOne("PSManagement.Domain.Projects.Aggregate.Project", null)
-                        .WithMany("Attachments")
-                        .HasForeignKey("ProjectId");
-                });
-
-            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.EmployeeParticipate", b =>
-                {
-                    b.HasOne("PSManagement.Domain.Employees.Entities.Employee", "Employee")
-                        .WithMany("EmployeeParticipates")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PSManagement.Domain.Projects.Aggregate.Project", "Project")
-                        .WithMany("EmployeeParticipates")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("PSManagement.Domain.Steps.Entities.Item", b =>
-                {
-                    b.OwnsOne("PSManagement.SharedKernel.ValueObjects.Money", "Price", b1 =>
-                        {
-                            b1.Property<int>("ItemId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<int>("Ammount")
-                                .HasColumnType("int")
-                                .HasColumnName("Ammount");
-
-                            b1.Property<string>("Currency")
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Currency");
-
-                            b1.HasKey("ItemId");
-
-                            b1.ToTable("Items");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ItemId");
-                        });
-
-                    b.Navigation("Price");
-                });
-
-            modelBuilder.Entity("PSManagement.Domain.Steps.Entities.Step", b =>
-                {
-                    b.HasOne("PSManagement.Domain.Projects.Aggregate.Project", "Project")
+                    b.HasOne("PSManagement.Domain.Projects.Entities.Project", "Project")
                         .WithMany("Steps")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -788,28 +820,9 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.Navigation("Track");
                 });
 
-            modelBuilder.Entity("PSManagement.Domain.Tracking.Entities.EmployeeWork", b =>
-                {
-                    b.HasOne("PSManagement.Domain.Employees.Entities.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PSManagement.Domain.Tracking.Entities.StepTrack", "StepTrack")
-                        .WithMany()
-                        .HasForeignKey("StepTrackId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("StepTrack");
-                });
-
             modelBuilder.Entity("PSManagement.Domain.Tracking.Entities.StepTrack", b =>
                 {
-                    b.HasOne("PSManagement.Domain.Steps.Entities.Step", "Step")
+                    b.HasOne("PSManagement.Domain.Projects.Entities.Step", "Step")
                         .WithMany("StepTracks")
                         .HasForeignKey("StepId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -828,7 +841,7 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("PSManagement.Domain.Tracking.Track", b =>
                 {
-                    b.HasOne("PSManagement.Domain.Projects.Aggregate.Project", "Project")
+                    b.HasOne("PSManagement.Domain.Projects.Entities.Project", "Project")
                         .WithMany("Tracks")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -884,18 +897,20 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("PSManagement.Domain.Projects.Aggregate.Project", b =>
+            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.Project", b =>
                 {
                     b.Navigation("Attachments");
 
                     b.Navigation("EmployeeParticipates");
+
+                    b.Navigation("FinincialSpending");
 
                     b.Navigation("Steps");
 
                     b.Navigation("Tracks");
                 });
 
-            modelBuilder.Entity("PSManagement.Domain.Steps.Entities.Step", b =>
+            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.Step", b =>
                 {
                     b.Navigation("StepTracks");
                 });
@@ -905,8 +920,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.Navigation("EmployeeTracks");
 
                     b.Navigation("StepTracks");
-
-                    b.Navigation("TrackedEmployees");
                 });
 #pragma warning restore 612, 618
         }

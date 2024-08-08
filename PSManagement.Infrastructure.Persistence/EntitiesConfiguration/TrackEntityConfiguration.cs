@@ -21,6 +21,8 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                 .WithMany(p => p.Tracks)
                 .HasForeignKey(t => t.ProjectId)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder.Ignore(e => e.TrackedEmployees);
+
             //builder.HasMany(e => e.TrackedEmployees)
             //    .WithMany(e => e.trac)
             //    .UsingEntity<EmployeeParticipate>(

@@ -30,7 +30,7 @@ namespace PSManagement.Infrastructure.Services.Authentication
                 return Result.Fail<AuthenticationResult>(UserErrors.InvalidLoginAttempt);
 
             }
-            String token = _jwtTokenGenerator.GenerateToken(u.Id,u.UserName,u.UserName,u.Email);
+            String token = _jwtTokenGenerator.GenerateToken(u);
             
             return  new AuthenticationResult {
                        Id = u.Id,
@@ -52,14 +52,15 @@ namespace PSManagement.Infrastructure.Services.Authentication
                     HashedPassword=password
                 });
             // generate token 
-            String token = _jwtTokenGenerator.GenerateToken(user.Id,userName,"",email);
+            String token = _jwtTokenGenerator.GenerateToken(u);
             return Result.Ok<AuthenticationResult>(
             new AuthenticationResult
             {
                 Id = user.Id,
                 Email = email,
-                FirstName = "",
-                LastName = "",
+                FirstName = user.Employee?.PersonalInfo.FirstName,
+                LastName = user.Employee?.PersonalInfo.LastName,
+                Roles=user.Roles,
                 Token = token
             });
             

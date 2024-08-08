@@ -1,11 +1,16 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using PSManagement.Application.Common.Services;
 using PSManagement.Application.Contracts.Authorization;
+using PSManagement.Domain.Identity.Entities;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq.Expressions;
+using System.Linq;
+
 using System.Security.Claims;
 using System.Text;
+using System.Collections.Generic;
+using PSManagement.Application.Contracts.Providers;
 
 namespace PSManagement.Infrastructure.Authentication
 {
@@ -19,22 +24,23 @@ namespace PSManagement.Infrastructure.Authentication
             _jwtSetting = jwtOptions.Value;
         }
 
-        public string GenerateToken(int  id, string firstName, string lastName, string email)
+        public string GenerateToken(User user)
         {
             var signingCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSetting.Secret)),
-                    SecurityAlgorithms.HmacSha256   
+                    SecurityAlgorithms.HmacSha256
                 );
-            var claims = new[] {
-                new Claim(JwtRegisteredClaimNames.Sub,id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Email,email),
-                new Claim(JwtRegisteredClaimNames.GivenName,firstName),
-                new Claim(JwtRegisteredClaimNames.FamilyName,lastName)
-
-
+            List<Claim> claims = new List<Claim>{
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(JwtRegisteredClaimNames.GivenName, user.Employee?.PersonalInfo.FirstName),
+                new Claim(JwtRegisteredClaimNames.FamilyName, user.Employee?.PersonalInfo.LastName)
             };
 
+            foreach (Role role  in user.Roles) {
+                claims.Add(new Claim(ClaimTypes.Role, role.Name));
+            }
             var securityToken = new JwtSecurityToken(
                 issuer: _jwtSetting.Issuer,
                 audience:_jwtSetting.Audience,

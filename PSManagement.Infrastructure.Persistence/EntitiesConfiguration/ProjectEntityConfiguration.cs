@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PSManagement.Domain.Employees.Entities;
-using PSManagement.Domain.Projects.Aggregate;
 using PSManagement.Domain.Projects.Entities;
 
 namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
@@ -48,7 +47,7 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                .OnDelete(DeleteBehavior.Restrict)
                .IsRequired(false);
 
-
+            builder.HasOne(e => e.Proposer).WithMany().HasForeignKey(e=>e.ProposerId);
             builder.OwnsOne(c => c.ProposalInfo,
                     p => {
                         p.Property(e => e.ProposingBookDate).HasColumnName("ProposingBookDate");
@@ -61,7 +60,9 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                         p.Property(e => e.Source).HasColumnName("FinicialSource");
                     }
             );
+            builder.HasOne(e => e.ProjectStatus).WithMany();
 
+            builder.HasMany(e => e.FinincialSpending);
             builder.HasMany(e => e.Tracks).WithOne(e => e.Project).HasForeignKey(e => e.ProjectId);
             
         }
