@@ -1,5 +1,4 @@
 ﻿using PSManagement.Domain.Employees.Entities;
-using PSManagement.Domain.Projects.Aggregate;
 using PSManagement.SharedKernel.Entities;
 using System;
 

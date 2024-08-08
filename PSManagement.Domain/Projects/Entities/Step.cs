@@ -1,5 +1,4 @@
 ﻿using PSManagement.Domain.Employees.Entities;
-using PSManagement.Domain.Projects.Aggregate;
 using PSManagement.Domain.Tracking;
 using PSManagement.Domain.Tracking.Entities;
 using PSManagement.SharedKernel.Aggregate;
@@ -10,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PSManagement.Domain.Steps.Entities
+namespace PSManagement.Domain.Projects.Entities
 {
     public class Step : BaseEntity
     {

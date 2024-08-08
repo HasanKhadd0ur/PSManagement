@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace PSManagement.Domain.Projects.Aggregate
+namespace PSManagement.Domain.Projects.ValueObjects
 {
     public record ProjectInfo(
-        String Name , 
-        String Code ,
-        String Description 
+        string Name,
+        string Code,
+        string Description
         );
 
 }

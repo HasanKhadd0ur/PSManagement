@@ -1,4 +1,4 @@
-﻿using PSManagement.Domain.Projects.Aggregate;
+﻿using PSManagement.Domain.Projects.Entities;
 using PSManagement.SharedKernel.Aggregate;
 using PSManagement.SharedKernel.Entities;
 using System;

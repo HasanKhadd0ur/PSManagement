@@ -1,6 +1,6 @@
 ﻿using PSManagement.SharedKernel.Entities;
 
-namespace PSManagement.Domain.Projects.Entities
+namespace PSManagement.Domain.ProjectsStatus.Entites
 {
     public class ProjectStatus : BaseEntity
     {

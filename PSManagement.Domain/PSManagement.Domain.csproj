@@ -7,6 +7,8 @@
   <ItemGroup>
     <Folder Include="Identity\ValueObjects\" />
     <Folder Include="Projects\DomainErrors\" />
+    <Folder Include="Reports\Entities\" />
+    <Folder Include="Reports\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>

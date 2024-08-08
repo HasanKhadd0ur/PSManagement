@@ -1,4 +1,4 @@
-﻿using PSManagement.Domain.Steps.Entities;
+﻿using PSManagement.Domain.Projects.Entities;
 using PSManagement.SharedKernel.Entities;
 using System.Collections.Generic;
 

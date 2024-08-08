@@ -1,5 +1,4 @@
 ﻿using PSManagement.Domain.Identity.Entities;
-using PSManagement.Domain.Projects.Aggregate;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Tracking;
 using PSManagement.Domain.Tracking.Entities;
@@ -19,6 +18,8 @@ namespace PSManagement.Domain.Employees.Entities
         public int UserId { get; set; }
         public User User { get; set; }
         public PersonalInfo PersonalInfo { get; set; }
+        public WorkInfo WorkInfo { get; set; }
+
         public ICollection<Project> Projects { get; set; }
         
         public ICollection<EmployeeTrack> EmployeeTracks { get; set; }
@@ -36,5 +37,8 @@ namespace PSManagement.Domain.Employees.Entities
             HIASTId = hiastId;
         }
     }
-
+    public record WorkInfo (
+        String WorkType , 
+        String WorkJob 
+        );
 }

@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace PSManagement.Domain.Projects.Aggregate
+namespace PSManagement.Domain.Projects.ValueObjects
 {
-    public record Aggreement (
-        int AggreementNumber ,
-        DateTime AggreementDate 
+    public record Aggreement(
+        int AggreementNumber,
+        DateTime AggreementDate
         );
 
 }

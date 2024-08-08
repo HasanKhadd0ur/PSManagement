@@ -1,7 +1,7 @@
 ﻿using PSManagement.Domain.Customers.DomainEvents;
 using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Customers.ValueObjects;
-using PSManagement.Domain.Projects.Aggregate;
+using PSManagement.Domain.Projects.Entities;
 using PSManagement.SharedKernel.Aggregate;
 using System;
 using System.Collections.Generic;
