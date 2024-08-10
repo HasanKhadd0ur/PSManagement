@@ -9,14 +9,16 @@ namespace PSManagement.SharedKernel.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public List<IDomainEvent> Events = new ();
+        public List<IDomainEvent> Events = new();
 	
 	    public void AddDomainEvent(IDomainEvent eventItem)
         {
             Events ??= new List<IDomainEvent>();
             Events.Add(eventItem);
-        }    
-             
+        }
+        public void ClearDomainEvents() {
+            Events.Clear();
+        }
         public void RemoveDomainEvent(IDomainEvent eventItem)
         {
             Events?.Remove(eventItem);
