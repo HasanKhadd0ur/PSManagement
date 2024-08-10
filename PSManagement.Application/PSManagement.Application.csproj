@@ -6,30 +6,53 @@
 
   <ItemGroup>
     <Folder Include="Behaviors\AuthorizationBehavior\" />
+    <Folder Include="Employees\UseCases\Commands\UpdateEmployeeWorkHours\" />
+    <Folder Include="Employees\UseCases\Queries\GetEmployeeWorkingHours\" />
+    <Folder Include="Employees\UseCases\Queries\GetEmployeeProjects\" />
+    <Folder Include="Employees\UseCases\Queries\GetAvailableEmployees\" />
+    <Folder Include="Employees\UseCases\Queries\GetEmployeeParticipations\" />
+    <Folder Include="FinancialSpending\UseCases\Commands\CreateFinancialSpendingItem\" />
+    <Folder Include="FinancialSpending\UseCases\Commands\" />
+    <Folder Include="FinancialSpending\UseCases\Commands\UpateFinancialSpendingItem\" />
+    <Folder Include="FinancialSpending\UseCases\Queries\GetFinancialSpendingByProject\" />
+    <Folder Include="FinancialSpending\UseCases\Queries\GetFinancialSpendingById\" />
     <Folder Include="ProjectsStatus\UseCases\" />
-    <Folder Include="Projects\UseCases\Commands\AddStep\" />
-    <Folder Include="Projects\UseCases\Commands\AddFinincialSpending\" />
+    <Folder Include="Projects\EventsHandlers\" />
+    <Folder Include="Projects\UseCases\Commands\AddProjectPlan\" />
     <Folder Include="Projects\UseCases\Commands\AddParticipant\" />
+    <Folder Include="Projects\UseCases\Commands\ApproveProject\" />
+    <Folder Include="Projects\UseCases\Commands\ChangeProjectTeamLeader\" />
+    <Folder Include="Projects\UseCases\Commands\RemoveParticipant\" />
     <Folder Include="Projects\UseCases\Commands\UpdateParticipant\" />
-    <Folder Include="Projects\UseCases\Commands\UpdateFinincialSpending\" />
-    <Folder Include="Projects\UseCases\Commands\UpdateProject\" />
+    <Folder Include="Projects\UseCases\Commands\AddAttachment\" />
     <Folder Include="Projects\UseCases\Commands\UpdateStep\" />
     <Folder Include="Projects\UseCases\Queries\ListAllProject\" />
     <Folder Include="Projects\UseCases\Queries\GetProjectPlan\" />
     <Folder Include="Projects\UseCases\Queries\GetProject\" />
     <Folder Include="Projects\UseCases\Queries\GetProjectFinicialSpending\" />
+    <Folder Include="Projects\UseCases\Queries\GetParticipants\" />
+    <Folder Include="Reports\UseCases\" />
+    <Folder Include="Reports\UseCases\Queries\" />
+    <Folder Include="Steps\UseCases\Commands\ChangeStepWeight\" />
+    <Folder Include="Steps\UseCases\Commands\UpdateCompletionRatio\" />
+    <Folder Include="Steps\UseCases\Commands\UpdateStepRequiredWorkers\" />
+    <Folder Include="Steps\UseCases\Commands\RemoveStep\" />
+    <Folder Include="Steps\UseCases\Queries\GetStep\" />
+    <Folder Include="Steps\UseCases\Queries\GetStepHistory\" />
     <Folder Include="Tracks\UseCaes\Commands\CreateTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\AddStepsTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\AddEmployeesTrack\" />
+    <Folder Include="Tracks\UseCaes\Commands\RemoveTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\SaveTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\UpdateEmployeeTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\UpdateStepTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\UpdateTrack\" />
-    <Folder Include="Tracks\UseCaes\Queries\ListAll\" />
-    <Folder Include="Tracks\UseCaes\Queries\GetTrack\" />
+    <Folder Include="Tracks\UseCaes\Queries\GetTrackById\" />
+    <Folder Include="Tracks\UseCaes\Queries\GetTracksByProject\" />
     <Folder Include="Tracks\UseCaes\Queries\GetPlanTrack\" />
     <Folder Include="Tracks\UseCaes\Queries\GetEmployeesTrack\" />
     <Folder Include="Tracks\UseCaes\Queries\GetEmployeeTrack\" />
+    <Folder Include="Tracks\UseCaes\Queries\GetStepTracks\" />
   </ItemGroup>
 
   <ItemGroup>

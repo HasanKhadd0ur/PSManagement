@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSManagement.Domain.Employees.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Application.Contracts.Providers
 {
-    public interface IDateTimeProvider
+    public interface IEmployeesProvider
     {
-        public DateTime UtcNow { get; }
+        public ICollection<Employee> FetchEmployees();
     }
-
 }

@@ -17,4 +17,5 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
         int ProjectManagerId,
         int ProposerId
         ) : ICommand<Result<ProjectDTO>>;
+
 }
