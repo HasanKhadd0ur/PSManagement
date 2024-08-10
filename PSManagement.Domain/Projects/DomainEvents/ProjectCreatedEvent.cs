@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSManagement.SharedKernel.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,5 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Domain.Projects.DomainEvents
 {
-    class ProjectCreatedEvent
-    {
-    }
+    public record ProjectCreatedEvent(int projectId) : IDomainEvent;
 }

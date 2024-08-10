@@ -39,13 +39,32 @@ namespace PSManagement.Domain.Projects.Entities
         public ICollection<Attachment> Attachments { get; set; }
 
         // finincial plan 
-        public FinincialFund FinincialFund { get; set; }
-        public ICollection<FinincialSpending> FinincialSpending { get; set; }
+        public FinancialFund FinancialFund { get; set; }
+        public ICollection<FinancialSpending> FinancialSpending { get; set; }
 
 
 
         public ICollection<EmployeeParticipate> EmployeeParticipates { get; set; }
         public ICollection<Track> Tracks { get; set; }
+
+        public void AddAttachment(Attachment attachment) {
+
+            Attachments.Add(attachment);
+
+        }
+        public void AddFinacialSpend(FinancialSpending financialSpending)
+        {
+            FinancialSpending.Add(financialSpending);
+
+        }
+
+        public void AddStep(Step step)
+        {
+            Steps.Add(step);
+
+        }
+
+
         public Project(
             ProposalInfo proposalInfo,
             ProjectInfo projectInfo,
@@ -63,10 +82,18 @@ namespace PSManagement.Domain.Projects.Entities
             ExecuterId = executerId;
             ProposerId = proposerId;
 
+            Attachments = new List<Attachment>();
+            FinancialSpending = new List<FinancialSpending>();
+            Steps = new List<Step>();
+            Participants = new List<Employee>();
+            EmployeeParticipates = new List<EmployeeParticipate>();
+
         }
         public Project()
         {
 
         }
+
+
     }
 }
