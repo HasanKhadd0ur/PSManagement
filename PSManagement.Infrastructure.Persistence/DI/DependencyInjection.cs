@@ -7,6 +7,8 @@ using PSManagement.Domain.Projects.Repositories;
 using PSManagement.Infrastructure.Persistence.Repositories.CustomerRepository;
 using PSManagement.Infrastructure.Persistence.Repositories.ProjectRepository;
 using PSManagement.Infrastructure.Persistence.Repositories.UserRepository;
+using PSManagement.Infrastructure.Persistence.UoW;
+using PSManagement.SharedKernel.Interfaces;
 
 namespace PSManagement.Infrastructure.Persistence.DI
 {
@@ -23,6 +25,8 @@ namespace PSManagement.Infrastructure.Persistence.DI
             services.AddScoped<IProjectsRepository, ProjectsRepository>();
 
 
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
 

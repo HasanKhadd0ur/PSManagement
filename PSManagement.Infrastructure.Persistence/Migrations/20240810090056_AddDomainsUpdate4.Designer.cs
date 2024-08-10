@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PSManagement.Infrastructure.Persistence;
 
 namespace PSManagement.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240810090056_AddDomainsUpdate4")]
+    partial class AddDomainsUpdate4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,9 +210,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ExpectedSpendingDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("LocalPurchase")
                         .HasColumnType("int");
@@ -733,17 +732,9 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Description");
 
-                            b1.Property<DateTime>("ExpectedEndDate")
-                                .HasColumnType("datetime2")
-                                .HasColumnName("ExpectedEndDate");
-
                             b1.Property<string>("Name")
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("Name");
-
-                            b1.Property<DateTime>("StartDate")
-                                .HasColumnType("datetime2")
-                                .HasColumnName("StartDate");
 
                             b1.HasKey("ProjectId");
 

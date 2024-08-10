@@ -5,22 +5,15 @@ using PSManagement.Domain.Projects.Entities;
 namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
 {
     public class FinicialSpendingEntityConfiguration :
-        IEntityTypeConfiguration<FinincialSpending>
+        IEntityTypeConfiguration<FinancialSpending>
 
     {
-        public void Configure(EntityTypeBuilder<FinincialSpending> builder)
+        public void Configure(EntityTypeBuilder<FinancialSpending> builder)
         {
             builder.OwnsOne(e => e.ExternalPurchase, p =>
             {
                 p.Property(e => e.Ammount).HasColumnName("ExternalPurchaseAmmount");
                 p.Property(e => e.Currency).HasColumnName("ExternalPurchaseCurrency").HasDefaultValue("USD");
-
-            });
-
-            builder.OwnsOne(e => e.LocalPurchase, p =>
-            {
-                p.Property(e => e.Ammount).HasColumnName("LocalPurchaseAmmount");
-                p.Property(e => e.Currency).HasColumnName("LocalPurchaseCurrency").HasDefaultValue("SP");
 
             });
 

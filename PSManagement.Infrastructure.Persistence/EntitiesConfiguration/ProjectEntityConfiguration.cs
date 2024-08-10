@@ -31,7 +31,9 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                     p.Property(e => e.Description).HasColumnName("Description");
                     p.Property(e => e.Code).HasColumnName("Code");
                     p.Property(e => e.Name).HasColumnName("Name");
-                    
+                    p.Property(e => e.StartDate).HasColumnName("StartDate");
+                    p.Property(e => e.ExpectedEndDate).HasColumnName("ExpectedEndDate");
+
 
                 }
             );
@@ -54,15 +56,15 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                         p.Property(e => e.ProposingBookNumber).HasColumnName("ProposingBookNumber");
                     }
             );
-            builder.OwnsOne(c => c.FinincialFund,
+            builder.OwnsOne(c => c.FinancialFund,
                     p => {
-                        p.Property(e => e.FinicialStatus).HasColumnName("FinicialStatus");
+                        p.Property(e => e.FinancialStatus).HasColumnName("FinicialStatus");
                         p.Property(e => e.Source).HasColumnName("FinicialSource");
                     }
             );
             builder.HasOne(e => e.ProjectStatus).WithMany();
 
-            builder.HasMany(e => e.FinincialSpending);
+            builder.HasMany(e => e.FinancialSpending);
             builder.HasMany(e => e.Tracks).WithOne(e => e.Project).HasForeignKey(e => e.ProjectId);
             
         }

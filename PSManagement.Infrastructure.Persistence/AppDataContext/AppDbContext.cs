@@ -5,6 +5,8 @@ using PSManagement.Domain.Identity.Entities;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Tracking;
 using PSManagement.Domain.Tracking.Entities;
+using PSManagement.Infrastructure.Persistence.SeedDataContext;
+using PSManagement.SharedKernel.Entities;
 
 namespace PSManagement.Infrastructure.Persistence
 {
@@ -37,6 +39,9 @@ namespace PSManagement.Infrastructure.Persistence
         {
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+     //       modelBuilder.Entity<BaseEntity>().Ignore(e => e.Events);
+            
+            SeedData.SeedAsync(modelBuilder).Wait();
 
             base.OnModelCreating(modelBuilder);
             
