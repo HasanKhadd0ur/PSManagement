@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿
+using Ardalis.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +8,14 @@ using System.Threading.Tasks;
 
 namespace PSManagement.SharedKernel.DomainErrors
 {
-    public class DomainError : Error
+    public class DomainError  :ValidationError
     {
-        public DomainError(string message) : base(message)
+        public DomainError(string errorCode, string errorMessage) :base()
         {
+            this.ErrorMessage = errorMessage;
+            this.ErrorCode = errorCode;
         }
 
-        public DomainError(string message, IError causedBy) : base(message, causedBy)
-        {
-        }
-
-        protected DomainError()
-        {
-        }
+        
     }
 }
