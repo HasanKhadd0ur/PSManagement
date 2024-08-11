@@ -1,6 +1,7 @@
-﻿using FluentResults;
+﻿using Ardalis.Result;
 using PSManagement.Application.Contracts.Authorization;
 using PSManagement.Domain.Identity.Entities;
+using PSManagement.Domain.Identity.Repositories;
 using PSManagement.SharedKernel.DomainException;
 using PSManagement.SharedKernel.Repositories;
 using System;
@@ -13,9 +14,9 @@ namespace PSManagement.Infrastructure.Services.Authorization
 {
     public class RoleService : IRoleService
     {
-        private readonly IRepository<Role> _roleRepository;
+        private readonly IRolesRepository _roleRepository;
 
-        public RoleService(IRepository<Role> roleRepository)
+        public RoleService(IRolesRepository roleRepository)
         {
             _roleRepository = roleRepository;
         }
@@ -32,14 +33,14 @@ namespace PSManagement.Infrastructure.Services.Authorization
                 // check if the role has been added succesfully
                 if (result is not null )
                 {
-                    return Result.Ok();
+                    return Result.Success();
                 }
                 else
                 {
-                    return Result.Fail(new Error("Failed to add the role."));
+                    return Result.Conflict("Failed to add the role.");
                 }
             }
-            return Result.Fail(new Error("Failed to add the role."));
+            return Result.Conflict("Failed to add the role.");
         }
 
         public async Task<Result> DeleteRoleAsync(int roleId)
@@ -47,17 +48,17 @@ namespace PSManagement.Infrastructure.Services.Authorization
             var roleDetails = await _roleRepository.GetByIdAsync(roleId);
             if (roleDetails == null)
             {
-                return Result.Fail(new Error("The Role Not Found."));
+                return Result.NotFound("The Role Not Found.");
             }
 
             if (roleDetails.Name == "Admin")
             {
-                return Result.Fail(new Error("You Cannot Remove the admin role."));
+                return Result.CriticalError("You Cannot Remove the admin role.");
             }
           
             await _roleRepository.DeleteAsync(roleDetails);
 
-            return Result.Ok() ;
+            return Result.Success() ;
 
         }
 
@@ -65,9 +66,9 @@ namespace PSManagement.Infrastructure.Services.Authorization
         {
             var roles =await  _roleRepository.GetByIdAsync(id);
             if (roles is null) {
-                return Result.Fail(new Error("The Role not found."));
+                return Result.NotFound("The Role not found.");
             }
-            return Result.Ok(roles);
+            return roles;
 
         }
 
@@ -82,12 +83,12 @@ namespace PSManagement.Infrastructure.Services.Authorization
             var role = await _roleRepository.GetByIdAsync(id);
             if (role is null)
             {
-                return Result.Fail(new Error("The Role not found."));
+                return Result.NotFound("The Role not found.");
             }
             role.Name = roleName;
             role = await _roleRepository.UpdateAsync(role);
 
-            return Result.Ok(role);
+            return role;
         }
     }
 }

@@ -26,8 +26,4 @@
 	  <ProjectReference Include="..\PSManagement.Domain\PSManagement.Domain.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="BackgroundServcies\" />
-	</ItemGroup>
-
 </Project>

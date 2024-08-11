@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PSManagement.Infrastructure.Authentication
+namespace PSManagement.Infrastructure.Settings
 {
     public class JwtSetting
     {
@@ -15,4 +15,5 @@ namespace PSManagement.Infrastructure.Authentication
         public string Secret { get; set; } = null!;
         public int ExpireMinutes { get; set; }
     }
+
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using PSManagement.Application.Contracts.Authorization;
 using PSManagement.Domain.Identity.Entities;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,6 +10,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Collections.Generic;
 using PSManagement.Application.Contracts.Providers;
+using PSManagement.Application.Contracts.Tokens;
+using PSManagement.Infrastructure.Settings;
 
 namespace PSManagement.Infrastructure.Authentication
 {
@@ -33,9 +34,7 @@ namespace PSManagement.Infrastructure.Authentication
             List<Claim> claims = new List<Claim>{
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.GivenName, user.Employee?.PersonalInfo.FirstName),
-                new Claim(JwtRegisteredClaimNames.FamilyName, user.Employee?.PersonalInfo.LastName)
+                new Claim(JwtRegisteredClaimNames.Email, user.Email)
             };
 
             foreach (Role role  in user.Roles) {

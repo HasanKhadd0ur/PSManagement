@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using PSManagement.Infrastructure.Authentication;
+using PSManagement.Infrastructure.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +20,7 @@ namespace PSManagement.Infrastructure.Tokens
             _jwtSettings = jwtSettings.Value;
         }
 
-        public void Configure(string? name, JwtBearerOptions options) => Configure(options);
+        public void Configure(string name, JwtBearerOptions options) => Configure(options);
 
         public void Configure(JwtBearerOptions options)
         {
