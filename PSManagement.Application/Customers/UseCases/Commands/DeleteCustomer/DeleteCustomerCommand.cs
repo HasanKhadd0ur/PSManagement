@@ -1,4 +1,5 @@
-﻿using FluentResults;
+﻿
+using Ardalis.Result;
 using PSManagement.SharedKernel.CQRS.Command;
 using System;
 using System.Collections.Generic;

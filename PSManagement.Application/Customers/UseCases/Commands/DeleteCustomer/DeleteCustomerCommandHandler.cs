@@ -1,6 +1,6 @@
-﻿using FluentResults;
-using PSManagement.Domain.Customers.Aggregate;
+﻿using Ardalis.Result;
 using PSManagement.Domain.Customers.DomainErrors;
+using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Customers.Repositories;
 using PSManagement.SharedKernel.CQRS.Command;
 using System;
@@ -27,12 +27,12 @@ namespace PSManagement.Application.Customers.UseCases.Commands.DeleteCustomer
             if (customer is null)
             {
 
-                return Result.Fail(CustomerErrors.InvalidEntryError);
+                return Result.Invalid(CustomerErrors.InvalidEntryError);
             }
 
             await _customersRepository.DeleteAsync(customer);
             
-            return Result.Ok();
+            return Result.Success();
         }
     }
 }

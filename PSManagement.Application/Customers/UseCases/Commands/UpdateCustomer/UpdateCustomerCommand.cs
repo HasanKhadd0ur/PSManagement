@@ -1,6 +1,4 @@
-﻿using FluentResults;
-using PSManagement.Application.Customers.Common;
-using PSManagement.Domain.Customers.Aggregate;
+﻿using Ardalis.Result;
 using PSManagement.Domain.Customers.ValueObjects;
 using PSManagement.SharedKernel.CQRS.Command;
 using System;

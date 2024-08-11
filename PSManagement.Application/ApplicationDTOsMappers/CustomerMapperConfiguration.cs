@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using PSManagement.Application.Customers.Common;
-using PSManagement.Domain.Customers.Aggregate;
 using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Customers.ValueObjects;
 using System;

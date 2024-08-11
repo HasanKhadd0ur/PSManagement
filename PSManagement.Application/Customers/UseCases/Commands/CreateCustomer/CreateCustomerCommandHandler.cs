@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using FluentResults;
-using PSManagement.Domain.Customers.Aggregate;
+﻿using Ardalis.Result;
+using AutoMapper;
 using PSManagement.Domain.Customers.DomainEvents;
+using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Customers.Repositories;
 using PSManagement.Domain.Customers.ValueObjects;
 using PSManagement.SharedKernel.CQRS.Command;
@@ -35,7 +35,7 @@ namespace PSManagement.Application.Customers.UseCases.Commands.CreateCustomer
             customer.AddDomainEvent(new CutsomerCreatedEvent(customer.Id ,customer.CustomerName));
             await _unitOfWork.SaveChangesAsync();
 
-            return Result.Ok(customer.Id);
+            return Result.Success(customer.Id);
         }
     }
 }

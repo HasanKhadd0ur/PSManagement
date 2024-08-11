@@ -11,11 +11,12 @@ namespace PSManagement.Application.Customers.Events
 {
     public class CustomerCreatedEventHandler : IDomainEventHandler<CutsomerCreatedEvent>
     {
-        public async Task Handle(CutsomerCreatedEvent notification, CancellationToken cancellationToken)
+        public  Task Handle(CutsomerCreatedEvent notification, CancellationToken cancellationToken)
         {
 
             Console.WriteLine("fdgfg");
-            
+            return Task.CompletedTask;
+
         }
     }
 }

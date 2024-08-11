@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using FluentResults;
+﻿using Ardalis.Result;
+using AutoMapper;
 using PSManagement.Application.Customers.Common;
-using PSManagement.Domain.Customers.Aggregate;
 using PSManagement.Domain.Customers.DomainErrors;
+using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Customers.Repositories;
 using PSManagement.SharedKernel.CQRS.Query;
 using System.Collections.Generic;
@@ -25,9 +25,9 @@ namespace PSManagement.Application.Customers.UseCases.Queries.GetCustomer
         {
             Customer customer = await _customersRepository.GetByIdAsync(request.customerId);
             if (customer is null) {
-                return Result.Fail(CustomerErrors.InvalidEntryError);
+                return Result.NotFound(CustomerErrors.InvalidEntryError.ErrorMessage);
             }
-            return Result.Ok(_mapper.Map<CustomerDTO>(customer));
+            return Result.Success(_mapper.Map<CustomerDTO>(customer));
 
         }
     }

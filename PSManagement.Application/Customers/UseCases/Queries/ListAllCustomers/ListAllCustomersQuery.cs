@@ -1,4 +1,4 @@
-﻿using FluentResults;
+﻿using Ardalis.Result;
 using PSManagement.Application.Customers.Common;
 using PSManagement.SharedKernel.CQRS.Query;
 using System;

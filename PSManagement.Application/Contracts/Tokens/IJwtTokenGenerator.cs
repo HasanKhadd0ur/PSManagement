@@ -1,10 +1,10 @@
 ﻿using PSManagement.Domain.Identity.Entities;
 using System;
 
-namespace PSManagement.Application.Contracts.Authorization
+namespace PSManagement.Application.Contracts.Tokens
 {
     public interface IJwtTokenGenerator
     {
-        public String GenerateToken(User user);
+        public string GenerateToken(User user);
     }
 }

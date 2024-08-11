@@ -1,7 +1,8 @@
-﻿using AutoMapper;
-using FluentResults;
-using PSManagement.Domain.Customers.Aggregate;
+﻿using Ardalis.Result;
+using AutoMapper;
+
 using PSManagement.Domain.Customers.DomainEvents;
+using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Customers.Repositories;
 using PSManagement.Domain.Customers.ValueObjects;
 using PSManagement.SharedKernel.CQRS.Command;
@@ -31,7 +32,7 @@ namespace PSManagement.Application.Customers.UseCases.Commands.UpdateCustomer
 
             await _customerRepository.UpdateAsync(customer);
             
-            return Result.Ok();
+            return Result.Success();
         }
     }
 }

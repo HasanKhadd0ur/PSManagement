@@ -1,4 +1,4 @@
-﻿using FluentResults;
+﻿using Ardalis.Result;
 using PSManagement.Domain.Identity.Entities;
 using System.Collections.Generic;
 using System.Linq;

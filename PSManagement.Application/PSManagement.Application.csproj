@@ -2,11 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+	  <NoWarn>NU1701</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Behaviors\AuthorizationBehavior\" />
     <Folder Include="Employees\UseCases\Commands\UpdateEmployeeWorkHours\" />
+    <Folder Include="Employees\UseCases\Commands\SyncEmployeesData\" />
     <Folder Include="Employees\UseCases\Queries\GetEmployeeWorkingHours\" />
     <Folder Include="Employees\UseCases\Queries\GetEmployeeProjects\" />
     <Folder Include="Employees\UseCases\Queries\GetAvailableEmployees\" />
@@ -58,6 +60,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="ErrorOr" Version="2.0.1" />
     <PackageReference Include="FluentValidation" Version="8.6.3" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="8.6.3" />
     <PackageReference Include="MediatR" Version="8.0.1" />

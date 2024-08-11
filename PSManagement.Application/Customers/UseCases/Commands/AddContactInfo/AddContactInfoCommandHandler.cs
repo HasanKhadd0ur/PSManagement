@@ -1,5 +1,4 @@
-﻿using FluentResults;
-using PSManagement.Domain.Customers.Aggregate;
+﻿using Ardalis.Result;
 using PSManagement.Domain.Customers.DomainErrors;
 using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Customers.Repositories;
@@ -24,13 +23,13 @@ namespace PSManagement.Application.Customers.UseCases.Commands.AddContactInfo
 
             if (customer is null) {
 
-                return Result.Fail(CustomerErrors.InvalidEntryError);
+                return Result.Invalid(CustomerErrors.InvalidEntryError);
             }
             
             ContactInfo contact = new (request.ContactValue,request.ContactType);
             customer.AddContactInfo(contact);
             await _customersRepository.UpdateAsync(customer);
-            return Result.Ok();
+            return Result.Success();
         }
     }
 

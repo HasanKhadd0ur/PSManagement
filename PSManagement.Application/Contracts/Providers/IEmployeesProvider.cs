@@ -9,6 +9,6 @@ namespace PSManagement.Application.Contracts.Providers
 {
     public interface IEmployeesProvider
     {
-        public ICollection<Employee> FetchEmployees();
+        public Task<IEnumerable<Employee>> FetchEmployees();
     }
 }

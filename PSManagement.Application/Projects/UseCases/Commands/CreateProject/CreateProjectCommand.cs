@@ -1,4 +1,4 @@
-﻿using FluentResults;
+﻿using Ardalis.Result;
 using PSManagement.Application.Projects.Common;
 using PSManagement.Domain.Projects.ValueObjects;
 using PSManagement.SharedKernel.CQRS.Command;
@@ -13,9 +13,10 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
         ProjectInfo ProjectInfo ,
         ProposalInfo ProposalInfo,
         Aggreement ProjectAggreement,
+        FinancialFund FinancialFund,
         int TeamLeaderId ,
         int ProjectManagerId,
-        int ProposerId
-        ) : ICommand<Result<ProjectDTO>>;
-
+        int ProposerId,
+        int ExecuterId
+        ) : ICommand<Result<CreateProjectResponse>>;
 }

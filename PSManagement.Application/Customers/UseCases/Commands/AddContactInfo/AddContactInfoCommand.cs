@@ -1,4 +1,4 @@
-﻿using FluentResults;
+﻿using Ardalis.Result;
 using PSManagement.SharedKernel.CQRS.Command;
 using PSManagement.SharedKernel.Repositories;
 using System;
@@ -8,6 +8,9 @@ using System.Text;
 
 namespace PSManagement.Application.Customers.UseCases.Commands.AddContactInfo
 {
-    public record  AddContactInfoCommand(int CustomerId,String ContactType,String ContactValue ) : ICommand<Result>;
+    public record  AddContactInfoCommand(
+        int CustomerId,
+        String ContactType,
+        String ContactValue ) : ICommand<Result>;
 
 }

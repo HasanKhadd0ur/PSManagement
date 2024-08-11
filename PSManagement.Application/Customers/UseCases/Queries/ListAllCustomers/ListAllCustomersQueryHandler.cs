@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using FluentResults;
+﻿using Ardalis.Result;
+using AutoMapper;
 using PSManagement.Application.Customers.Common;
 using PSManagement.Domain.Customers.Repositories;
 using PSManagement.SharedKernel.CQRS.Query;
@@ -21,7 +21,7 @@ namespace PSManagement.Application.Customers.UseCases.Queries.ListAllCustomers
 
         public async Task<Result<IEnumerable<CustomerDTO>>> Handle(ListAllCustomersQuery request, CancellationToken cancellationToken)
         {
-            return  Result.Ok( _mapper.Map<IEnumerable<CustomerDTO>>(await _customersRepository.ListAsync()));
+            return  Result.Success( _mapper.Map<IEnumerable<CustomerDTO>>(await _customersRepository.ListAsync()));
         }
     }
 
