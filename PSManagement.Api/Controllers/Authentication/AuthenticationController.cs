@@ -1,6 +1,7 @@
-﻿
-using FluentResults;
+﻿using System.Linq;
+using Ardalis.Result;
 using Microsoft.AspNetCore.Mvc;
+using PSManagement.Api.Controllers.ApiBase;
 using PSManagement.Application.Contracts.Authentication;
 using PSManagement.Contracts.Authentication;
 using System.Threading.Tasks;
@@ -9,8 +10,7 @@ using AuthenticationResponse = PSManagement.Contracts.Authentication.Authenticat
 namespace PSManagement.Api.Controllers.Authentication
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationController : APIController
     {
         private readonly IAuthenticationService _authenticationService;
 
@@ -33,7 +33,7 @@ namespace PSManagement.Api.Controllers.Authentication
                 return Ok(response);
             }
 
-            return Problem(title: result.Errors[0].Message,detail:result.Errors[0].Reasons[0]?.Message,statusCode:401);
+            return Problem(title: result.ValidationErrors.FirstOrDefault().ErrorCode,detail:result.ValidationErrors.FirstOrDefault().ErrorMessage,statusCode:401);
         }
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody]  RegisterRequest registerRequest)

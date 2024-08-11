@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using FluentResults;
+﻿using Ardalis.Result;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +21,11 @@ namespace PSManagement.Api.Mappers
             if (source.IsSuccess)
             {
                 var mappedValue = context.Mapper.Map<TDestination>(source.Value);
-                return Result.Ok(mappedValue);
+                return Result.Success(mappedValue);
             }
             else
             {
-                return Result.Fail<TDestination>(source.Errors);
+                return Result.Invalid(source.ValidationErrors);
             }
         }
     }

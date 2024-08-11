@@ -14,8 +14,9 @@ namespace PSManagement.Api.Controllers
     public class HomeController : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
+
 
             return Ok( new { message = "success" });
 

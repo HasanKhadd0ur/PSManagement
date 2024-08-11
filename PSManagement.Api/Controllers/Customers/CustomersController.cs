@@ -15,16 +15,16 @@ using PSManagement.Application.Customers.UseCases.Commands.DeleteCustomer;
 using PSManagement.Application.Customers.UseCases.Commands.UpdateCustomer;
 using PSManagement.Application.Customers.UseCases.Queries.ListAllCustomers;
 using PSManagement.Contracts.Customers.Responses;
-using FluentResults;
 using PSManagement.Application.Customers.UseCases.Queries.GetCustomer;
+using PSManagement.Api.Controllers.ApiBase;
+using Ardalis.Result;
 
 namespace PSManagement.Api.Controllers.Customers
 {
     [Route("api/[controller]")]
-    [ApiController]
   //  [Authorize]
-    public class CustomersController : ControllerBase
-    {
+    public class CustomersController : APIController
+{
         private readonly IMediator _sender;
         private readonly IMapper _mapper;
 
@@ -49,7 +49,7 @@ namespace PSManagement.Api.Controllers.Customers
         {
             var query = new GetCustomerQuery(id);
 
-            var result = _mapper.Map<Result<CustomerRecord>>(await _sender.Send(query));
+            var result = await _sender.Send(query);
 
             return Ok(result);
         }
@@ -59,7 +59,6 @@ namespace PSManagement.Api.Controllers.Customers
             var command = _mapper.Map<CreateCustomerCommand>(request);
 
             var result = await _sender.Send(command);
-
             return Ok(result);
         }
         

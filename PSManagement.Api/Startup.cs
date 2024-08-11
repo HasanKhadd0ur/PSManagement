@@ -36,8 +36,8 @@ namespace PSManagement.Api
                 .AddAPI()
                 .AddPresentation()
                 .AddApplication()
-                .AddInfrastructure(Configuration)
-                .AddPersistence(Configuration);
+                .AddPersistence(Configuration)
+                .AddInfrastructure(Configuration);
             
         }
 

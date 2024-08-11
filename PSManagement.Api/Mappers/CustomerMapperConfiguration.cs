@@ -24,7 +24,7 @@ namespace PSManagement.Api.Mappers
             CreateMap<CustomerDTO, CustomerRecord>();
             CreateMap<ContactInfoDTO, ContactInfoRecord>();
 
-            CreateMap<CustomerRecord, CustomerDTO>().ForMember(src =>src.ContactInfo , des => des.Ignore());
+            CreateMap<CustomerRecord, CustomerDTO>().ReverseMap();
             
             CreateMap<IEnumerable<CustomerRecord>, ListCustomersResponse>()
                     .ConstructUsing(src => new ListCustomersResponse(src));
