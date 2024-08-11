@@ -15,7 +15,6 @@ namespace PSManagement.Domain.Projects.Builders
     {
         private ProposalInfo _proposalInfo;
         private ProjectInfo _projectInfo;
-        private ProjectStatus _projectStatus;
         private FinancialFund _financialFund;
         private Aggreement _projectAggreement;
 
@@ -26,20 +25,55 @@ namespace PSManagement.Domain.Projects.Builders
         private int _proposerId;
 
         private ICollection<Step> _steps;
-        private ICollection<Employee> _participants;
+        private ICollection<EmployeeParticipate> _participants;
         private ICollection<Attachment> _attachments;
 
-        public ICollection<FinancialSpending> FinancialSpending { get; set; }
+        private ICollection<FinancialSpending> _financialSpending;
 
+        public ProjectBuilder WithParticipants(ICollection<EmployeeParticipate> participates)
+        {
+            _participants = participates;
+            return this;
+        }
+
+            public ProjectBuilder WithFinancialSpending(ICollection<FinancialSpending> financialSpending)
+        {
+            _financialSpending = financialSpending;
+            return this;
+        }
+        public ProjectBuilder WithSteps(ICollection<Step> steps)
+        {
+            _steps = steps;
+            return this;
+        }
         public ProjectBuilder WithProposalInfo(ProposalInfo proposalInfo)
         {
             _proposalInfo = proposalInfo;
             return this;
         }
-
+        public ProjectBuilder WithTeamLeader(int  teamLeaderId)
+        {
+            _teamLeaderId = teamLeaderId;
+            return this;
+        }
+        public ProjectBuilder WithProjectManager(int projectManagerId)
+        {
+            _projectManagerId = projectManagerId;
+            return this;
+        }
+        public ProjectBuilder WithExecuter(int executerId)
+        {
+            _executerId = executerId;
+            return this;
+        }
         public ProjectBuilder WithProjectInfo(ProjectInfo projectInfo)
         {
             _projectInfo = projectInfo;
+            return this;
+        }
+        public ProjectBuilder WithProposer(int proposerId)
+        {
+            _proposerId = proposerId;
             return this;
         }
 
@@ -63,7 +97,9 @@ namespace PSManagement.Domain.Projects.Builders
 
         public Project Build()
         {
-            Project project= new Project(_proposalInfo, _projectInfo,_projectAggreement,_proposerId,_teamLeaderId,_projectManagerId ,_executerId);
+            Project project= new (_proposalInfo, _projectInfo,_projectAggreement,_proposerId,_teamLeaderId,_projectManagerId ,_executerId);
+            project.FinancialFund = _financialFund;
+
             if (_attachments is not null) {
 
                 foreach (Attachment attachment in _attachments) {
@@ -81,7 +117,15 @@ namespace PSManagement.Domain.Projects.Builders
 
                 }
             }
+            if (_participants is not null)
+            {
 
+                foreach (EmployeeParticipate participate in _participants)
+                {
+                    project.EmployeeParticipates.Add(participate);
+
+                }
+            }
             return project;
         }
     }

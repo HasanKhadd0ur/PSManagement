@@ -13,6 +13,7 @@ namespace PSManagement.Domain.Identity.Entities
         public string HashedPassword { get; set; }
         public ICollection<Role> Roles { get; set; }
 
+
     }
 
 

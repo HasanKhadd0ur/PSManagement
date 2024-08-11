@@ -1,4 +1,4 @@
-﻿using PSManagement.Domain.Customers.Aggregate;
+﻿using PSManagement.Domain.Customers.Entities;
 using PSManagement.SharedKernel.Repositories;
 
 

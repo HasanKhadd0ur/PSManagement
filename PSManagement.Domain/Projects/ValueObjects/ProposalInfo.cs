@@ -1,5 +1,4 @@
-﻿using PSManagement.Domain.Customers.Aggregate;
-using System;
+﻿using System;
 
 namespace PSManagement.Domain.Projects.ValueObjects
 {
