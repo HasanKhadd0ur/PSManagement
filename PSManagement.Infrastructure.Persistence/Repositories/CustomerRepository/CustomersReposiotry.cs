@@ -1,4 +1,4 @@
-﻿using PSManagement.Domain.Customers.Aggregate;
+﻿using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Customers.Repositories;
 using PSManagement.Infrastructure.Persistence.Repositories.Base;
 using System;

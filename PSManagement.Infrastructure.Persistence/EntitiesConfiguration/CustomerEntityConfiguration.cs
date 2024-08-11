@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PSManagement.Domain.Customers.Aggregate;
+using PSManagement.Domain.Customers.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

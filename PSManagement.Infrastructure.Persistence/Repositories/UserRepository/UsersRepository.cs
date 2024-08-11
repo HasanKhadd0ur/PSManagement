@@ -29,4 +29,18 @@ namespace PSManagement.Infrastructure.Persistence.Repositories.UserRepository
 
         
     }
+    public class RolesRepository : BaseRepository<Role>, IRolesRepository
+    {
+        public RolesRepository(AppDbContext context) : base(context)
+        {
+        }
+
+        public async Task<Role> GetByRoleName(string roleName, ISpecification<Role> specification = null)
+        {
+            IEnumerable<Role> roles = await this.ListAsync(specification);
+            return roles.FirstOrDefault(r => r.Name == roleName);
+
+
+        }
+    }
 }

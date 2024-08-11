@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PSManagement.Domain.Customers.Aggregate;
+using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.Identity.Entities;
 using PSManagement.Domain.Projects.Entities;

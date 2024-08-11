@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PSManagement.Domain.Employees.Entities;
+using PSManagement.Domain.Identity.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
 {
-    public class EmployeeEntityConfiguration : IEntityTypeConfiguration<Employee>
+    public class EmployeeEntityConfiguration : IEntityTypeConfiguration<Employee> ,IEntityTypeConfiguration<User>
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
@@ -40,6 +41,18 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
 
 
             
+        }
+
+        public void Configure(EntityTypeBuilder<User> builder)
+        {
+            builder
+            .HasMany(u => u.Roles)
+            .WithMany(r => r.Users)
+            .UsingEntity<Dictionary<string, object>>(
+                "UserRole",
+                j => j.HasOne<Role>().WithMany().HasForeignKey("RoleId"),
+                j => j.HasOne<User>().WithMany().HasForeignKey("UserId")
+            );
         }
     }
 }
