@@ -4,10 +4,17 @@ namespace PSManagement.Domain.Projects.Entities
 {
     public class Attachment : BaseEntity
     {
-
+        public int ProjectId { get; set; }
         public string AttachmentUrl { get; set; }
         public string AttachmentName { get; set; }
-        public string AttachmenDescription { get; set; }
+        public string AttachmentDescription { get; set; }
+        public Attachment(string attachmentUrl, string attachmentName, string attachmentDescription, int projectId)
+        {
+            AttachmentUrl = attachmentUrl;
+            AttachmentName = attachmentName;
+            AttachmentDescription = attachmentDescription;
+            ProjectId = projectId;
+        }
 
     }
 }

@@ -42,7 +42,10 @@ namespace PSManagement.Infrastructure.BackgroundServcies
                         var syncService = scope.ServiceProvider.GetRequiredService<ISyncEmployeesService>();
 
                         // Now you can use the repository to sync employees data
-                        await syncService.SyncEmployees(dataProvider);
+                        SyncResponse response = await syncService.SyncEmployees(dataProvider);
+
+                        Console.WriteLine("A Data sync for Employees Occured At " +response.SyncDate +"\n The number of new Employees are "+response.SyncDataCount );
+
                     }
 
                 }

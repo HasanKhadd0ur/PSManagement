@@ -7,5 +7,8 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Domain.Projects.DomainEvents
 {
-    public record ProjectCreatedEvent(int projectId) : IDomainEvent;
+    public record ProjectCreatedEvent(
+        int ProjectId,
+        int TeamLeaderId,
+        int ProjectManagerId) : IDomainEvent;
 }

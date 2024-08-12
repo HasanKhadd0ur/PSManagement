@@ -62,8 +62,10 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                         p.Property(e => e.Source).HasColumnName("FinicialSource");
                     }
             );
-            builder.HasOne(e => e.ProjectStatus).WithMany();
 
+            builder.Property(p => p.CurrentState).HasDefaultValue("Proposed");
+            
+            builder.HasMany(e => e.Attachments).WithOne().HasForeignKey(e => e.ProjectId);
             builder.HasMany(e => e.FinancialSpending);
             builder.HasMany(e => e.Tracks).WithOne(e => e.Project).HasForeignKey(e => e.ProjectId);
             

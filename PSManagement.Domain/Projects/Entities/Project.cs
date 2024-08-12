@@ -5,8 +5,10 @@ using PSManagement.Domain.ProjectsStatus.Entites;
 using PSManagement.Domain.ProjectTypes.Entities;
 using PSManagement.Domain.Tracking;
 using PSManagement.SharedKernel.Aggregate;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +20,12 @@ namespace PSManagement.Domain.Projects.Entities
         // information about the project itself 
         public ProposalInfo ProposalInfo { get; set; }
         public ProjectInfo ProjectInfo { get; set; }
-        public ProjectStatus ProjectStatus { get; set; }
         public Aggreement ProjectAggreement { get; set; }
+        // state management 
+        [NotMapped]
+        public string CurrentState { get; private set; }  // Persisted in the database
+
+        private IProjectState _state;
 
         // information about who lead and execute the project 
         public int TeamLeaderId { get; set; }
@@ -72,8 +78,10 @@ namespace PSManagement.Domain.Projects.Entities
             int proposerId,
             int teamLeaderId,
             int projectManagerId,
-            int executerId)
+            int executerId,
+            string stateName)
         {
+            SetStateFromString(stateName);
             ProposalInfo = proposalInfo;
             ProjectInfo = projectInfo;
             ProjectAggreement = projectAggreement;
@@ -91,9 +99,64 @@ namespace PSManagement.Domain.Projects.Entities
         }
         public Project()
         {
+            _state = new ProposedState();
+            CurrentState = _state.StateName;
+        }
+        public void SetState(IProjectState newState)
+        {
+            _state = newState;
+            CurrentState = _state.StateName;  // Update the persisted state
+        }
+        public void Complete() 
+        {
+            _state.Complete(this);
+        
+        }
+        public void Plan()
+        {
+            _state.Complete(this);
+
+        }
+        public void Approve()
+        {
+            _state.Complete(this);
+
+        }
+        public void Cancle()
+        {
+            _state.Complete(this);
+
+        }
+        public void Propose()
+        {
+            _state.Complete(this);
 
         }
 
+        public void SetStateFromString(string stateName)
+        {
+            switch (stateName)
+            {
+                case "Proposed":
+                    SetState(new ProposedState());
+                    break;
+                case "InPlan":
+                    SetState(new InPlanState());
+                    break;
+                case "Cancled":
+                    SetState(new CancledState());
+                    break;
+                case "InProgress":
+                    SetState(new InProgressState());
+                    break;
+                case "Completed":
+                    SetState(new CompletedState());
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown state");
+            }
+        }
 
     }
+
 }

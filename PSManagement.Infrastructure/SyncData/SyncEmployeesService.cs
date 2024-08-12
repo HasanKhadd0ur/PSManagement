@@ -1,11 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using PSManagement.Application.Contracts.Providers;
-using PSManagement.Application.Contracts.SyncData;
-using PSManagement.Domain.Employees.Entities;
-using PSManagement.Domain.Employees.Repositories;
-using PSManagement.Domain.Employees.Specification;
-using PSManagement.SharedKernel.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +8,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using PSManagement.Infrastructure.Settings;
+using PSManagement.Application.Contracts.SyncData;
+using PSManagement.Application.Contracts.Providers;
+using PSManagement.Domain.Employees.Repositories;
+using PSManagement.Domain.Employees.Entities;
+using PSManagement.SharedKernel.Specification;
+using PSManagement.Domain.Employees.Specification;
 
 namespace PSManagement.Infrastructure.BackgroundServcies
 {

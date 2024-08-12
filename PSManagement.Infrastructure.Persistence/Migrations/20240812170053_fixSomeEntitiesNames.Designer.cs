@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PSManagement.Infrastructure.Persistence;
 
 namespace PSManagement.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240812170053_fixSomeEntitiesNames")]
+    partial class fixSomeEntitiesNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,7 +186,7 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.Property<string>("AttachmentUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int?>("ProjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -258,11 +260,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CurrentState")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("Proposed");
-
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
@@ -270,6 +267,9 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ProjectManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProjectStatusId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProposerId")
@@ -285,6 +285,8 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.HasIndex("ExecuterId");
 
                     b.HasIndex("ProjectManagerId");
+
+                    b.HasIndex("ProjectStatusId");
 
                     b.HasIndex("ProposerId");
 
@@ -326,6 +328,27 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Steps");
+                });
+
+            modelBuilder.Entity("PSManagement.Domain.ProjectsStatus.Entites.ProjectStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProjectStatus");
                 });
 
             modelBuilder.Entity("PSManagement.Domain.Reports.Entities.Answer", b =>
@@ -703,9 +726,7 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("PSManagement.Domain.Projects.Entities.Project", null)
                         .WithMany("Attachments")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("PSManagement.Domain.Projects.Entities.EmployeeParticipate", b =>
@@ -777,6 +798,10 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("ProjectManagerId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("PSManagement.Domain.ProjectsStatus.Entites.ProjectStatus", "ProjectStatus")
+                        .WithMany()
+                        .HasForeignKey("ProjectStatusId");
 
                     b.HasOne("PSManagement.Domain.Customers.Entities.Customer", "Proposer")
                         .WithMany()
@@ -902,6 +927,8 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.Navigation("ProjectInfo");
 
                     b.Navigation("ProjectManager");
+
+                    b.Navigation("ProjectStatus");
 
                     b.Navigation("ProposalInfo");
 

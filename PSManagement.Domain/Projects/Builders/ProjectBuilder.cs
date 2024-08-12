@@ -23,7 +23,7 @@ namespace PSManagement.Domain.Projects.Builders
         private int _projectManagerId;
         private int _executerId;
         private int _proposerId;
-
+        private string _stateName;
         private ICollection<Step> _steps;
         private ICollection<EmployeeParticipate> _participants;
         private ICollection<Attachment> _attachments;
@@ -94,10 +94,26 @@ namespace PSManagement.Domain.Projects.Builders
             }
             return this;
         }
+        public ProjectBuilder WithState(string stateName)
+        {
+            _stateName = stateName;
+            return this;
+        }
 
         public Project Build()
         {
-            Project project= new (_proposalInfo, _projectInfo,_projectAggreement,_proposerId,_teamLeaderId,_projectManagerId ,_executerId);
+            if (_stateName is null || _stateName == "") {
+                _stateName = "Proposed";
+            }
+            Project project= new (
+                _proposalInfo,
+                _projectInfo,
+                _projectAggreement,
+                _proposerId,
+                _teamLeaderId,
+                _projectManagerId ,
+                _executerId,
+                _stateName);
             project.FinancialFund = _financialFund;
 
             if (_attachments is not null) {

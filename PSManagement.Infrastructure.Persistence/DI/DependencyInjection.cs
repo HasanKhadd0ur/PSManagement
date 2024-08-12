@@ -6,12 +6,14 @@ using PSManagement.Domain.Employees.Repositories;
 using PSManagement.Domain.Identity.Repositories;
 using PSManagement.Domain.Projects.Builders;
 using PSManagement.Domain.Projects.Repositories;
+using PSManagement.Infrastructure.Persistence.Repositories.Base;
 using PSManagement.Infrastructure.Persistence.Repositories.CustomerRepository;
 using PSManagement.Infrastructure.Persistence.Repositories.EmployeeRepository;
 using PSManagement.Infrastructure.Persistence.Repositories.ProjectRepository;
 using PSManagement.Infrastructure.Persistence.Repositories.UserRepository;
 using PSManagement.Infrastructure.Persistence.UoW;
 using PSManagement.SharedKernel.Interfaces;
+using PSManagement.SharedKernel.Repositories;
 
 namespace PSManagement.Infrastructure.Persistence.DI
 {
@@ -23,6 +25,7 @@ namespace PSManagement.Infrastructure.Persistence.DI
             services.AddDbContext<AppDbContext>(options => {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
+
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<ICustomersRepository, CustomersReposiotry>();
             services.AddScoped<IProjectsRepository, ProjectsRepository>();
@@ -31,6 +34,7 @@ namespace PSManagement.Infrastructure.Persistence.DI
 
 
             services.AddScoped<ProjectBuilder>();
+            services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
