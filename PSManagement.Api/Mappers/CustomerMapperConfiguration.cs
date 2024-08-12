@@ -3,8 +3,10 @@ using PSManagement.Application.Customers.Common;
 using PSManagement.Application.Customers.UseCases.Commands.AddContactInfo;
 using PSManagement.Application.Customers.UseCases.Commands.CreateCustomer;
 using PSManagement.Application.Customers.UseCases.Commands.UpdateCustomer;
+using PSManagement.Application.Projects.UseCases.Commands.CreateProject;
 using PSManagement.Contracts.Customers.Requests;
 using PSManagement.Contracts.Customers.Responses;
+using PSManagement.Contracts.Projects.Requests;
 using PSManagement.SharedKernel.Utilities;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,14 @@ namespace PSManagement.Api.Mappers
             
             CreateMap<IEnumerable<CustomerRecord>, ListCustomersResponse>()
                     .ConstructUsing(src => new ListCustomersResponse(src));
+            
+        }
+    }
+    public class ProjectMapperConfiguration : Profile
+    {
+        public ProjectMapperConfiguration()
+        {
+            CreateMap<CreateProjectRequest, CreateProjectCommand>().ReverseMap();
             
         }
     }

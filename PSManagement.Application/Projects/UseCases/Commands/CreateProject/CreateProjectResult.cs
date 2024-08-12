@@ -2,7 +2,7 @@
 
 namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
 {
-    public record CreateProjectResponse(
+    public record CreateProjectResult(
          int ProjectId,
          ProposalInfo ProposalInfo ,
          ProjectInfo ProjectInfo,

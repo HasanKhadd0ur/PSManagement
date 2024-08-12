@@ -1,4 +1,5 @@
 ﻿using Ardalis.Result;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace PSManagement.Application.Contracts.Storage
 {
     public interface IFileService
     {
-        public Result StoreFile(string fileName);
+        public Task<Result<String>> StoreFile(string fileName,IFormFile file);
 
     }
 }

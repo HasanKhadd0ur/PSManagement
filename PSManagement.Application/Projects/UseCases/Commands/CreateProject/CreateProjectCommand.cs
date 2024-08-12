@@ -18,5 +18,5 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
         int ProjectManagerId,
         int ProposerId,
         int ExecuterId
-        ) : ICommand<Result<CreateProjectResponse>>;
+        ) : ICommand<Result<CreateProjectResult>>;
 }

@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSManagement.Domain", "PSMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSManagement.SharedKernel", "PSManagement.SharedKernel\PSManagement.SharedKernel.csproj", "{3507E59A-4B8B-4418-B1C6-0AD0C2697959}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSManagement.Infrastructure", "PSManagement.Infrastructure\PSManagement.Infrastructure.csproj", "{E96488F4-9D4F-4890-A7A0-1085647C82A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PSManagement.Infrastructure.Services", "PSManagement.Infrastructure\PSManagement.Infrastructure.Services.csproj", "{E96488F4-9D4F-4890-A7A0-1085647C82A8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7C209DBF-1DB8-4E86-BD78-F689B70D5BD1}"
 EndProject

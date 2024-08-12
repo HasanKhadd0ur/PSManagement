@@ -20,7 +20,7 @@
     <ProjectReference Include="..\PSManagement.Contracts\PSManagement.Contracts.csproj" />
     <ProjectReference Include="..\PSManagement.Domain\PSManagement.Domain.csproj" />
     <ProjectReference Include="..\PSManagement.Infrastructure.Persistence\PSManagement.Infrastructure.Persistence.csproj" />
-    <ProjectReference Include="..\PSManagement.Infrastructure\PSManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\PSManagement.Infrastructure\PSManagement.Infrastructure.Services.csproj" />
     <ProjectReference Include="..\PSManagement.Presentation\PSManagement.Presentation.csproj" />
     <ProjectReference Include="..\PSManagement.SharedKernel\PSManagement.SharedKernel.csproj" />
   </ItemGroup>

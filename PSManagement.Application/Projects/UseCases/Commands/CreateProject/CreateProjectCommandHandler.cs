@@ -1,6 +1,7 @@
 ﻿using Ardalis.Result;
 using PSManagement.Application.Projects.Common;
 using PSManagement.Domain.Projects.Builders;
+using PSManagement.Domain.Projects.DomainEvents;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.Repositories;
 using PSManagement.SharedKernel.CQRS.Command;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
 {
-    public class CreateProjectCommandHandler : ICommandHandler<CreateProjectCommand, Result<CreateProjectResponse>>
+    public class CreateProjectCommandHandler : ICommandHandler<CreateProjectCommand, Result<CreateProjectResult>>
     {
         private readonly IProjectsRepository _projectsRepository;
         private readonly ProjectBuilder _projectBuilder;
@@ -27,7 +28,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<CreateProjectResponse>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
+        public async Task<Result<CreateProjectResult>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
             Project project = _projectBuilder
                 .WithProjectAggreement(request.ProjectAggreement)
@@ -40,7 +41,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
                 .WithProposer(request.ProposerId)
                 .Build();
             Project AddedProject =await _projectsRepository.AddAsync(project);
-            CreateProjectResponse response = new (
+            CreateProjectResult response = new (
                 AddedProject.Id,
                 AddedProject.ProposalInfo,
                 AddedProject.ProjectInfo,
@@ -49,6 +50,8 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
                 AddedProject.ProjectManagerId,
                 AddedProject.ExecuterId
                 );
+            project.Propose();
+            project.AddDomainEvent(new ProjectCreatedEvent(AddedProject.Id,AddedProject.TeamLeaderId,AddedProject.ProjectManagerId));
             await _unitOfWork.SaveChangesAsync();
             return Result.Success(response);
 

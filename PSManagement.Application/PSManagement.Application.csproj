@@ -18,15 +18,15 @@
     <Folder Include="FinancialSpending\UseCases\Commands\UpateFinancialSpendingItem\" />
     <Folder Include="FinancialSpending\UseCases\Queries\GetFinancialSpendingByProject\" />
     <Folder Include="FinancialSpending\UseCases\Queries\GetFinancialSpendingById\" />
-    <Folder Include="ProjectsStatus\UseCases\" />
-    <Folder Include="Projects\EventsHandlers\" />
     <Folder Include="Projects\UseCases\Commands\AddProjectPlan\" />
     <Folder Include="Projects\UseCases\Commands\AddParticipant\" />
     <Folder Include="Projects\UseCases\Commands\ApproveProject\" />
     <Folder Include="Projects\UseCases\Commands\ChangeProjectTeamLeader\" />
+    <Folder Include="Projects\UseCases\Commands\CompletePlanProcess\" />
+    <Folder Include="Projects\UseCases\Commands\CancleProject\" />
+    <Folder Include="Projects\UseCases\Commands\CompleteProgressProcess\" />
     <Folder Include="Projects\UseCases\Commands\RemoveParticipant\" />
     <Folder Include="Projects\UseCases\Commands\UpdateParticipant\" />
-    <Folder Include="Projects\UseCases\Commands\AddAttachment\" />
     <Folder Include="Projects\UseCases\Commands\UpdateStep\" />
     <Folder Include="Projects\UseCases\Queries\ListAllProject\" />
     <Folder Include="Projects\UseCases\Queries\GetProjectPlan\" />
@@ -65,6 +65,7 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="8.6.3" />
     <PackageReference Include="MediatR" Version="8.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
   </ItemGroup>
