@@ -12,16 +12,13 @@ namespace PSManagement.Infrastructure.BackgroundServcies
 {
     public class BackgroundJobSyncEmployees: BackgroundService
     {
-        private readonly IDateTimeProvider _timeProvider;
 
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly int _syncIntervalInMinutes;
         public BackgroundJobSyncEmployees(
-            IDateTimeProvider timeProvider,
             IOptions<EmployeesSyncJobSettings> settings,
             IServiceScopeFactory scopeFactory)
         {
-            _timeProvider = timeProvider;
             _syncIntervalInMinutes = settings.Value.SyncIntervalInMinutes;
             _scopeFactory = scopeFactory;
         }
@@ -35,7 +32,7 @@ namespace PSManagement.Infrastructure.BackgroundServcies
 
                 try
                 {
-                    using (var scope = _scopeFactory.CreateScope())
+                    using (IServiceScope scope = _scopeFactory.CreateScope())
                     {
                         // Resolve the scoped IEmployeesRepository
                         var dataProvider = scope.ServiceProvider.GetRequiredService<IEmployeesProvider>();
@@ -47,9 +44,9 @@ namespace PSManagement.Infrastructure.BackgroundServcies
                         Console.WriteLine("A Data sync for Employees Occured At " +response.SyncDate +"\n The number of new Employees are "+response.SyncDataCount );
 
                     }
-
+                    Console.WriteLine("A Sync Employees Data End.");
                 }
-                catch (Exception ex)
+                catch
                 {
                 }
 

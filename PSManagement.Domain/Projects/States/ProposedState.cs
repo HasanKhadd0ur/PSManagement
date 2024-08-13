@@ -1,12 +1,14 @@
-﻿namespace PSManagement.Domain.Projects.Entities
+﻿using PSManagement.Domain.Projects.ValueObjects;
+
+namespace PSManagement.Domain.Projects.Entities
 {
     public class ProposedState : IProjectState
     {
         public string StateName => "Proposed";
 
-        public void Approve(Project project)
+        public void Approve(Project project, Aggreement projectAggreement)
         {
-            project.SetState(new InPlanState());
+
         }
 
         public void Cancle(Project project)
@@ -26,7 +28,7 @@
 
         public void Propose(Project project)
         {
-        
+            project.SetState(new InPlanState());
         }
     }
 

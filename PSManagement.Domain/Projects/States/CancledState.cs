@@ -1,10 +1,12 @@
-﻿namespace PSManagement.Domain.Projects.Entities
+﻿using PSManagement.Domain.Projects.ValueObjects;
+
+namespace PSManagement.Domain.Projects.Entities
 {
     public class CancledState : IProjectState
     {
         public string StateName => "CancledState";
 
-        public void Approve(Project project)
+        public void Approve(Project project, Aggreement projectAggreement)
         {
 
         }

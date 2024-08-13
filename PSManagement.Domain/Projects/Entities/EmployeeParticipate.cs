@@ -12,5 +12,16 @@ namespace PSManagement.Domain.Projects.Entities
         public Project Project { get; set; }
         public int PartialTimeRatio { get; set; }
         public string Role { get; set; }
+        public EmployeeParticipate(int employeeId, int projectId, string role, int partialTimeRatio)
+        {
+            EmployeeId = employeeId;
+            ProjectId = projectId;
+            Role = role;
+            PartialTimeRatio = partialTimeRatio;
+        }
+        public EmployeeParticipate()
+        {
+
+        }
     }
 }

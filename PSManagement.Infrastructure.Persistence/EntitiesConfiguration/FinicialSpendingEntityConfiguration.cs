@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PSManagement.Domain.Projects.Entities;
+using PSManagement.Domain.FinancialSpends.Entities;
 
 namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
 {

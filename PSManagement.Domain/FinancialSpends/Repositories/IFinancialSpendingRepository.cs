@@ -1,4 +1,4 @@
-﻿using PSManagement.Domain.Projects.Entities;
+﻿using PSManagement.Domain.FinancialSpends.Entities;
 using PSManagement.SharedKernel.Repositories;
 
 namespace PSManagement.Domain.FinincialSpending.Repositories

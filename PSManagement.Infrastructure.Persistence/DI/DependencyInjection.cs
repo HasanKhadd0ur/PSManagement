@@ -10,6 +10,7 @@ using PSManagement.Infrastructure.Persistence.Repositories.Base;
 using PSManagement.Infrastructure.Persistence.Repositories.CustomerRepository;
 using PSManagement.Infrastructure.Persistence.Repositories.EmployeeRepository;
 using PSManagement.Infrastructure.Persistence.Repositories.ProjectRepository;
+using PSManagement.Infrastructure.Persistence.Repositories.StepRepository;
 using PSManagement.Infrastructure.Persistence.Repositories.UserRepository;
 using PSManagement.Infrastructure.Persistence.UoW;
 using PSManagement.SharedKernel.Interfaces;
@@ -31,6 +32,7 @@ namespace PSManagement.Infrastructure.Persistence.DI
             services.AddScoped<IProjectsRepository, ProjectsRepository>();
             services.AddScoped<IRolesRepository, RolesRepository>();
             services.AddScoped<IEmployeesRepository, EmployeesRespository>();
+            services.AddScoped<IStepsRepository, StepsRepository>();
 
 
             services.AddScoped<ProjectBuilder>();

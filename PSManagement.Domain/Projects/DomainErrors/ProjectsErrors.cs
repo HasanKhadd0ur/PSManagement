@@ -1,4 +1,4 @@
-﻿using ErrorOr;
+﻿using Ardalis.Result;
 using PSManagement.SharedKernel.DomainErrors;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,9 @@ namespace PSManagement.Domain.Projects.DomainErrors
 {
     public class ProjectsErrors
     {
-        public static Error InvalidEntryError { get; } = Error.Validation("ProjectError.InvalidEntry.", "Invalid Project Data");
+        public static DomainError InvalidEntryError { get; } = new ("ProjectError.InvalidEntry.", "Invalid Project Data");
+        public static DomainError ParticipantExistError { get; } = new("ProjectError.Participant.Exist.", "the Project already have the given particpant Data");
+        public static DomainError ParticipantUnExistError { get; } = new("ProjectError.Participant.UnExist.", "the Project doesnt have the given particpant Data");
 
     }
 }

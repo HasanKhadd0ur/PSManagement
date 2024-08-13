@@ -1,5 +1,6 @@
 ﻿using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Employees.Entities;
+using PSManagement.Domain.FinancialSpends.Entities;
 using PSManagement.Domain.Projects.ValueObjects;
 using PSManagement.Domain.ProjectsStatus.Entites;
 using PSManagement.Domain.ProjectTypes.Entities;
@@ -114,22 +115,22 @@ namespace PSManagement.Domain.Projects.Entities
         }
         public void Plan()
         {
-            _state.Complete(this);
+            _state.Plan(this);
 
         }
-        public void Approve()
+        public void Approve(Aggreement projectAggreement)
         {
-            _state.Complete(this);
+            _state.Approve(this,projectAggreement);
 
         }
         public void Cancle()
         {
-            _state.Complete(this);
+            _state.Cancle(this);
 
         }
         public void Propose()
         {
-            _state.Complete(this);
+            _state.Propose(this);
 
         }
 

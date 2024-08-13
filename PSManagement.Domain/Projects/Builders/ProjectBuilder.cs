@@ -1,4 +1,5 @@
 ﻿using PSManagement.Domain.Employees.Entities;
+using PSManagement.Domain.FinancialSpends.Entities;
 using PSManagement.Domain.Projects.DomainEvents;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.ValueObjects;
