@@ -51,7 +51,8 @@ namespace PSManagement.Api.Controllers.Customers
 
             var result = await _sender.Send(query);
 
-            return Ok(result);
+
+            return Ok(_mapper.Map<Result<CustomerRecord>>(result));
         }
         [HttpPost]
         public async Task<IActionResult> CreateCustomer(CreateCustomerRequest request)

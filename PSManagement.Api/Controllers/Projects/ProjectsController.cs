@@ -1,15 +1,22 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PSManagement.Api.Controllers.ApiBase;
 using PSManagement.Application.Projects.UseCases.Commands.AddAttachment;
 using PSManagement.Application.Projects.UseCases.Commands.CreateProject;
+using PSManagement.Application.Projects.UseCases.Queries.GetProject;
 using PSManagement.Contracts.Projects.Requests;
-using System;
+using PSManagement.Contracts.Projects.Response;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Ardalis.Result;
+using PSManagement.Application.Projects.UseCases.Queries.ListAllProject;
+using PSManagement.Application.Projects.UseCases.Commands.AddParticipant;
+using PSManagement.Application.Projects.UseCases.Commands.RemoveParticipant;
+using PSManagement.Application.Projects.UseCases.Commands.AddProjectStep;
+using PSManagement.Application.Projects.UseCases.Commands.ChangeProjectTeamLeader;
+using PSManagement.Application.Projects.UseCases.Commands.ApproveProject;
+using PSManagement.Application.Projects.UseCases.Queries.GetParticipants;
 
 namespace PSManagement.Api.Controllers.Projects
 {
@@ -24,6 +31,92 @@ namespace PSManagement.Api.Controllers.Projects
         {
             _mapper = mapper;
             _sender = sender;
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery]ListAllProjectsRequest request)
+        {
+            var query =  _mapper.Map<ListAllProjectsQuery>(request);
+
+            var result = _mapper.Map<Result<IEnumerable<ProjectResponse>>>(await _sender.Send(query));
+
+            return Ok(result);
+        }
+
+
+        [HttpGet("GetParticipants{id}")]
+        public async Task<IActionResult> GetParticipants(int id)
+        {
+            GetProjectParticipantsQuery query = new (id);
+
+            var result = await _sender.Send(query);
+
+            return Ok( _mapper.Map<Result<IEnumerable<EmployeeParticipateResponse>>>(result));
+        }
+
+        [HttpPost("ApproveProject")]
+        public async Task<IActionResult> ApproveProjectRequest(ApproveProjectRequest request)
+        {
+            var query = _mapper.Map<ApproveProjectCommand>(request);
+
+            var result = await _sender.Send(query);
+
+            return Ok(result);
+        }
+
+        [HttpPost("ChangeTeamLeader")]
+        public async Task<IActionResult> ChangeTeamLeader(ChangeProjectTeamLeaderRequest request)
+        {
+            var query = _mapper.Map<ChangeProjectTeamLeaderCommand>(request);
+
+            var result = await _sender.Send(query);
+
+            return Ok(result);
+        }
+
+
+        [HttpPost("AddProjectStep")]
+        public async Task<IActionResult> AddParticipant(AddProjectStepRequest request)
+        {
+            var query = _mapper.Map<AddProjectStepCommand>(request);
+
+            var result = await _sender.Send(query);
+
+            return Ok(result);
+        }
+
+
+        [HttpPost("RemoveParticipant")]
+        public async Task<IActionResult> RemoveParticipant(RemoveParticipantRequest request)
+        {
+            var query = _mapper.Map<RemoveParticipantCommand>(request);
+
+            var result = await _sender.Send(query);
+
+            return Ok(result);
+        }
+
+        [HttpPost("AddParticipant")]
+        public async Task<IActionResult> AddParticipant(AddParticipantRequest request)
+        {
+            var query = _mapper.Map<AddParticipantCommand>(request);
+
+            var result = await _sender.Send(query);
+
+            return Ok(result);
+        }
+
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var query = new GetProjectByIdQuery(id);
+
+            var result = await _sender.Send(query);
+
+            return Ok(_mapper.Map<Result<ProjectResponse>>(result));
         }
 
         [HttpPost]
