@@ -2,42 +2,29 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-	  <NoWarn>NU1701</NoWarn>
+	  <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Behaviors\AuthorizationBehavior\" />
+    <Folder Include="Behaviors\LoggingBehavior\" />
     <Folder Include="Employees\UseCases\Commands\UpdateEmployeeWorkHours\" />
     <Folder Include="Employees\UseCases\Commands\SyncEmployeesData\" />
     <Folder Include="Employees\UseCases\Queries\GetEmployeeWorkingHours\" />
     <Folder Include="Employees\UseCases\Queries\GetEmployeeProjects\" />
     <Folder Include="Employees\UseCases\Queries\GetAvailableEmployees\" />
     <Folder Include="Employees\UseCases\Queries\GetEmployeeParticipations\" />
-    <Folder Include="FinancialSpending\UseCases\Commands\CreateFinancialSpendingItem\" />
-    <Folder Include="FinancialSpending\UseCases\Commands\" />
-    <Folder Include="FinancialSpending\UseCases\Commands\UpateFinancialSpendingItem\" />
-    <Folder Include="FinancialSpending\UseCases\Queries\GetFinancialSpendingByProject\" />
-    <Folder Include="FinancialSpending\UseCases\Queries\GetFinancialSpendingById\" />
-    <Folder Include="Projects\UseCases\Commands\AddProjectPlan\" />
-    <Folder Include="Projects\UseCases\Commands\AddParticipant\" />
-    <Folder Include="Projects\UseCases\Commands\ApproveProject\" />
-    <Folder Include="Projects\UseCases\Commands\ChangeProjectTeamLeader\" />
-    <Folder Include="Projects\UseCases\Commands\CompletePlanProcess\" />
-    <Folder Include="Projects\UseCases\Commands\CancleProject\" />
-    <Folder Include="Projects\UseCases\Commands\CompleteProgressProcess\" />
-    <Folder Include="Projects\UseCases\Commands\RemoveParticipant\" />
-    <Folder Include="Projects\UseCases\Commands\UpdateParticipant\" />
-    <Folder Include="Projects\UseCases\Commands\UpdateStep\" />
-    <Folder Include="Projects\UseCases\Queries\ListAllProject\" />
+    <Folder Include="FinancialSpends\UseCases\Commands\CreateFinancialSpendingItem\" />
+    <Folder Include="FinancialSpends\UseCases\Commands\" />
+    <Folder Include="FinancialSpends\UseCases\Commands\UpateFinancialSpendingItem\" />
+    <Folder Include="FinancialSpends\UseCases\Queries\GetFinancialSpendingByProject\" />
+    <Folder Include="FinancialSpends\UseCases\Queries\GetFinancialSpendingById\" />
     <Folder Include="Projects\UseCases\Queries\GetProjectPlan\" />
-    <Folder Include="Projects\UseCases\Queries\GetProject\" />
     <Folder Include="Projects\UseCases\Queries\GetProjectFinicialSpending\" />
-    <Folder Include="Projects\UseCases\Queries\GetParticipants\" />
-    <Folder Include="Reports\UseCases\" />
-    <Folder Include="Reports\UseCases\Queries\" />
+    <Folder Include="XReports\UseCases\" />
+    <Folder Include="XReports\UseCases\Queries\" />
     <Folder Include="Steps\UseCases\Commands\ChangeStepWeight\" />
     <Folder Include="Steps\UseCases\Commands\UpdateCompletionRatio\" />
-    <Folder Include="Steps\UseCases\Commands\UpdateStepRequiredWorkers\" />
     <Folder Include="Steps\UseCases\Commands\RemoveStep\" />
     <Folder Include="Steps\UseCases\Queries\GetStep\" />
     <Folder Include="Steps\UseCases\Queries\GetStepHistory\" />

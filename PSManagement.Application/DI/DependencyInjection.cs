@@ -26,7 +26,7 @@ namespace PSManagement.Application.DI
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             
-            services.AddAutoMapper(typeof(CustomerMapperConfiguration));
+            services.AddAutoMapper(typeof(Mappers.MapperConfiguration));
 
             return services;
         }

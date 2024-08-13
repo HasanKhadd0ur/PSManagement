@@ -40,18 +40,21 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
                 .WithTeamLeader(request.TeamLeaderId)
                 .WithProposer(request.ProposerId)
                 .Build();
-            Project AddedProject =await _projectsRepository.AddAsync(project);
-            CreateProjectResult response = new (
-                AddedProject.Id,
-                AddedProject.ProposalInfo,
-                AddedProject.ProjectInfo,
-                AddedProject.ProjectAggreement,
-                AddedProject.TeamLeaderId,
-                AddedProject.ProjectManagerId,
-                AddedProject.ExecuterId
-                );
+            
             project.Propose();
-            project.AddDomainEvent(new ProjectCreatedEvent(AddedProject.Id,AddedProject.TeamLeaderId,AddedProject.ProjectManagerId));
+
+            project =await _projectsRepository.AddAsync(project);
+            CreateProjectResult response = new (
+                project.Id,
+                project.ProposalInfo,
+                project.ProjectInfo,
+                project.ProjectAggreement,
+                project.TeamLeaderId,
+                project.ProjectManagerId,
+                project.ExecuterId
+                );
+
+            project.AddDomainEvent(new ProjectCreatedEvent(project.Id,project.TeamLeaderId,project.ProjectManagerId));
             await _unitOfWork.SaveChangesAsync();
             return Result.Success(response);
 
