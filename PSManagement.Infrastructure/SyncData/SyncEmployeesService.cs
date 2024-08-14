@@ -14,6 +14,7 @@ using PSManagement.Domain.Employees.Repositories;
 using PSManagement.Domain.Employees.Entities;
 using PSManagement.SharedKernel.Specification;
 using PSManagement.Domain.Employees.Specification;
+using PSManagement.Application.Contracts.Authorization;
 
 namespace PSManagement.Infrastructure.BackgroundServcies
 {
@@ -24,18 +25,20 @@ namespace PSManagement.Infrastructure.BackgroundServcies
         private readonly IEmployeesProvider _employeesProviders;
         private readonly BaseSpecification<Employee> _specification;
         private readonly IDateTimeProvider _timeProvider;
-        
+        private readonly IUserRoleService _userRoleService;
+
 
         public SyncEmployeesService(
             IEmployeesRepository employeesRepository,
             IEmployeesProvider employeesProviders,
-            IDateTimeProvider timeProvider
-            )
+            IDateTimeProvider timeProvider,
+            IUserRoleService userRoleService)
         {
             _employeesRepository = employeesRepository;
             _employeesProviders = employeesProviders;
             _specification = new EmployeesSpecification();
             _timeProvider = timeProvider;
+            _userRoleService = userRoleService;
         }
 
         public async Task<SyncResponse> SyncEmployees(IEmployeesProvider employeesProvider)
@@ -47,7 +50,9 @@ namespace PSManagement.Infrastructure.BackgroundServcies
                 _specification.Criteria = empl => empl.HIASTId == employee.HIASTId;
                 Employee emp = _employeesRepository.ListAsync(_specification).Result.FirstOrDefault();
                 if (emp is null) {
-                    await _employeesRepository.AddAsync(employee);
+                    emp =await _employeesRepository.AddAsync(employee);
+
+                    await _userRoleService.AssignUserToRole(emp.User.Email,"Employee");
                     count++;
                 }
 

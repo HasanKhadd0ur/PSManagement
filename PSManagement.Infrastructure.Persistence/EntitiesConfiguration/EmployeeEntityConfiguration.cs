@@ -40,7 +40,8 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                 .HasForeignKey<Employee>(e => e.UserId); ;
 
 
-            
+            builder.HasOne(e => e.Department).WithMany().OnDelete(DeleteBehavior.Restrict).IsRequired(false);
+
         }
 
         public void Configure(EntityTypeBuilder<User> builder)

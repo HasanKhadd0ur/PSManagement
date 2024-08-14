@@ -46,7 +46,7 @@ namespace PSManagement.Infrastructure.Persistence
             SeedData.SeedAsync(modelBuilder).Wait();
 
             base.OnModelCreating(modelBuilder);
-            
+
             modelBuilder.HasAnnotation("Relational:Collation", "Arabic_CI_AS");
 
         }

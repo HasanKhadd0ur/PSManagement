@@ -23,8 +23,11 @@ namespace PSManagement.Infrastructure.Persistence.SeedDataContext
 
             builder.Entity<Department>().HasData(
                 new Department { Id = 1, Name = "قسم المعلوميات" },
-                new Department { Id = 2, Name = "قسم النظم الإلكترونيى" },
-                new Department { Id = 3, Name = "شؤون الطلاب" }
+                new Department { Id = 2, Name = "قسم النظم الإلكترونية" },
+                new Department { Id = 3, Name = "قسم الميكاترونيكس" },
+                new Department { Id = 4, Name = "قسم الفيزياء" },
+                new Department { Id = 5, Name = "مديرية التطوير والخدمات البرمجية" },
+                new Department { Id = 6, Name = "شؤون الطلاب" }
 
 
                 ) ;
@@ -34,10 +37,9 @@ namespace PSManagement.Infrastructure.Persistence.SeedDataContext
         {
 
             builder.Entity<Role>().HasData(
-                
                 new Role {Id=1, Name = "Admin" },
                 new Role {Id = 2, Name = "Employee" },
-                new Role {Id = 3, Name = "Scientific-Supervisor" }
+                new Role {Id = 4, Name = "Scientific-Deputy" }
 
                 );
 
