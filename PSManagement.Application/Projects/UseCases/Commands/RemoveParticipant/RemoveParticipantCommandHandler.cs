@@ -39,7 +39,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.RemoveParticipant
             else
             {
 
-                if (project.EmployeeParticipates.Where(e => e.Id == request.ParticipantId) is null)
+                if (project.EmployeeParticipates?.Where(e => e.Id == request.ParticipantId) is null)
                 {
 
                     return Result.Invalid(ProjectsErrors.ParticipantUnExistError);

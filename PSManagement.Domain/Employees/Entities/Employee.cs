@@ -17,6 +17,8 @@ namespace PSManagement.Domain.Employees.Entities
         public int HIASTId { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        public int DepartmentId { get; set; }
+        public Department Department { get; set; }
         public PersonalInfo PersonalInfo { get; set; }
         public WorkInfo WorkInfo { get; set; }
 

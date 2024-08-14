@@ -7,6 +7,7 @@ namespace PSManagement.Contracts.Projects.Response
         public int Id { get; set; }
         public int HIASTId { get; set; }
         public int UserId { get; set; }
+        public string DepartmentName { get; set; }
         public PersonalInfo PersonalInfo { get; set; }
         public WorkInfo WorkInfo { get; set; }
     }

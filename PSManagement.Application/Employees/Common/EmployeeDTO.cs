@@ -12,6 +12,7 @@ namespace PSManagement.Application.Employees.Common
         public int Id { get; set; }
         public int HIASTId { get; set; }
         public int UserId { get; set; }
+        public String DepartmentName { get; set; }
         public PersonalInfo PersonalInfo { get; set; }
         public WorkInfo WorkInfo { get; set; }
 

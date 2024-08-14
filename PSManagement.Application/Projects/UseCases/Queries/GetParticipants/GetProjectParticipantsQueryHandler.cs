@@ -4,6 +4,7 @@ using PSManagement.Application.Projects.Common;
 using PSManagement.Domain.Projects.Repositories;
 using PSManagement.SharedKernel.CQRS.Query;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,11 +30,13 @@ namespace PSManagement.Application.Projects.UseCases.Queries.GetParticipants
             {
                 return Result.NotFound("Project not found");
             }
+
             IEnumerable<EmployeeParticipateDTO> result = _mapper.Map<IEnumerable<EmployeeParticipateDTO>>(_projectRepository.GetProjectParticipants(request.ProjectId));
             if (result is null)
             {
                 result = new List<EmployeeParticipateDTO>();
             }
+            result = result.Select(e => { e.ProjectInfo = project.ProjectInfo; return e; });
             return Result.Success(result);
         }
     }

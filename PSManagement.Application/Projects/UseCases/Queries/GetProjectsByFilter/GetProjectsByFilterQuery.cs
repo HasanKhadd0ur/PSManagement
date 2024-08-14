@@ -5,10 +5,11 @@ using System.Collections.Generic;
 
 namespace PSManagement.Application.Projects.UseCases.Queries.ListAllProject
 {
-    public record ListAllProjectsQuery(
-        int? PageNumber,
-        int? PageSize
-
-        ) : IQuery<Result<IEnumerable<ProjectDTO>>>;
+    public record GetProjectsByFilterQuery(
+         string ProjectName,
+         string TeamLeaderName,
+         string DepartmentName,
+         string ProposerName
+     ) : IQuery<Result<IEnumerable<ProjectDTO>>>;
 
 }

@@ -27,13 +27,21 @@ namespace PSManagement.Application.Mappers
 
             CreateMap<StepDTO, Step>().ReverseMap();
 
-            CreateMap<EmployeeDTO, Employee>().ReverseMap();
-            CreateMap<EmployeeParticipateDTO, EmployeeParticipate>().ReverseMap();
+            CreateMap<Employee, EmployeeDTO>()
+                .ForMember(e => e.DepartmentName, op => op.MapFrom(e => e.Department.Name));
+            CreateMap<EmployeeParticipateDTO, EmployeeParticipate>()
+                .ForMember(d=>d.Project ,op =>op.Ignore())
+                ;
+            CreateMap< EmployeeParticipate, EmployeeParticipateDTO>()
+                .ForMember(d => d.ProjectInfo, op => op.MapFrom(e => e.Project.ProjectInfo));
+                
+            CreateMap<EmployeeParticipate, EmployeeParticipateDTO>()
+                .ForMember(d => d.ProjectInfo, op => op.MapFrom(e=>e.Project.ProjectInfo));
+
 
             CreateMap<TrackDTO, Track>().ReverseMap();
             CreateMap<FinancialSpendingDTO, FinancialSpending>().ReverseMap();
-            CreateMap<Project, ProjectDTO>()
-                      .ReverseMap(); // This allows for mapping in the reverse direction as well
+            CreateMap<Project, ProjectDTO>().ReverseMap();
 
         }
     }

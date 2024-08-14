@@ -12,10 +12,10 @@
   <ItemGroup>
     <ProjectReference Include="..\PSManagement.Application\PSManagement.Application.csproj" />
     <ProjectReference Include="..\PSManagement.Domain\PSManagement.Domain.csproj" />
+    <ProjectReference Include="..\PSManagement.SharedKernel\PSManagement.SharedKernel.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Employees\Requests\" />
     <Folder Include="FinancialSpends\Requests\" />
     <Folder Include="Steps\Requests\" />
     <Folder Include="Tracks\Response\" />

@@ -14,6 +14,7 @@ namespace PSManagement.Domain.Tracking
     public class Track : BaseEntity
     {
         public DateTime TrackDate { get; set; }
+        public bool IsCompleted { get; set; }
         public String TrackNote { get; set; }
         public int ProjectId { get; set; }
         public Project Project { get; set; }

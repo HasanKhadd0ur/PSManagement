@@ -45,6 +45,16 @@ namespace PSManagement.Api.Controllers.Projects
         }
 
 
+        [HttpGet("ByFilter")]
+        public async Task<IActionResult> GetByFilter([FromQuery] GetProjectsByFilterRequest request)
+        {
+            GetProjectsByFilterQuery query = _mapper.Map<GetProjectsByFilterQuery>(request);
+
+            var result = await _sender.Send(query);
+
+            return Ok(_mapper.Map<Result<IEnumerable<ProjectResponse>>>(result));
+        }
+
         [HttpGet("GetParticipants{id}")]
         public async Task<IActionResult> GetParticipants(int id)
         {
