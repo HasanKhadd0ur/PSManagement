@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Api.Mappers
 {
-    public class MapperConfigurations :Profile
+    public class MappersConfigurations :Profile
     {
-        public MapperConfigurations()
+        public MappersConfigurations()
         {
             CreateMap(typeof(Result<>), typeof(Result<>)).ConvertUsing(typeof(ResultToResultConverter<,>));
         }
