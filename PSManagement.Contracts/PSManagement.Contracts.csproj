@@ -16,8 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="FinancialSpends\Requests\" />
-    <Folder Include="Steps\Requests\" />
     <Folder Include="Tracks\Response\" />
     <Folder Include="Tracks\Requests\" />
   </ItemGroup>
