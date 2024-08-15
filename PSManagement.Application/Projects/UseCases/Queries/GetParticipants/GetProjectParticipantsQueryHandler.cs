@@ -1,8 +1,11 @@
 ﻿using Ardalis.Result;
 using AutoMapper;
 using PSManagement.Application.Projects.Common;
+using PSManagement.Domain.Projects;
+using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.Repositories;
 using PSManagement.SharedKernel.CQRS.Query;
+using PSManagement.SharedKernel.Specification;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -14,6 +17,7 @@ namespace PSManagement.Application.Projects.UseCases.Queries.GetParticipants
     {
         private readonly IProjectsRepository _projectRepository;
         private readonly IMapper _mapper;
+        private readonly BaseSpecification<Project> _specification;
 
         public GetProjectParticipantsQueryHandler(
             IProjectsRepository projectRepository,
@@ -21,6 +25,7 @@ namespace PSManagement.Application.Projects.UseCases.Queries.GetParticipants
         {
             _projectRepository = projectRepository;
             _mapper = mapper;
+            _specification = new ProjectSpecification();
         }
 
         public async Task<Result<IEnumerable<EmployeeParticipateDTO>>> Handle(GetProjectParticipantsQuery request, CancellationToken cancellationToken)
@@ -30,8 +35,11 @@ namespace PSManagement.Application.Projects.UseCases.Queries.GetParticipants
             {
                 return Result.NotFound("Project not found");
             }
+            _specification.AddInclude(p => p.EmployeeParticipates);
+            _specification.AddInclude("EmployeeParticipates.Employee");
+            _specification.AddInclude("EmployeeParticipates.Project");
 
-            IEnumerable<EmployeeParticipateDTO> result = _mapper.Map<IEnumerable<EmployeeParticipateDTO>>(_projectRepository.GetProjectParticipants(request.ProjectId));
+            IEnumerable<EmployeeParticipateDTO> result = _mapper.Map<IEnumerable<EmployeeParticipateDTO>>(_projectRepository.GetProjectParticipants(request.ProjectId,_specification));
             if (result is null)
             {
                 result = new List<EmployeeParticipateDTO>();

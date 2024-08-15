@@ -21,7 +21,10 @@ namespace PSManagement.Application.Employees.UseCases.Commands.UpdateEmployeeWor
         public async Task<Result> Handle(UpdateEmployeeWorkHoursCommand request, CancellationToken cancellationToken)
         {
             Employee employee =await _employeesRepository.GetByIdAsync(request.EmployeeId);
-            if (request.WorkingHour < _workHourLimit)
+            if (employee is null) {
+                return Result.Invalid(EmployeesErrors.EmployeeUnExist);
+            }
+            if (request.WorkingHour < _workHourLimit && request.WorkingHour > 0)
             {
                 employee.Availability = new(request.WorkingHour, employee.Availability.IsAvailable);
 

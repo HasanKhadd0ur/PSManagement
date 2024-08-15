@@ -4,7 +4,6 @@ using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.ValueObjects;
-using PSManagement.Domain.ProjectsStatus.Entites;
 using System;
 using System.Collections.Generic;
 

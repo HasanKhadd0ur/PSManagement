@@ -35,10 +35,13 @@ namespace PSManagement.Application.Employees.UseCases.Queries.GetEmployeeById
             _specification.ApplyPaging((pageNumber - 1) * pageSize, pageSize);
 
             _specification.AddInclude(e => e.Project);
+            _specification.AddInclude("Employee.Department");
+
+            _specification.AddInclude(e => e.Employee);
 
             IEnumerable<EmployeeParticipate> response = await _employeesParticipateRepository.ListAsync(_specification);
 
-            response =response.Where(e => e.EmployeeId == request.EmployeeId);
+            response =response.Where(e => e.EmployeeId == request.EmployeeId).ToList();
 
             return Result.Success(_mapper.Map<IEnumerable<EmployeeParticipateDTO>>(response));
         }

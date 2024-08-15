@@ -7,6 +7,8 @@ using AutoMapper;
 using PSManagement.Application.Mappers;
 using FluentValidation;
 using PSManagement.Application.Behaviors.ValidationBehavior;
+using PSManagement.Application.Behaviors.LoggingBehavior;
+using MapperConfiguration = PSManagement.Application.Mappers.MapperConfiguration;
 
 namespace PSManagement.Application.DI
 {
@@ -18,15 +20,16 @@ namespace PSManagement.Application.DI
 
 
             services.AddMediatR(typeof(DependencyInjection).Assembly);
-
             // Register the pipeline behaviors explicitly
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             // Register FluentValidation validators
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             
-            services.AddAutoMapper(typeof(Mappers.MapperConfiguration));
+            services.AddAutoMapper(cfg => {
+                cfg.AddProfile<MapperConfiguration>();
+            });
 
             return services;
         }

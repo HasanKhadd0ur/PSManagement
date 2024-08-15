@@ -8,10 +8,10 @@ using System.Text;
 
 namespace PSManagement.Application.Projects.UseCases.Commands.AddParticipant
 {
-    public record  AddParticipantCommand(
+    public record AddParticipantCommand(
         int ProjectId,
         int ParticipantId,
         int PartialTimeRatio,
-        String Role 
-        ):ICommand<Result>;
+        String Role
+        ) : ICommand<Result>;
 }

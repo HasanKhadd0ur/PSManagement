@@ -7,26 +7,15 @@
 
   <ItemGroup>
     <Folder Include="Behaviors\AuthorizationBehavior\" />
-    <Folder Include="Behaviors\LoggingBehavior\" />
-    <Folder Include="FinancialSpends\UseCases\Commands\CreateFinancialSpendingItem\" />
-    <Folder Include="FinancialSpends\UseCases\Commands\RemoveFinancialSpendingItem\" />
-    <Folder Include="FinancialSpends\UseCases\Commands\UpateFinancialSpendingItem\" />
-    <Folder Include="FinancialSpends\UseCases\Queries\GetFinancialSpendingByProject\" />
-    <Folder Include="FinancialSpends\UseCases\Queries\GetFinancialSpendingById\" />
-    <Folder Include="Projects\UseCases\Queries\GetProjectPlan\" />
-    <Folder Include="Steps\UseCases\Queries\GetStepsByProject\" />
+    <Folder Include="Employees\UseCases\Commands\InreesEmployeeWorkHours\" />
+    <Folder Include="Projects\UseCases\Queries\GetProjectAttachments\" />
     <Folder Include="XReports\UseCases\" />
     <Folder Include="XReports\UseCases\Queries\" />
-    <Folder Include="Steps\UseCases\Commands\ChangeStepWeight\" />
-    <Folder Include="Steps\UseCases\Commands\UpdateCompletionRatio\" />
-    <Folder Include="Steps\UseCases\Commands\RemoveStep\" />
-    <Folder Include="Steps\UseCases\Queries\GetStep\" />
-    <Folder Include="Steps\UseCases\Queries\GetStepHistory\" />
     <Folder Include="Tracks\UseCaes\Commands\CreateTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\AddStepsTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\AddEmployeesTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\RemoveTrack\" />
-    <Folder Include="Tracks\UseCaes\Commands\SaveTrack\" />
+    <Folder Include="Tracks\UseCaes\Commands\CompleteTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\UpdateEmployeeTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\UpdateStepTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\UpdateTrack\" />
@@ -49,6 +38,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
