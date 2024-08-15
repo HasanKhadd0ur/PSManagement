@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Employees.Entities;
+using PSManagement.Domain.FinancialSpends.Entities;
 using PSManagement.Domain.Identity.Entities;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Reports.Entities;
@@ -27,6 +28,8 @@ namespace PSManagement.Infrastructure.Persistence
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<FinancialSpending> FinancialSpendings { get; set; }
+
         public DbSet<Step> Steps { get; set; }
 
         public DbSet<Track> Tracks { get; set; }

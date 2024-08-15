@@ -66,7 +66,7 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
             builder.Property(p => p.CurrentState).HasDefaultValue("Proposed");
             
             builder.HasMany(e => e.Attachments).WithOne().HasForeignKey(e => e.ProjectId);
-            builder.HasMany(e => e.FinancialSpending);
+            builder.HasMany(e => e.FinancialSpending).WithOne().HasForeignKey(e=>e.ProjectId);
             builder.HasMany(e => e.Tracks).WithOne(e => e.Project).HasForeignKey(e => e.ProjectId);
             
         }

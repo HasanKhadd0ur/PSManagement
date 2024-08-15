@@ -19,10 +19,11 @@ namespace PSManagement.Infrastructure.Persistence.Repositories.ProjectRepository
         {
         }
 
-        public IEnumerable<EmployeeParticipate> GetProjectParticipants(int projectId)
+      
+        public IEnumerable<EmployeeParticipate> GetProjectParticipants(int projectId, ISpecification<Project> specification)
         {
 
-            return  _dbContext.Projects.Where(p => p.Id == projectId).FirstOrDefault()?.EmployeeParticipates.AsEnumerable();
+            return  ApplySpecification(specification).Where(p =>p.Id== projectId).FirstOrDefault().EmployeeParticipates.AsEnumerable();
 
         }
 

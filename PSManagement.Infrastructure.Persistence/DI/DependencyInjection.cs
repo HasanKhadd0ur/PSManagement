@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PSManagement.Domain.Customers.Repositories;
 using PSManagement.Domain.Employees.Repositories;
+using PSManagement.Domain.FinancialSpends.Entities;
+using PSManagement.Domain.FinincialSpending.Repositories;
 using PSManagement.Domain.Identity.Repositories;
 using PSManagement.Domain.Projects.Builders;
 using PSManagement.Domain.Projects.Repositories;
@@ -33,6 +35,7 @@ namespace PSManagement.Infrastructure.Persistence.DI
             services.AddScoped<IRolesRepository, RolesRepository>();
             services.AddScoped<IEmployeesRepository, EmployeesRespository>();
             services.AddScoped<IStepsRepository, StepsRepository>();
+            services.AddScoped<IFinancialSpendingRepository, FinancialSpendingRepository>();
 
 
             services.AddScoped<ProjectBuilder>();
