@@ -7,18 +7,12 @@
 
   <ItemGroup>
     <Folder Include="Behaviors\AuthorizationBehavior\" />
-    <Folder Include="Employees\UseCases\Commands\InreesEmployeeWorkHours\" />
+    <Folder Include="Employees\UseCases\Commands\IncreasEmployeeWorkHours\" />
     <Folder Include="Projects\UseCases\Queries\GetProjectAttachments\" />
-    <Folder Include="Tracks\UseCaes\Commands\AddStepsTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\UpdateEmployeeTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\UpdateStepTrack\" />
-    <Folder Include="Tracks\UseCaes\Commands\RemoveTrack\" />
-    <Folder Include="Tracks\UseCaes\Queries\GetTrackById\" />
-    <Folder Include="Tracks\UseCaes\Queries\GetTracksByProject\" />
-    <Folder Include="Tracks\UseCaes\Queries\GetPlanTrack\" />
     <Folder Include="Tracks\UseCaes\Queries\GetEmployeesTrack\" />
-    <Folder Include="Tracks\UseCaes\Queries\GetEmployeeTrack\" />
-    <Folder Include="Tracks\UseCaes\Queries\GetStepTracks\" />
+    <Folder Include="Employees\UseCases\Queries\GetEmployeeTrackHistory\" />
   </ItemGroup>
 
   <ItemGroup>

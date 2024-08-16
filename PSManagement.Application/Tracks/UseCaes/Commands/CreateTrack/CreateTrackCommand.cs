@@ -8,7 +8,7 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.CreateTrack
 {
     public record CreateTrackCommand(
         TrackInfo TrackInfo,
-        String TrackNote ,
+        String Notes ,
         int ProjectId 
     ) : ILoggableCommand<Result<int>>;
 }

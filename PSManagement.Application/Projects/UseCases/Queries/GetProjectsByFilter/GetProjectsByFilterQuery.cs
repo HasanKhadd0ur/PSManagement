@@ -9,6 +9,10 @@ namespace PSManagement.Application.Projects.UseCases.Queries.ListAllProject
          string ProjectName,
          string TeamLeaderName,
          string DepartmentName,
+         int? ProjectManagerId,
+         int? TeamLeaderId,
+         int? PageNumber,
+         int? PageSize,
          string ProposerName
      ) : IQuery<Result<IEnumerable<ProjectDTO>>>;
 

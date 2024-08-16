@@ -1,4 +1,5 @@
 ﻿using PSManagement.Application.Employees.Common;
+using PSManagement.Domain.Tracking.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace PSManagement.Application.Tracks.Common
     {
         public int Id { get; set; }
         public bool IsCompleted { get; set; }
-        public DateTime TrackDate { get; set; }
-        public String TrackNote { get; set; }
+        public TrackInfo TrackInfo { get; set; }
+        public String Notes { get; set; }
         public int ProjectId { get; set; }
 
     }

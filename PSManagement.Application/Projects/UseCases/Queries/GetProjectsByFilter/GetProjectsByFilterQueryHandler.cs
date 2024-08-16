@@ -35,6 +35,11 @@ namespace PSManagement.Application.Projects.UseCases.Queries.ListAllProject
             _specification.AddInclude(e => e.Executer);
             _specification.AddInclude(e => e.Proposer);
 
+            int pageNumber = request.PageNumber.HasValue && request.PageNumber.Value > 0 ? request.PageNumber.Value : 1;
+            int pageSize = request.PageSize.HasValue && request.PageSize.Value > 0 && request.PageSize.Value <= 30 ? request.PageSize.Value : 30;
+            
+            _specification.ApplyPaging((pageNumber - 1) * pageSize, pageSize);
+
 
             IEnumerable<Project> projects = await _projectsRepository.ListAsync(_specification);
             if (!string.IsNullOrEmpty(request.DepartmentName))
@@ -56,8 +61,13 @@ namespace PSManagement.Application.Projects.UseCases.Queries.ListAllProject
             {
                 projects = projects.Where(e => e.ProjectInfo.Name.ToLower().Contains(request.ProjectName.Trim().ToLower()));
             }
-
-
+            if (request.ProjectManagerId.HasValue) {
+                projects = projects.Where(p => p.ProjectManagerId == request.ProjectManagerId);
+            }
+            if (request.TeamLeaderId.HasValue)
+            {
+                projects = projects.Where(p => p.TeamLeaderId == request.TeamLeaderId);
+            }
             return Result.Success(_mapper.Map<IEnumerable<ProjectDTO>>(projects));
         }
     }

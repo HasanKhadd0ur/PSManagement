@@ -1,5 +1,6 @@
 ﻿using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.Projects.Entities;
+using PSManagement.Domain.Tracking.DomainEvents;
 using PSManagement.Domain.Tracking.Entities;
 using PSManagement.Domain.Tracking.ValueObjects;
 using PSManagement.SharedKernel.Aggregate;
@@ -23,6 +24,14 @@ namespace PSManagement.Domain.Tracking
         public ICollection<EmployeeTrack> EmployeeTracks { get; set; }
         public Track()
         {
+
+        }
+
+        public void Complete(DateTime completionDate)
+        {
+            TrackInfo = new (TrackInfo.TrackDate,true,TrackInfo.StatusDescription);
+
+            AddDomainEvent(new TrackCompleteddEvent(ProjectId, Id, completionDate));
 
         }
     }

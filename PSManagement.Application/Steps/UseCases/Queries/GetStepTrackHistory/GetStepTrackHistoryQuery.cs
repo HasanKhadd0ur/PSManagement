@@ -8,5 +8,6 @@ namespace PSManagement.Application.Steps.UseCases.Queries.GetStepTrackHistory
         int StepId,
         int? PageNumber,
         int ? PageSize
-    ) : IQuery<Result<IEnumerable<StepTrackDTO>>>;
+    ) :  IQuery<Result<IEnumerable<StepTrackDTO>>>;
+
 }

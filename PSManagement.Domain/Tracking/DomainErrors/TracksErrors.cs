@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Domain.Tracking.DomainErrors
 {
-    public class TracksErrror
+    public class TracksErrors
     {
         public static DomainError InvalidEntryError { get; } = new("TrackError.InvalidEntry.", "Invalid Project Data");
 

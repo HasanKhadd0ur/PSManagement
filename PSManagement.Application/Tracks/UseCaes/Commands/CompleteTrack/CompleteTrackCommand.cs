@@ -6,7 +6,7 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.CompleteTrack
 {
     public record CompleteTrackCommand(
         int TrackId,
-        DateTime TrackDate,
+        DateTime CompletionDate,
         int ProjectId
     ) : ILoggableCommand<Result>;
 }

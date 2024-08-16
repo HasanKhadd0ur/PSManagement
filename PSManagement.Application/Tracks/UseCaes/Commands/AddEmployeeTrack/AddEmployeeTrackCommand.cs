@@ -1,16 +1,17 @@
 ﻿using Ardalis.Result;
+using PSManagement.Domain.Tracking.Entities;
 using PSManagement.Domain.Tracking.ValueObjects;
 using PSManagement.SharedKernel.CQRS.Command;
 using System;
 
-namespace PSManagement.Application.Tracks.UseCaes.Commands.AddEmployeesTrack
+namespace PSManagement.Application.Tracks.UseCaes.Commands.AddEmployeeTrack
 {
     public record AddEmployeeTrackCommand(
     int TrackId,
     int EmployeeId,
-    EmployeeWorkInfo EmployeeWorkInfo ,
+    EmployeeWorkInfo EmployeeWorkInfo,
     EmployeeWork EmployeeWork,
-    String Notes,
+    string Notes,
     int ProjectId
-) : ILoggableCommand<Result>;
+) : ILoggableCommand<Result<int>>;
 }
