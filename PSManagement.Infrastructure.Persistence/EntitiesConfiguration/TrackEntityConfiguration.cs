@@ -9,10 +9,7 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
         IEntityTypeConfiguration<Track> , 
         IEntityTypeConfiguration<StepTrack>,
         IEntityTypeConfiguration<EmployeeTrack>
-        //, 
-        //IEntityTypeConfiguration<EmployeeWork>
-
-
+        
     {
         public void Configure(EntityTypeBuilder<Track> builder)
         {
@@ -23,16 +20,15 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                 .OnDelete(DeleteBehavior.Restrict);
             builder.Ignore(e => e.TrackedEmployees);
 
-            //builder.HasMany(e => e.TrackedEmployees)
-            //    .WithMany(e => e.trac)
-            //    .UsingEntity<EmployeeParticipate>(
-            //         l => l.HasOne<Employee>(e => e.Employee)
-            //             .WithMany(e => e.EmployeeParticipates)
-            //             .HasForeignKey(e => e.EmployeeId),
-            //         r => r.HasOne<Project>(e => e.Project)
-            //             .WithMany(e => e.EmployeeParticipates)
-            //             .HasForeignKey(e => e.ProjectId)
-            //  );
+            builder.OwnsOne(e => e.TrackInfo, p =>
+            {
+                p.Property(e => e.IsCompleted).HasColumnName("IsCompleted").HasDefaultValue(false);
+                p.Property(e => e.StatusDescription).HasColumnName("StatusDescription");
+
+                p.Property(e => e.TrackDate).HasColumnName("TrackDate");
+
+
+            });
         }
         public void Configure(EntityTypeBuilder<StepTrack> builder)
         {
@@ -56,23 +52,24 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                 .WithMany(s => s.EmployeeTracks)
                 .HasForeignKey(st => st.EmloyeeId)
             ;
-            
+
+            builder.OwnsOne(e => e.EmployeeWorkInfo, p =>
+            {
+                p.Property(e => e.AssignedWork).HasColumnName("AssignedWork");
+                p.Property(e => e.AssignedWorkEnd).HasColumnName("AssignedWorkEnd");
+                p.Property(e => e.PerformedWork).HasColumnName("PerformedWork");
+                
+            });
+
+            builder.OwnsOne(e => e.EmployeeWork, p =>
+            {
+                p.Property(e => e.ContributingRatio).HasColumnName("ContributingRatio");
+                p.Property(e => e.WorkedHours).HasColumnName("WorkedHours");
+                p.Property(e => e.AssignedWorkingHours).HasColumnName("AssignedWorkingHours");
+
+            });
+
         }
 
-        //public void Configure(EntityTypeBuilder<EmployeeWork> builder)
-        //{
-        //    //builder.HasOne(ew => ew.StepTrack)
-        //    //.WithMany(st => st.EmployeeWorks)
-        //    //.HasForeignKey(ew => ew.StepTrackId)
-        //    // .OnDelete(DeleteBehavior.Restrict); ;
-
-
-        //    builder.HasOne(ew => ew.Employee)
-        //    .WithMany(e => e.EmployeeWorks)
-        //    .HasForeignKey(ew => ew.EmployeeId)
-        //     .OnDelete(DeleteBehavior.Restrict); ;
-
-
-        //}
     }
 }

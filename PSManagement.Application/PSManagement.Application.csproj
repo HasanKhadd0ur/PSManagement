@@ -9,16 +9,10 @@
     <Folder Include="Behaviors\AuthorizationBehavior\" />
     <Folder Include="Employees\UseCases\Commands\InreesEmployeeWorkHours\" />
     <Folder Include="Projects\UseCases\Queries\GetProjectAttachments\" />
-    <Folder Include="XReports\UseCases\" />
-    <Folder Include="XReports\UseCases\Queries\" />
-    <Folder Include="Tracks\UseCaes\Commands\CreateTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\AddStepsTrack\" />
-    <Folder Include="Tracks\UseCaes\Commands\AddEmployeesTrack\" />
-    <Folder Include="Tracks\UseCaes\Commands\RemoveTrack\" />
-    <Folder Include="Tracks\UseCaes\Commands\CompleteTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\UpdateEmployeeTrack\" />
     <Folder Include="Tracks\UseCaes\Commands\UpdateStepTrack\" />
-    <Folder Include="Tracks\UseCaes\Commands\UpdateTrack\" />
+    <Folder Include="Tracks\UseCaes\Commands\RemoveTrack\" />
     <Folder Include="Tracks\UseCaes\Queries\GetTrackById\" />
     <Folder Include="Tracks\UseCaes\Queries\GetTracksByProject\" />
     <Folder Include="Tracks\UseCaes\Queries\GetPlanTrack\" />

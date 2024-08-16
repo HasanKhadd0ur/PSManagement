@@ -1,6 +1,7 @@
 ﻿using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Tracking.Entities;
+using PSManagement.Domain.Tracking.ValueObjects;
 using PSManagement.SharedKernel.Aggregate;
 using PSManagement.SharedKernel.Entities;
 using System;
@@ -13,9 +14,8 @@ namespace PSManagement.Domain.Tracking
 {
     public class Track : BaseEntity
     {
-        public DateTime TrackDate { get; set; }
-        public bool IsCompleted { get; set; }
-        public String TrackNote { get; set; }
+        public TrackInfo TrackInfo { get; set; }
+        public String Notes { get; set; }
         public int ProjectId { get; set; }
         public Project Project { get; set; }
         public ICollection<StepTrack> StepTracks { get; set; }

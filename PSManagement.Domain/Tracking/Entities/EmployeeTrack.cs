@@ -1,6 +1,6 @@
 ﻿using PSManagement.Domain.Employees.Entities;
+using PSManagement.Domain.Tracking.ValueObjects;
 using PSManagement.SharedKernel.Entities;
-using System;
 
 namespace PSManagement.Domain.Tracking
 {
@@ -10,11 +10,8 @@ namespace PSManagement.Domain.Tracking
         public int TrackId { get; set; }
         public Employee Employee { get; set; }
         public Track Track { get; set; }
-        public int WorkingHours { get; set; }
-        public String PerformedWork { get; set; }
-        public String AssignedWork { get; set; }
-
-        //public ICollection<EmployeeWork> EmployeeWorks { get; set; }
-
+        public EmployeeWorkInfo EmployeeWorkInfo { get; set; }
+        public EmployeeWork EmployeeWork { get; set; }
+        public string Notes { get; set; }
     }
 }

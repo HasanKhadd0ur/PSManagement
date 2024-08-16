@@ -4,7 +4,6 @@ using PSManagement.Domain.Tracking;
 using PSManagement.Domain.Tracking.Entities;
 using PSManagement.SharedKernel.Aggregate;
 using PSManagement.SharedKernel.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,8 +38,4 @@ namespace PSManagement.Domain.Employees.Entities
             HIASTId = hiastId;
         }
     }
-    public record WorkInfo (
-        String WorkType , 
-        String WorkJob 
-        );
 }

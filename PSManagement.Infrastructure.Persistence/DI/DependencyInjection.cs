@@ -8,11 +8,13 @@ using PSManagement.Domain.FinincialSpending.Repositories;
 using PSManagement.Domain.Identity.Repositories;
 using PSManagement.Domain.Projects.Builders;
 using PSManagement.Domain.Projects.Repositories;
+using PSManagement.Domain.Steps.Repositories;
 using PSManagement.Infrastructure.Persistence.Repositories.Base;
 using PSManagement.Infrastructure.Persistence.Repositories.CustomerRepository;
 using PSManagement.Infrastructure.Persistence.Repositories.EmployeeRepository;
 using PSManagement.Infrastructure.Persistence.Repositories.ProjectRepository;
 using PSManagement.Infrastructure.Persistence.Repositories.StepRepository;
+using PSManagement.Infrastructure.Persistence.Repositories.TrackRepository;
 using PSManagement.Infrastructure.Persistence.Repositories.UserRepository;
 using PSManagement.Infrastructure.Persistence.UoW;
 using PSManagement.SharedKernel.Interfaces;
@@ -36,7 +38,7 @@ namespace PSManagement.Infrastructure.Persistence.DI
             services.AddScoped<IEmployeesRepository, EmployeesRespository>();
             services.AddScoped<IStepsRepository, StepsRepository>();
             services.AddScoped<IFinancialSpendingRepository, FinancialSpendingRepository>();
-
+            services.AddScoped<ITracksRepository, TracksRepository>();             
 
             services.AddScoped<ProjectBuilder>();
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));

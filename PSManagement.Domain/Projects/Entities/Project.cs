@@ -2,7 +2,6 @@
 using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.FinancialSpends.Entities;
 using PSManagement.Domain.Projects.ValueObjects;
-using PSManagement.Domain.ProjectTypes.Entities;
 using PSManagement.Domain.Tracking;
 using PSManagement.SharedKernel.Aggregate;
 using System;

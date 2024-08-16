@@ -45,7 +45,7 @@ namespace PSManagement.Application.Mappers
 
             CreateMap<TrackDTO, Track>().ReverseMap();
             CreateMap<StepTrack, StepTrackDTO>()
-                .ForMember(d => d.TrackDate, op=> op.MapFrom( src => src.Track.TrackDate));
+                .ForMember(d => d.TrackDate, op=> op.MapFrom( src => src.Track.TrackInfo.TrackDate));
 
             CreateMap<FinancialSpendingDTO, FinancialSpending>().ReverseMap();
            

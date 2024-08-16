@@ -12,9 +12,8 @@ namespace PSManagement.Domain.Tracking.Entities
         public int TrackId { get; set; }
         public Track Track { get; set; }
         public String ExecutionState { get; set; }
-
         public int ExecutionRatio { get; set; }
-        //public ICollection<EmployeeWork> EmployeeWorks { get; set; }
+
         public StepTrack()
         {
                 
