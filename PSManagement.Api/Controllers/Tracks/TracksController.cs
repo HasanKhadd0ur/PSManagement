@@ -66,7 +66,7 @@ namespace PSManagement.Api.Controllers.Tracks
         }
 
         [HttpGet("GetTracksByProject")]
-        public async Task<IActionResult> GetTracksByProject(GetTracksByProjectRequest request)
+        public async Task<IActionResult> GetTracksByProject([FromQuery] GetTracksByProjectRequest request)
         {
             var query = _mapper.Map<GetTracksByProjectQuery>(request);
 
@@ -100,7 +100,7 @@ namespace PSManagement.Api.Controllers.Tracks
         {
             var command = _mapper.Map<CompleteTrackCommand>(request);
 
-            var result = _mapper.Map<Result>(await _sender.Send(command));
+            var result =await _sender.Send(command);
 
             return Ok(result);
         }
@@ -110,7 +110,7 @@ namespace PSManagement.Api.Controllers.Tracks
         {
             var command = _mapper.Map<RemoveTrackCommand>(request);
 
-            var result = _mapper.Map<Result>(await _sender.Send(command));
+            var result =await _sender.Send(command);
 
             return Ok(result);
         }
@@ -144,7 +144,7 @@ namespace PSManagement.Api.Controllers.Tracks
         {
             var command = _mapper.Map<UpdateEmployeeWorkTrackCommand>(request);
 
-            var result = _mapper.Map<Result>(await _sender.Send(command));
+            var result =await _sender.Send(command);
 
             return Ok(result);
         }
@@ -153,7 +153,7 @@ namespace PSManagement.Api.Controllers.Tracks
         {
             var command = _mapper.Map<UpdateStepTrackCommand>(request);
 
-            var result = _mapper.Map<Result>(await _sender.Send(command));
+            var result = await _sender.Send(command);
 
             return Ok(result);
         }

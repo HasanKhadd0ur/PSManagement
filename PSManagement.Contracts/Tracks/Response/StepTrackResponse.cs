@@ -11,7 +11,8 @@ namespace PSManagement.Contracts.Tracks.Response
         StepInfo StepInfo ,
         TrackInfo TrackInfo,
         String ExecutionState,
-        DateTime TrackDate ,
-        int ExecutionRatio 
+        int TrackExecutionRatio,
+        int OldExecutionRatio
+
     );
 }

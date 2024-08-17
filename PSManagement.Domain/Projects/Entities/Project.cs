@@ -20,12 +20,25 @@ namespace PSManagement.Domain.Projects.Entities
         public ProposalInfo ProposalInfo { get; set; }
         public ProjectInfo ProjectInfo { get; set; }
         public Aggreement ProjectAggreement { get; set; }
-      
+
         // state management 
         public string CurrentState { get; private set; }  // Persisted in the database
-        
+
         [NotMapped]
-        private IProjectState _state;
+        private IProjectState _state ;
+        [NotMapped]
+        public IProjectState State {
+            get {
+
+                if (_state is null) {
+                    SetStateFromString(CurrentState);
+                }
+
+                return _state;
+            }
+            
+            set => _state = value;
+        }
 
         // information about who lead and execute the project 
         public int TeamLeaderId { get; set; }
@@ -100,7 +113,6 @@ namespace PSManagement.Domain.Projects.Entities
         }
         public Project()
         {
-            SetStateFromString(CurrentState);
         }
         public void SetState(IProjectState newState)
         {
@@ -109,27 +121,27 @@ namespace PSManagement.Domain.Projects.Entities
         }
         public void Complete() 
         {
-            _state.Complete(this);
+            State.Complete(this);
         
         }
         public void Plan()
         {
-            _state.Plan(this);
+            State.Plan(this);
 
         }
         public void Approve(Aggreement projectAggreement)
         {
-            _state.Approve(this,projectAggreement);
+            State.Approve(this,projectAggreement);
 
         }
         public void Cancel(DateTime canellationTime)
         {
-            _state.Cancel(this,canellationTime);
+            State.Cancel(this,canellationTime);
 
         }
         public void Propose()
         {
-            _state.Propose(this);
+            State.Propose(this);
 
         }
 

@@ -1,5 +1,8 @@
 ﻿using Ardalis.Result;
 using AutoMapper;
+using PSManagement.Domain.Projects.DomainErrors;
+using PSManagement.Domain.Projects.Entities;
+using PSManagement.Domain.Projects.Repositories;
 using PSManagement.Domain.Steps.Repositories;
 using PSManagement.Domain.Tracking;
 using PSManagement.Domain.Tracking.DomainErrors;
@@ -22,18 +25,21 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.AddStepTrack
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly BaseSpecification<Track> _specification;
+        private readonly IStepsRepository _stepsRepository;
 
         public AddStepTrackCommandHandler(
             IUnitOfWork unitOfWork,
             ITracksRepository tracksRepository,
             IRepository<StepTrack> stepTracksRepository,
-            IMapper mapper)
+            IMapper mapper,
+            IStepsRepository stepsRepository)
         {
             _unitOfWork = unitOfWork;
             _tracksRepository = tracksRepository;
             _stepTracksRepository = stepTracksRepository;
             _mapper = mapper;
             _specification = new TrackSpecification();
+            _stepsRepository = stepsRepository;
         }
 
         public async Task<Result<int>> Handle(AddStepTrackCommand request, CancellationToken cancellationToken)
@@ -59,8 +65,17 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.AddStepTrack
                 return Result.Invalid(TracksErrors.StepTrackExistError);
 
             }
+            Step step = await _stepsRepository.GetByIdAsync(request.StepId);
+            if (step is null) {
 
-            StepTrack stepTrack = await _stepTracksRepository.AddAsync(_mapper.Map<StepTrack>(request));
+                return Result.Invalid(StepsErrors.InvalidEntryError);
+            
+            }
+
+            StepTrack stepTrack = _mapper.Map<StepTrack>(request);
+            stepTrack.OldExecutionRatio = step.CurrentCompletionRatio;
+
+            stepTrack = await _stepTracksRepository.AddAsync(stepTrack);
 
             await _unitOfWork.SaveChangesAsync();
 

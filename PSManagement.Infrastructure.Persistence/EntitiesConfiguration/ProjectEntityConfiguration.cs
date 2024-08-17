@@ -37,7 +37,8 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
 
                 }
             );
-            
+
+
             builder.HasOne(e => e.TeamLeader)
                .WithMany()
                .HasForeignKey(e => e.TeamLeaderId)

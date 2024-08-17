@@ -1,6 +1,7 @@
 ﻿using Ardalis.Result;
 using PSManagement.Application.Contracts.Storage;
 using PSManagement.Domain.Projects.Builders;
+using PSManagement.Domain.Projects.DomainErrors;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.Repositories;
 using PSManagement.SharedKernel.CQRS.Command;
@@ -16,20 +17,28 @@ namespace PSManagement.Application.Projects.UseCases.Commands.AddAttachment
         private readonly IFileService _fileService;
         private readonly IRepository<Attachment> _attachmentRepository;
         private readonly IUnitOfWork _unitOfWork;
-        
+        private readonly IProjectsRepository _projectsRepository;
+
         public AddAttachmentCommandHandler(
             IFileService fileService,
             IRepository<Attachment> repository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IProjectsRepository projectsRepository)
         {
             _fileService = fileService;
             _attachmentRepository = repository;
             _unitOfWork = unitOfWork;
+            _projectsRepository = projectsRepository;
         }
 
         public async Task<Result<int>> Handle(AddAttachmentCommand request, CancellationToken cancellationToken)
         {
             Result<string> pathResult = await _fileService.StoreFile(request.AttachmentName+Guid.NewGuid(),request.File);
+            Project project = await _projectsRepository.GetByIdAsync(request.ProjectId);
+            if (project is null) {
+
+                return Result.Invalid(ProjectsErrors.InvalidEntryError);
+            }
             if (pathResult.IsSuccess)
             {
                 Attachment attachment = new(pathResult.Value, request.AttachmentName, request.AttachmentDescription, request.ProjectId);

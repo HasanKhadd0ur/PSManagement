@@ -17,6 +17,7 @@ using PSManagement.Application.Projects.UseCases.Commands.AddProjectStep;
 using PSManagement.Application.Projects.UseCases.Commands.ChangeProjectTeamLeader;
 using PSManagement.Application.Projects.UseCases.Commands.ApproveProject;
 using PSManagement.Application.Projects.UseCases.Queries.GetParticipants;
+using PSManagement.Application.Projects.UseCases.Queries.GetProjectAttachments;
 
 namespace PSManagement.Api.Controllers.Projects
 {
@@ -56,7 +57,7 @@ namespace PSManagement.Api.Controllers.Projects
         }
     
         [HttpGet("ByProjectManager")]
-        public async Task<IActionResult> GetByBrojectManager(GetProjectsByProjectManagerRequest request )
+        public async Task<IActionResult> GetByBrojectManager([FromQuery] GetProjectsByProjectManagerRequest request )
         {
             GetProjectsByFilterQuery query = _mapper.Map<GetProjectsByFilterQuery>(request);
 
@@ -173,5 +174,15 @@ namespace PSManagement.Api.Controllers.Projects
             return Ok(result);
 
         }
+        [HttpGet("Attachments{id}")]
+        public async Task<IActionResult> GetAttachments([FromQuery]GetProjectAttachmentsRequest request)
+        {
+            var query = _mapper.Map<GetProjectAttachmentsQuery>(request);
+            var result = await _sender.Send(query);
+
+            return Ok(_mapper.Map<Result<IEnumerable<AttachmentReponse>>>(result));
+
+        }
+
     }
 }

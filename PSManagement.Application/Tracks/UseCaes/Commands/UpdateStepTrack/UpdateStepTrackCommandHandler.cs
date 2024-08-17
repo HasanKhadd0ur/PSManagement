@@ -60,7 +60,7 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.UpdateStepTrack
                 return Result.Invalid(TracksErrors.InvalidEntryError);
             }
 
-            stepTrack.ExecutionRatio = request.ExecutionRatio;
+            stepTrack.TrackExecutionRatio = request.TrackExecutionRatio;
             stepTrack.ExecutionState = request.ExecutionState;
 
             await _stepTracksRepository.UpdateAsync(stepTrack);

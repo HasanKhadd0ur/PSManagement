@@ -5,6 +5,9 @@ using PSManagement.Application.FinancialSpends.Common;
 using PSManagement.Application.FinancialSpends.UseCases.Commands.CreateFinancialSpendItem;
 using PSManagement.Application.Projects.Common;
 using PSManagement.Application.Tracks.Common;
+using PSManagement.Application.Tracks.UseCaes.Commands.AddEmployeeTrack;
+using PSManagement.Application.Tracks.UseCaes.Commands.AddStepTrack;
+using PSManagement.Application.Tracks.UseCaes.Commands.CreateTrack;
 using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Customers.ValueObjects;
 using PSManagement.Domain.Employees.Entities;
@@ -52,6 +55,12 @@ namespace PSManagement.Application.Mappers
                 .ConvertUsing(project => project.ProjectInfo);
 
             CreateMap<Track, TrackDTO>();
+
+            CreateMap<CreateTrackCommand, Track>().ReverseMap();
+            CreateMap<AddEmployeeTrackCommand, EmployeeTrack>().ReverseMap();
+
+            CreateMap<AddStepTrackCommand, StepTrack>()
+                .ForMember(e => e.OldExecutionRatio, op => op.Ignore());
 
             CreateMap<FinancialSpendingDTO, FinancialSpending>().ReverseMap();
            

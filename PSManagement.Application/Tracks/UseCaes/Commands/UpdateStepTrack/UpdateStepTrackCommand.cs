@@ -10,7 +10,7 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.UpdateStepTrack
         int StepId,
         string ExecutionState,
         DateTime TrackDate,
-        int ExecutionRatio
+        int TrackExecutionRatio
      ) : ILoggableCommand<Result>;
 
 }

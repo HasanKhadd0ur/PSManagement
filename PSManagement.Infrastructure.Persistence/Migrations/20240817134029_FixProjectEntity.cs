@@ -11,7 +11,7 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                 table: "Projects",
                 type: "nvarchar(max)",
                 nullable: true,
-                defaultValueSql: "Proposed",
+                defaultValue: "Proposed",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)",
                 oldNullable: true,

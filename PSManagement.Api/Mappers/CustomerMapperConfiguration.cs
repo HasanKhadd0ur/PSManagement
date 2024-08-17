@@ -12,10 +12,12 @@ using PSManagement.Application.Projects.UseCases.Commands.ChangeProjectTeamLeade
 using PSManagement.Application.Projects.UseCases.Commands.CreateProject;
 using PSManagement.Application.Projects.UseCases.Commands.RemoveParticipant;
 using PSManagement.Application.Projects.UseCases.Queries.ListAllProject;
+using PSManagement.Application.Tracks.Common;
 using PSManagement.Contracts.Customers.Requests;
 using PSManagement.Contracts.Customers.Responses;
 using PSManagement.Contracts.Projects.Requests;
 using PSManagement.Contracts.Projects.Response;
+using PSManagement.Contracts.Tracks.Response;
 using PSManagement.SharedKernel.Utilities;
 using System;
 using System.Collections.Generic;
@@ -53,9 +55,12 @@ namespace PSManagement.Api.Mappers
             CreateMap<AddProjectStepRequest, AddProjectStepCommand>().ReverseMap();
             CreateMap<ChangeProjectTeamLeaderRequest, ChangeProjectTeamLeaderCommand>().ReverseMap();
             CreateMap<RemoveParticipantRequest, RemoveParticipantCommand>().ReverseMap();
+            CreateMap<ProjectDTO,ProjectResponse>().ReverseMap();
 
             CreateMap<EmployeeResponse, EmployeeDTO>().ReverseMap();
             CreateMap<EmployeeParticipateResponse, EmployeeParticipateDTO>().ReverseMap();
+
+            CreateMap<TrackDTO, TrackResponse>().ReverseMap();
 
         }
     }

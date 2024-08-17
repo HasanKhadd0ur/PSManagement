@@ -9,6 +9,6 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.AddStepTrack
         int TrackId,
         string ExecutionState,
         DateTime TrackDate,
-        int ExecutionRatio
+        int TrackExecutionRatio
     ) : ICommand<Result<int>>;
 }

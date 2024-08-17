@@ -11,6 +11,6 @@ namespace PSManagement.Contracts.Tracks.Requests
       int TrackId,
       string ExecutionState,
       DateTime TrackDate,
-      int ExecutionRatio
+      int TrackExecutionRatio
   );
 }

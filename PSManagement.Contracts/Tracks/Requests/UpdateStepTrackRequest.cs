@@ -8,6 +8,6 @@ namespace PSManagement.Contracts.Tracks.Requests
       int StepId,
       string ExecutionState,
       DateTime TrackDate,
-      int ExecutionRatio
+      int TrackExecutionRatio
    );
 }

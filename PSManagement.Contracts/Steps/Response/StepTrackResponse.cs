@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSManagement.Domain.Tracking.ValueObjects;
+using System;
 
 namespace PSManagement.Contracts.Projects.Response
 {
@@ -7,7 +8,7 @@ namespace PSManagement.Contracts.Projects.Response
         public int StepId { get; set; }
         public int TrackId { get; set; }
         public String ExecutionState { get; set; }
-        public DateTime TrackDate { get; set; }
+        public TrackInfo TrackInfo { get; set; }
 
         public int ExecutionRatio { get; set; }
 

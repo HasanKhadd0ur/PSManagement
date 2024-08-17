@@ -48,7 +48,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.RemoveParticipant
                     return Result.Invalid(ProjectsErrors.ParticipantUnExistError);
                 
                 }
-                var employeeParticipate =project.EmployeeParticipates.Where(e => e.ProjectId == request.ParticipantId).FirstOrDefault();
+                var employeeParticipate =project.EmployeeParticipates.Where(e => e.EmployeeId == request.ParticipantId).FirstOrDefault();
                 if (employeeParticipate is null) {
 
                     return Result.Invalid(ProjectsErrors.ParticipantUnExistError);

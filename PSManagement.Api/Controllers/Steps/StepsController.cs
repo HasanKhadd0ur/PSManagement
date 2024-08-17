@@ -42,7 +42,7 @@ namespace PSManagement.Api.Controllers.Steps
         }
 
         [HttpGet("ByProject")]
-        public async Task<IActionResult> GetByProject(GetStepsByProjectRequest request)
+        public async Task<IActionResult> GetByProject([FromQuery] GetStepsByProjectRequest request)
         {
             GetStepsByProjectQuery query = _mapper.Map<GetStepsByProjectQuery>(request);
 
@@ -66,7 +66,7 @@ namespace PSManagement.Api.Controllers.Steps
 
 
         [HttpGet("StepTrackHistory")]
-        public async Task<IActionResult> Get(GetStepTrackHistoryRequest request)
+        public async Task<IActionResult> Get([FromQuery] GetStepTrackHistoryRequest request)
         {
             var query =_mapper.Map<GetStepTrackHistoryQuery>(request);
 

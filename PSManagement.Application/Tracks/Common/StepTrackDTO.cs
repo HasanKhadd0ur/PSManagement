@@ -15,7 +15,8 @@ namespace PSManagement.Application.Tracks.Common
         public TrackInfo TrackInfo { get; set; }
 
         public String ExecutionState { get; set; }
-        public int ExecutionRatio { get; set; }
+        public int TrackExecutionRatio { get; set; }
 
+        public int OldExecutionRatio { get; set; }
     }
 }
