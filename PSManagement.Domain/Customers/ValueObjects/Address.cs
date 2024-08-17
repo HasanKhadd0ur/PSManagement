@@ -9,7 +9,6 @@ namespace PSManagement.Domain.Customers.ValueObjects
 {
     public record Address(
          int StreetNumber ,
-         int ZipCode ,
          String StreetName ,
          String City );
 }

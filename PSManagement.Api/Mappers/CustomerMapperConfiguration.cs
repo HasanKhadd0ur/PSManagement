@@ -32,12 +32,12 @@ namespace PSManagement.Api.Mappers
             CreateMap<UpdateCustomerCommand, UpdateCustomerRequest>().ReverseMap();
 
             CreateMap<AddContactInfoRequest, AddContactInfoCommand>().ReverseMap();
-            CreateMap<CustomerDTO, CustomerRecord>();
-            CreateMap<ContactInfoDTO, ContactInfoRecord>();
+            CreateMap<CustomerDTO, CustomerResponse>();
+            CreateMap<ContactInfoDTO, ContactInfoResponse>();
 
-            CreateMap<CustomerRecord, CustomerDTO>().ReverseMap();
+            CreateMap<CustomerResponse, CustomerDTO>().ReverseMap();
             
-            CreateMap<IEnumerable<CustomerRecord>, ListCustomersResponse>()
+            CreateMap<IEnumerable<CustomerResponse>, ListCustomersResponse>()
                     .ConstructUsing(src => new ListCustomersResponse(src));
             
         }

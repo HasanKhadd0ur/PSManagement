@@ -15,6 +15,7 @@ namespace PSManagement.Application.Employees.Common
         public String DepartmentName { get; set; }
         public PersonalInfo PersonalInfo { get; set; }
         public WorkInfo WorkInfo { get; set; }
+        public Availability Availability { get; set; }
 
     }
 }

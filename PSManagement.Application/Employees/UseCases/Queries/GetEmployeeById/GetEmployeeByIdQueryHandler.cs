@@ -28,7 +28,7 @@ namespace PSManagement.Application.Employees.UseCases.Queries.GetEmployeeById
 
         public async Task<Result<EmployeeDTO>> Handle(GetEmployeeByIdQuery request, CancellationToken cancellationToken)
         {
-           
+            _specification.AddInclude(e => e.Department);
             return Result.Success(_mapper.Map<EmployeeDTO>(await _employeesRepository.GetByIdAsync(request.EmployeeId,_specification)));
         }
     }

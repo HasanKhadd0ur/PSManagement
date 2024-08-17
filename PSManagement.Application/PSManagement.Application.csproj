@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <Folder Include="Behaviors\AuthorizationBehavior\" />
-    <Folder Include="Customers\UseCases\Commands\RemoveContactInfo\" />
     <Folder Include="Tracks\EventsHandlers\" />
   </ItemGroup>
 

@@ -5,6 +5,6 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Contracts.Customers.Responses
 {
-    public record  ListCustomersResponse( IEnumerable<CustomerRecord> Customers );
+    public record  ListCustomersResponse( IEnumerable<CustomerResponse> Customers );
     
 }

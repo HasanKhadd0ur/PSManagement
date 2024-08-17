@@ -22,7 +22,7 @@ namespace PSManagement.Contracts.Projects.Response
         public Department Executer { get; set; }
 
         public int ProposerId { get; private set; }
-        public CustomerRecord Proposer { get; set; }
+        public CustomerResponse Proposer { get; set; }
         public ICollection<StepResponse> Steps { get; set; }
         public ICollection<Attachment> Attachments { get; set; }
 

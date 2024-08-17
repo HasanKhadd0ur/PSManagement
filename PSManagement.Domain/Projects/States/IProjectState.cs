@@ -1,4 +1,5 @@
 ﻿using PSManagement.Domain.Projects.ValueObjects;
+using System;
 
 namespace PSManagement.Domain.Projects.Entities
 {
@@ -7,7 +8,7 @@ namespace PSManagement.Domain.Projects.Entities
         void Complete(Project project);
         void Plan(Project project);
         void Approve(Project project, Aggreement projectAggreement);
-        void Cancle(Project project);
+        void Cancel(Project project, DateTime canellationTime);
         void Propose(Project project);
         string StateName { get; }
     }

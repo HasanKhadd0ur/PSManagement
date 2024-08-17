@@ -1,4 +1,5 @@
 ﻿using PSManagement.Domain.Projects.ValueObjects;
+using System;
 
 namespace PSManagement.Domain.Projects.Entities
 {
@@ -11,7 +12,7 @@ namespace PSManagement.Domain.Projects.Entities
 
         }
 
-        public void Cancle(Project project)
+        public void Cancel(Project project, DateTime canellationTime)
         {
 
         }

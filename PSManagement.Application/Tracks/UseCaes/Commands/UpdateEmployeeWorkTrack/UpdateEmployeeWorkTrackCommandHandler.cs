@@ -15,19 +15,14 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.UpdateEmployeeWorkTra
     {
         private readonly IRepository<EmployeeTrack> _employeeTracksRepository;
         private readonly ITracksRepository _tracksRepository;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
+        
         public UpdateEmployeeWorkTrackCommandHandler(
-            IUnitOfWork unitOfWork,
             ITracksRepository tracksRepository,
-            IRepository<EmployeeTrack> employeeTracksRepository,
-            IMapper mapper)
+            IRepository<EmployeeTrack> employeeTracksRepository
+            )
         {
-            _unitOfWork = unitOfWork;
             _tracksRepository = tracksRepository;
             _employeeTracksRepository = employeeTracksRepository;
-            _mapper = mapper;
         }
 
         public async Task<Result> Handle(UpdateEmployeeWorkTrackCommand request, CancellationToken cancellationToken)

@@ -17,21 +17,17 @@ namespace PSManagement.Application.FinancialSpends.UseCases.Commands.CreateFinan
         private readonly IProjectsRepository _projectsRepository;
         private readonly IFinancialSpendingRepository _spendRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-
 
 
         public CreateFinancialSpendItemCommandHandler(
             IFinancialSpendingRepository spendRepository,
             IProjectsRepository projectsRepository,
-            IUnitOfWork unitOfWork, 
-            IMapper mapper)
+            IUnitOfWork unitOfWork
+            )
         {
             _spendRepository = spendRepository;
             _projectsRepository = projectsRepository;
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
 

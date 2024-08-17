@@ -1,4 +1,5 @@
 ﻿using Ardalis.Result;
+using PSManagement.Application.Contracts.Providers;
 using PSManagement.Domain.Projects.DomainErrors;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.Repositories;
@@ -13,16 +14,17 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CancelProject
     {
         private readonly IProjectsRepository _projectsRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IDateTimeProvider _dateTime;
 
         public CancelProjectCommandHandler(
             IProjectsRepository projectsRepository,
-            IUnitOfWork unitOfWork
-            )
+            IUnitOfWork unitOfWork,
+            IDateTimeProvider dateTime)
         {
 
             _projectsRepository = projectsRepository;
             _unitOfWork = unitOfWork;
-
+            _dateTime = dateTime;
         }
 
         public async Task<Result> Handle(CancelProjectCommand request, CancellationToken cancellationToken)
@@ -35,7 +37,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CancelProject
             else
             {
 
-                project.Cancle();
+                project.Cancel(_dateTime.UtcNow);
                 await _unitOfWork.SaveChangesAsync();
 
                 return Result.Success();

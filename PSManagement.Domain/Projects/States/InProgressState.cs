@@ -13,9 +13,9 @@ namespace PSManagement.Domain.Projects.Entities
 
         }
 
-        public void Cancle(Project project)
+        public void Cancel(Project project, DateTime canellationTime)
         {
-            project.AddDomainEvent(new ProjectCancelledEvent(project.Id, DateTime.Now));
+            project.AddDomainEvent(new ProjectCancelledEvent(project.Id,canellationTime));
             project.SetState(new CancledState());
         }
 

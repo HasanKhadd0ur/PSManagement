@@ -19,11 +19,10 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                 address.Property(a => a.StreetName).HasColumnName("StreetName");
                 address.Property(a => a.City).HasColumnName("City");
                 address.Property(a => a.StreetNumber).HasColumnName("StreetNumber");
-                address.Property(a => a.ZipCode).HasColumnName("ZipCode");
             }
             );
 
-            builder.OwnsMany(c => c.ContactInfo);
+            builder.HasMany(c => c.ContactInfo);
             
         }
     }

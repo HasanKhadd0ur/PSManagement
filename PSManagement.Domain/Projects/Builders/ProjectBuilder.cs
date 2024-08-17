@@ -89,6 +89,7 @@ namespace PSManagement.Domain.Projects.Builders
         }
         public ProjectBuilder WithAttachment(Attachment[] attachments)
         {
+            _attachments = new List<Attachment>();
             foreach (Attachment attachment in attachments) {
                 _attachments.Add(attachment);
             }

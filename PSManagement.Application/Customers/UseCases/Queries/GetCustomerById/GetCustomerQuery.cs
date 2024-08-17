@@ -7,6 +7,6 @@ using System.Text;
 
 namespace PSManagement.Application.Customers.UseCases.Queries.GetCustomer
 {
-    public record  GetCustomerQuery(int customerId) : IQuery<Result<CustomerDTO>>;
+    public record  GetCustomerQuery(int CustomerId) : IQuery<Result<CustomerDTO>>;
 
 }

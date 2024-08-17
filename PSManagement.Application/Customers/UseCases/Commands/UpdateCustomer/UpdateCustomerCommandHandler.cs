@@ -27,8 +27,10 @@ namespace PSManagement.Application.Customers.UseCases.Commands.UpdateCustomer
         public async Task<Result> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
 
-            Customer customer = new (request.CustomerName ,request.Address,request.Email);
-            customer.Id = request.CustomerId;
+            Customer customer = await  _customerRepository.GetByIdAsync(request.CustomerId);
+            customer.Email = request.Email;
+            customer.CustomerName = request.CustomerName;
+            customer.Address = request.Address;
 
             await _customerRepository.UpdateAsync(customer);
             

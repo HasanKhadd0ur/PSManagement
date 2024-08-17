@@ -10,4 +10,5 @@ namespace PSManagement.Contracts.Customers.Requests
         int CustomerId,
         String ContactType,
         String ContactValue);
+
 }

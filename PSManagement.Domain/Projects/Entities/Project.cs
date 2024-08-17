@@ -20,10 +20,11 @@ namespace PSManagement.Domain.Projects.Entities
         public ProposalInfo ProposalInfo { get; set; }
         public ProjectInfo ProjectInfo { get; set; }
         public Aggreement ProjectAggreement { get; set; }
+      
         // state management 
-        [NotMapped]
         public string CurrentState { get; private set; }  // Persisted in the database
-
+        
+        [NotMapped]
         private IProjectState _state;
 
         // information about who lead and execute the project 
@@ -94,17 +95,17 @@ namespace PSManagement.Domain.Projects.Entities
             Steps = new List<Step>();
             Participants = new List<Employee>();
             EmployeeParticipates = new List<EmployeeParticipate>();
+            
 
         }
         public Project()
         {
-            _state = new ProposedState();
-            CurrentState = _state.StateName;
+            SetStateFromString(CurrentState);
         }
         public void SetState(IProjectState newState)
         {
             _state = newState;
-            CurrentState = _state.StateName;  // Update the persisted state
+            CurrentState = _state.StateName; 
         }
         public void Complete() 
         {
@@ -121,9 +122,9 @@ namespace PSManagement.Domain.Projects.Entities
             _state.Approve(this,projectAggreement);
 
         }
-        public void Cancle()
+        public void Cancel(DateTime canellationTime)
         {
-            _state.Cancle(this);
+            _state.Cancel(this,canellationTime);
 
         }
         public void Propose()

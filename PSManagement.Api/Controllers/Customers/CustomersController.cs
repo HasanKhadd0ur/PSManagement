@@ -18,6 +18,7 @@ using PSManagement.Contracts.Customers.Responses;
 using PSManagement.Application.Customers.UseCases.Queries.GetCustomer;
 using PSManagement.Api.Controllers.ApiBase;
 using Ardalis.Result;
+using PSManagement.Application.Customers.UseCases.Commands.RemoveContactInfo;
 
 namespace PSManagement.Api.Controllers.Customers
 {
@@ -35,36 +36,53 @@ namespace PSManagement.Api.Controllers.Customers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListCustomers()
+        public async Task<IActionResult> Get()
         {
             var query = new ListAllCustomersQuery();
 
-            var result = _mapper.Map<Result<IEnumerable<CustomerRecord>>>( await _sender.Send(query));
+            var result = _mapper.Map<Result<IEnumerable<CustomerResponse>>>( await _sender.Send(query));
          
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCustomer(int id )
+        public async Task<IActionResult> Get(int id )
         {
             var query = new GetCustomerQuery(id);
 
             var result = await _sender.Send(query);
 
 
-            return Ok(_mapper.Map<Result<CustomerRecord>>(result));
+            return Ok(_mapper.Map<Result<CustomerResponse>>(result));
         }
         [HttpPost]
-        public async Task<IActionResult> CreateCustomer(CreateCustomerRequest request)
+        public async Task<IActionResult> Post(CreateCustomerRequest request)
         {
             var command = _mapper.Map<CreateCustomerCommand>(request);
 
             var result = await _sender.Send(command);
-            return Ok(result);
+
+            if (result.IsSuccess)
+            {
+
+                var query = new GetCustomerQuery(result.Value);
+
+                var response = await _sender.Send(query);
+
+                return Ok(_mapper.Map<CustomerResponse>(response));
+
+            }
+            else
+            {
+
+                return Ok(result);
+
+            }
+
         }
         
         [HttpDelete]
-        public async Task<IActionResult> DeleteCustomer(DeleteCustomerRequest request)
+        public async Task<IActionResult> Delete(DeleteCustomerRequest request)
         {
             var command = _mapper.Map<DeleteCustomerCommand>(request);
 
@@ -73,8 +91,9 @@ namespace PSManagement.Api.Controllers.Customers
             return Ok(result);
 
         }
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCustomer(int id ,UpdateCustomerRequest request)
+        public async Task<IActionResult> Put(int id ,UpdateCustomerRequest request)
         {
             if(id != request.CustomerId){
                 return Problem();
@@ -89,7 +108,7 @@ namespace PSManagement.Api.Controllers.Customers
 
 
         [HttpPost("AddContactInfo")]
-        public async Task<IActionResult> AddContactInfo(AddContactInfoRequest request)
+        public async Task<IActionResult> PostContactInfo(AddContactInfoRequest request)
         {
             var command = _mapper.Map<AddContactInfoCommand>(request);
 
@@ -98,6 +117,16 @@ namespace PSManagement.Api.Controllers.Customers
             return Ok(result);
         }
 
+
+        [HttpDelete("RemoveContactInfo")]
+        public async Task<IActionResult> DeleteContactInfo(RemoveContactInfoRequest request)
+        {
+            var command = _mapper.Map<RemoveContactInfoCommand>(request);
+
+            var result = await _sender.Send(command);
+
+            return Ok(result);
+        }
 
 
     }

@@ -38,6 +38,8 @@ namespace PSManagement.Application.Employees.UseCases.Queries.GetEmployeeById
             _specification.AddInclude("Employee.Department");
 
             _specification.AddInclude(e => e.Employee);
+            _specification.AddInclude(e => e.Employee.Department);
+
 
             IEnumerable<EmployeeParticipate> response = await _employeesParticipateRepository.ListAsync(_specification);
 
