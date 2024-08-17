@@ -3,5 +3,4 @@
     public record GetAvailableEmployeesRequest(
     int? PageNumber,
     int? PageSize);
-
 }

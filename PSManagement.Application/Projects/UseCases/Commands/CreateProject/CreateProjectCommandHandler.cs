@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
 {
-    public class CreateProjectCommandHandler : ICommandHandler<CreateProjectCommand, Result<CreateProjectResult>>
+    public class CreateProjectCommandHandler : ICommandHandler<CreateProjectCommand, Result<int>>
     {
         private readonly IProjectsRepository _projectsRepository;
         private readonly ProjectBuilder _projectBuilder;
@@ -28,7 +28,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<CreateProjectResult>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
             Project project = _projectBuilder
                 .WithProjectAggreement(request.ProjectAggreement)
@@ -56,7 +56,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
 
             project.AddDomainEvent(new ProjectCreatedEvent(project.Id,project.TeamLeaderId,project.ProjectManagerId));
             await _unitOfWork.SaveChangesAsync();
-            return Result.Success(response);
+            return Result.Success(response.ProjectId);
 
         }
     }

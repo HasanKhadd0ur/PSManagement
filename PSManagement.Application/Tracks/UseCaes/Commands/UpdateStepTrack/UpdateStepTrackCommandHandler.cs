@@ -4,26 +4,22 @@ using PSManagement.Domain.Steps.Repositories;
 using PSManagement.Domain.Tracking;
 using PSManagement.Domain.Tracking.DomainErrors;
 using PSManagement.Domain.Tracking.Entities;
-using PSManagement.Domain.Tracking.Specification;
 using PSManagement.SharedKernel.CQRS.Command;
 using PSManagement.SharedKernel.Interfaces;
 using PSManagement.SharedKernel.Repositories;
-using PSManagement.SharedKernel.Specification;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PSManagement.Application.Tracks.UseCaes.Commands.AddStepTrack
+namespace PSManagement.Application.Tracks.UseCaes.Commands.UpdateStepTrack
 {
-    public class AddStepTrackCommandHandler : ICommandHandler<AddStepTrackCommand, Result<int>>
+    public class UpdateStepTrackCommandHandler : ICommandHandler<UpdateStepTrackCommand, Result>
     {
         private readonly IRepository<StepTrack> _stepTracksRepository;
         private readonly ITracksRepository _tracksRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly BaseSpecification<Track> _specification;
 
-        public AddStepTrackCommandHandler(
+        public UpdateStepTrackCommandHandler(
             IUnitOfWork unitOfWork,
             ITracksRepository tracksRepository,
             IRepository<StepTrack> stepTracksRepository,
@@ -33,13 +29,11 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.AddStepTrack
             _tracksRepository = tracksRepository;
             _stepTracksRepository = stepTracksRepository;
             _mapper = mapper;
-            _specification = new TrackSpecification();
         }
 
-        public async Task<Result<int>> Handle(AddStepTrackCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateStepTrackCommand request, CancellationToken cancellationToken)
         {
-            _specification.AddInclude(e => e.StepTracks);
-            Track track = await _tracksRepository.GetByIdAsync(request.TrackId,_specification);
+            Track track = await _tracksRepository.GetByIdAsync(request.TrackId);
 
             if (track is null)
             {
@@ -53,19 +47,27 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.AddStepTrack
                 return Result.Invalid(TracksErrors.TrackCompletedUpdateError);
             }
 
-            if (track.StepTracks.Any(e => e.StepId == request.StepId))
+            StepTrack stepTrack = await _stepTracksRepository.GetByIdAsync(request.StepTrackId);
+            if (stepTrack is null)
             {
 
-                return Result.Invalid(TracksErrors.StepTrackExistError);
+                return Result.Invalid(TracksErrors.InvalidEntryError);
 
             }
+            if (request.StepId != stepTrack.StepId)
+            {
 
-            StepTrack stepTrack = await _stepTracksRepository.AddAsync(_mapper.Map<StepTrack>(request));
+                return Result.Invalid(TracksErrors.InvalidEntryError);
+            }
 
-            await _unitOfWork.SaveChangesAsync();
+            stepTrack.ExecutionRatio = request.ExecutionRatio;
+            stepTrack.ExecutionState = request.ExecutionState;
 
-            return Result.Success(stepTrack.Id);
+            await _stepTracksRepository.UpdateAsync(stepTrack);
+
+            return Result.Success();
 
         }
     }
+
 }

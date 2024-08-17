@@ -54,6 +54,16 @@ namespace PSManagement.Api.Controllers.Projects
 
             return Ok(_mapper.Map<Result<IEnumerable<ProjectResponse>>>(result));
         }
+    
+        [HttpGet("ByProjectManager")]
+        public async Task<IActionResult> GetByBrojectManager(GetProjectsByProjectManagerRequest request )
+        {
+            GetProjectsByFilterQuery query = _mapper.Map<GetProjectsByFilterQuery>(request);
+
+            var result = await _sender.Send(query);
+
+            return Ok(_mapper.Map<Result<IEnumerable<ProjectResponse>>>(result));
+        }
 
         [HttpGet("GetParticipants{id}")]
         public async Task<IActionResult> GetParticipants(int id)
@@ -65,8 +75,9 @@ namespace PSManagement.Api.Controllers.Projects
             return Ok( _mapper.Map<Result<IEnumerable<EmployeeParticipateResponse>>>(result));
         }
 
+
         [HttpPost("ApproveProject")]
-        public async Task<IActionResult> ApproveProjectRequest(ApproveProjectRequest request)
+        public async Task<IActionResult> PostApproveProjectRequest(ApproveProjectRequest request)
         {
             var query = _mapper.Map<ApproveProjectCommand>(request);
 
@@ -75,8 +86,8 @@ namespace PSManagement.Api.Controllers.Projects
             return Ok(result);
         }
 
-        [HttpPost("ChangeTeamLeader")]
-        public async Task<IActionResult> ChangeTeamLeader(ChangeProjectTeamLeaderRequest request)
+        [HttpPut("ChangeTeamLeader")]
+        public async Task<IActionResult> PuttChangeTeamLeader(ChangeProjectTeamLeaderRequest request)
         {
             var query = _mapper.Map<ChangeProjectTeamLeaderCommand>(request);
 
@@ -87,7 +98,7 @@ namespace PSManagement.Api.Controllers.Projects
 
 
         [HttpPost("AddProjectStep")]
-        public async Task<IActionResult> AddParticipant(AddProjectStepRequest request)
+        public async Task<IActionResult> PostAddParticipant(AddProjectStepRequest request)
         {
             var query = _mapper.Map<AddProjectStepCommand>(request);
 
@@ -98,7 +109,7 @@ namespace PSManagement.Api.Controllers.Projects
 
 
         [HttpPost("RemoveParticipant")]
-        public async Task<IActionResult> RemoveParticipant(RemoveParticipantRequest request)
+        public async Task<IActionResult> PostRemoveParticipant(RemoveParticipantRequest request)
         {
             var query = _mapper.Map<RemoveParticipantCommand>(request);
 
@@ -107,8 +118,9 @@ namespace PSManagement.Api.Controllers.Projects
             return Ok(result);
         }
 
+
         [HttpPost("AddParticipant")]
-        public async Task<IActionResult> AddParticipant(AddParticipantRequest request)
+        public async Task<IActionResult> PostAddParticipant(AddParticipantRequest request)
         {
             var query = _mapper.Map<AddParticipantCommand>(request);
 
@@ -129,17 +141,32 @@ namespace PSManagement.Api.Controllers.Projects
             return Ok(_mapper.Map<Result<ProjectResponse>>(result));
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateProjectRequest request)
         {
             var command = _mapper.Map<CreateProjectCommand>(request);
             var result = await _sender.Send(command);
-            return Ok(_mapper.Map<CreateProjectResult>(result));
+
+            if (result.IsSuccess)
+            {
+
+                var query = new GetProjectByIdQuery(result.Value);
+                var response = await _sender.Send(query);
+
+                return Ok(_mapper.Map<ProjectResponse>(response));
+
+            }
+            else {
+
+                return Ok(result);
+            
+            }
         
         }
 
         [HttpPost("AddAttachment")]
-        public async Task<IActionResult> AddAttachment( [FromForm]AddAttachmentRequest request)
+        public async Task<IActionResult> PostAddAttachment( [FromForm]AddAttachmentRequest request)
         {
             var command = _mapper.Map<AddAttachmentCommand>(request);
             var result = await _sender.Send(command);

@@ -15,9 +15,4 @@
     <ProjectReference Include="..\PSManagement.SharedKernel\PSManagement.SharedKernel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Tracks\Response\" />
-    <Folder Include="Tracks\Requests\" />
-  </ItemGroup>
-
 </Project>

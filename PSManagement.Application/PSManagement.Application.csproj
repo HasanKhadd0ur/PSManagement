@@ -7,12 +7,8 @@
 
   <ItemGroup>
     <Folder Include="Behaviors\AuthorizationBehavior\" />
-    <Folder Include="Employees\UseCases\Commands\IncreasEmployeeWorkHours\" />
-    <Folder Include="Projects\UseCases\Queries\GetProjectAttachments\" />
-    <Folder Include="Tracks\UseCaes\Commands\UpdateEmployeeTrack\" />
-    <Folder Include="Tracks\UseCaes\Commands\UpdateStepTrack\" />
-    <Folder Include="Tracks\UseCaes\Queries\GetEmployeesTrack\" />
-    <Folder Include="Employees\UseCases\Queries\GetEmployeeTrackHistory\" />
+    <Folder Include="Customers\UseCases\Commands\RemoveContactInfo\" />
+    <Folder Include="Tracks\EventsHandlers\" />
   </ItemGroup>
 
   <ItemGroup>

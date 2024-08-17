@@ -35,11 +35,25 @@ namespace PSManagement.Api.Controllers.FinancialSpends
         [HttpPost]
         public async Task<IActionResult> Post(CreateFinancialSpendItemRequest request)
         {
-            var query = _mapper.Map<CreateFinancialSpendItemCommand>(request);
+            var command = _mapper.Map<CreateFinancialSpendItemCommand>(request);
 
-            var result = await _sender.Send(query);
+            var result = await _sender.Send(command);
 
-            return Ok(result);
+            if (result.IsSuccess)
+            {
+
+                var query = new GetFinancialSpendItemByIdQuery(result.Value);
+                var response = await _sender.Send(query);
+
+                return Ok(_mapper.Map<FinancialSpendingResponse>(response));
+
+            }
+            else
+            {
+
+                return Ok(result);
+
+            }
         }
 
         [HttpGet]
@@ -81,7 +95,7 @@ namespace PSManagement.Api.Controllers.FinancialSpends
         {
             if (id != request.Id)
             {
-                Result.Conflict();
+                Result.Conflict("no match for the id");
             }
 
             var query = _mapper.Map<UpdateFinancialSpendItemCommand>(request);

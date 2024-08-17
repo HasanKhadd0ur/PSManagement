@@ -4,6 +4,8 @@
      string EmployeeFirstName,
      int? HiastId,
      string DepartmentName,
-     string WorkType
+     string WorkType,
+     int? PageSize ,
+     int? PageNumber
      ) ;
 }

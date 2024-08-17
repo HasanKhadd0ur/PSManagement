@@ -28,7 +28,8 @@ namespace PSManagement.Application.Mappers
             CreateMap<CustomerDTO, Customer>().ReverseMap();
             CreateMap<ContactInfoDTO, ContactInfo>().ReverseMap();
 
-            CreateMap<StepDTO, Step>().ReverseMap();
+            CreateMap<Step, StepDTO>()
+             ;
 
             CreateMap<Employee, EmployeeDTO>()
                 .ForMember(e => e.DepartmentName, op => op.MapFrom(e => e.Department.Name));
@@ -39,13 +40,18 @@ namespace PSManagement.Application.Mappers
                 .ForMember(d => d.Employee, op => op.MapFrom(e => e.Employee))
                 
                 ;
+            CreateMap<StepTrack, StepTrackDTO>()
+                .ForMember(d => d.StepInfo, opt => opt.MapFrom(s => s.Step.StepInfo))
+                .ForMember(d => d.TrackInfo, op => op.MapFrom(e => e.Track.TrackInfo))
+                ;
+            CreateMap<EmployeeTrack, EmployeeTrackDTO>()
+                .ForMember(d => d.TrackInfo, op => op.MapFrom(e => e.Track.TrackInfo))
+                ;
 
             CreateMap<Project, ProjectInfo>()
                 .ConvertUsing(project => project.ProjectInfo);
 
-            CreateMap<TrackDTO, Track>().ReverseMap();
-            CreateMap<StepTrack, StepTrackDTO>()
-                .ForMember(d => d.TrackDate, op=> op.MapFrom( src => src.Track.TrackInfo.TrackDate));
+            CreateMap<Track, TrackDTO>();
 
             CreateMap<FinancialSpendingDTO, FinancialSpending>().ReverseMap();
            

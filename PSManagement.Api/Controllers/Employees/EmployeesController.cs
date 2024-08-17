@@ -88,8 +88,8 @@ namespace PSManagement.Api.Controllers.Employees
 
         }
 
-        [HttpPost("UpdateWorkHours")]
-        public async Task<IActionResult> UpdateWorkHours(UpdateEmployeeWorkHoursRequest request)
+        [HttpPut("UpdateWorkHours")]
+        public async Task<IActionResult> PutUpdateWorkHours(UpdateEmployeeWorkHoursRequest request)
         {
             UpdateEmployeeWorkHoursCommand query =_mapper.Map<UpdateEmployeeWorkHoursCommand>(request);
 

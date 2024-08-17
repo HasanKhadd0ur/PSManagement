@@ -3,26 +3,22 @@ using AutoMapper;
 using PSManagement.Domain.Steps.Repositories;
 using PSManagement.Domain.Tracking;
 using PSManagement.Domain.Tracking.DomainErrors;
-using PSManagement.Domain.Tracking.Specification;
 using PSManagement.SharedKernel.CQRS.Command;
 using PSManagement.SharedKernel.Interfaces;
 using PSManagement.SharedKernel.Repositories;
-using PSManagement.SharedKernel.Specification;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
 
-namespace PSManagement.Application.Tracks.UseCaes.Commands.AddEmployeeTrack
+namespace PSManagement.Application.Tracks.UseCaes.Commands.UpdateEmployeeWorkTrack
 {
-    public class AddEmployeeTrackCommandHandler : ICommandHandler<AddEmployeeTrackCommand, Result<int>>
+    public class UpdateEmployeeWorkTrackCommandHandler : ICommandHandler<UpdateEmployeeWorkTrackCommand, Result>
     {
         private readonly IRepository<EmployeeTrack> _employeeTracksRepository;
         private readonly ITracksRepository _tracksRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly BaseSpecification<Track> _specification;
 
-        public AddEmployeeTrackCommandHandler(
+        public UpdateEmployeeWorkTrackCommandHandler(
             IUnitOfWork unitOfWork,
             ITracksRepository tracksRepository,
             IRepository<EmployeeTrack> employeeTracksRepository,
@@ -32,13 +28,11 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.AddEmployeeTrack
             _tracksRepository = tracksRepository;
             _employeeTracksRepository = employeeTracksRepository;
             _mapper = mapper;
-            _specification = new TrackSpecification();
         }
 
-        public async Task<Result<int>> Handle(AddEmployeeTrackCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateEmployeeWorkTrackCommand request, CancellationToken cancellationToken)
         {
-            _specification.AddInclude(e => e.EmployeeTracks);
-            Track track = await _tracksRepository.GetByIdAsync(request.TrackId,_specification);
+            Track track = await _tracksRepository.GetByIdAsync(request.TrackId);
 
             if (track is null)
             {
@@ -46,24 +40,31 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.AddEmployeeTrack
                 return Result.Invalid(TracksErrors.InvalidEntryError);
 
             }
-
             if (track.TrackInfo.IsCompleted)
             {
 
                 return Result.Invalid(TracksErrors.TrackCompletedUpdateError);
             }
+            EmployeeTrack employeeTrack = await _employeeTracksRepository.GetByIdAsync(request.EmployeeTrackId);
+            if (employeeTrack is null)
+            {
 
-            if (track.EmployeeTracks.Any(e => e.EmloyeeId == request.EmployeeId)) {
+                return Result.Invalid(TracksErrors.InvalidEntryError);
 
-                return Result.Invalid(TracksErrors.ParticipantTrackExistError);
-            
+            }
+            if (request.EmployeeId != employeeTrack.EmloyeeId)
+            {
+
+                return Result.Invalid(TracksErrors.InvalidEntryError);
             }
 
-            EmployeeTrack employeeTrack = await _employeeTracksRepository.AddAsync(_mapper.Map<EmployeeTrack>(request));
+            employeeTrack.EmployeeWork = request.EmployeeWork;
+            employeeTrack.EmployeeWorkInfo = request.EmployeeWorkInfo;
+            employeeTrack.Notes = request.Notes;
 
-            await _unitOfWork.SaveChangesAsync();
+            await _employeeTracksRepository.UpdateAsync(employeeTrack);
 
-            return Result.Success(employeeTrack.Id);
+            return Result.Success();
 
         }
     }

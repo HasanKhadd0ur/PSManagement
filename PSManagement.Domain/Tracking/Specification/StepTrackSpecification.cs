@@ -13,5 +13,4 @@ namespace PSManagement.Domain.Tracking.Specification
 
         }
     }
-
 }

@@ -51,8 +51,8 @@ namespace PSManagement.Api.Controllers.Steps
             return Ok(result);
         }
 
-        [HttpPost("{id}")]
-        public async Task<IActionResult> ChangeStepWeight(ChangeStepWeightRequest request,[FromRoute]int id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutChangeStepWeight(ChangeStepWeightRequest request,[FromRoute]int id)
         {
             if (request.StepId != id) {
                 return Ok(Result.NotFound("the step not found"));
@@ -75,9 +75,8 @@ namespace PSManagement.Api.Controllers.Steps
             return Ok(result);
         }
 
-
-        [HttpPost]
-        public async Task<IActionResult> UpdateCompleteionRatio(UpdateCompletionRatioRequest request)
+        [HttpPut]
+        public async Task<IActionResult> PutCompletionRatio(UpdateCompletionRatioRequest request)
         {
             var query = _mapper.Map<UpdateCompletionRatioCommand>(request);
 

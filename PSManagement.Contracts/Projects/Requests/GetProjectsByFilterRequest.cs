@@ -4,7 +4,7 @@
      string ProjectName,
      string TeamLeaderName,
      string DepartmentName,
-     string ProposerName
- );
-
+     string ProposerName,
+     int? PageNumber,
+     int? PagerSize);
 }

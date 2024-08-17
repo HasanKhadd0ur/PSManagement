@@ -9,7 +9,9 @@ namespace PSManagement.Application.Employees.UseCases.Queries.GetEmployeesByFilt
          string EmployeeFirstName,
          int? HiastId,
          string DepartmentName,
-         string WorkType
+         string WorkType,
+         int? PageNumber,
+         int? PageSize
     ) : IQuery<Result<IEnumerable<EmployeeDTO>>>;
 
 }

@@ -35,12 +35,9 @@ namespace PSManagement.Application.Steps.UseCases.Queries.GetStepTrackHistory
             _specification.AddInclude("StepTracks.Track");
             
 
-
-            _specification.ApplyPaging((pageNumber - 1) * pageSize, pageSize);
-
             var steps = await _stepsRepository.GetByIdAsync(request.StepId,_specification);
 
-            return Result.Success(_mapper.Map<IEnumerable<StepTrackDTO>>(steps.StepTracks.AsEnumerable()));
+            return Result.Success(_mapper.Map<IEnumerable<StepTrackDTO>>(steps.StepTracks.AsEnumerable().Skip((pageNumber - 1) * pageSize).Take(pageSize)));
         }
     }
 }
