@@ -10,8 +10,10 @@ using PSManagement.Application.Employees.UseCases.Commands.UpdateEmployeeWorkHou
 using PSManagement.Application.Employees.UseCases.Queries.GetAvailableEmployees;
 using PSManagement.Application.Employees.UseCases.Queries.GetEmployeeById;
 using PSManagement.Application.Employees.UseCases.Queries.GetEmployeesByFilter;
+using PSManagement.Application.Employees.UseCases.Queries.GetEmployeeTrackHistory;
 using PSManagement.Contracts.Employees.Requests;
 using PSManagement.Contracts.Projects.Response;
+using PSManagement.Contracts.Tracks.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,6 +80,17 @@ namespace PSManagement.Api.Controllers.Employees
             return Ok(_mapper.Map<Result<IEnumerable<EmployeeParticipateResponse>>>(result));
 
         }
+       
+        [HttpPost("TrackHistory")]
+        public async Task<IActionResult> GetEmployeeTrackHistory([FromForm] GetEmployeeTrackHistoryRequest request)
+        {
+            var command = _mapper.Map<GetEmployeeTrackHistoryQuery>(request);
+            var result = await _sender.Send(command);
+
+            return Ok(_mapper.Map<Result<IEnumerable<EmployeeTrackResponse>>>(result));
+
+        }
+
 
         [HttpPost("SyncEmployees")]
         public async Task<IActionResult> Post()
@@ -98,5 +111,6 @@ namespace PSManagement.Api.Controllers.Employees
             return Ok(result);
 
         }
+        
     }
 }

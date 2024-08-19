@@ -11,8 +11,11 @@ namespace PSManagement.Application.Customers.UseCases.Commands.CreateCustomer
     {
         public CreateCustomerCommandValidator()
         {
-            RuleFor(x => x.CustomerName).NotEmpty();
-            RuleFor(x => x.Email).EmailAddress();
+            RuleFor(x => x.CustomerName)
+                .NotEmpty()
+                .MinimumLength(5);
+            RuleFor(x => x.Email)
+                .EmailAddress();
         }
     }
 }
