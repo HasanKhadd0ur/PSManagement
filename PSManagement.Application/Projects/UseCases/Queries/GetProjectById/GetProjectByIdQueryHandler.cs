@@ -1,6 +1,7 @@
 ﻿using Ardalis.Result;
 using AutoMapper;
 using PSManagement.Application.Projects.Common;
+using PSManagement.Application.Projects.UseCases.Queries.GetProjectById;
 using PSManagement.Domain.Projects;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.Repositories;
@@ -34,6 +35,7 @@ namespace PSManagement.Application.Projects.UseCases.Queries.GetProject
             _specification.Includes.Add(p => p.Attachments);
             _specification.Includes.Add(p => p.TeamLeader);
             _specification.Includes.Add(p => p.Executer);
+            _specification.Includes.Add(p => p.Proposer);
 
 
 

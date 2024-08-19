@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PSManagement.Application.Projects.UseCases.Queries.GetProject
+namespace PSManagement.Application.Projects.UseCases.Queries.GetProjectById
 {
     public record GetProjectByIdQuery(
          int ProjectId

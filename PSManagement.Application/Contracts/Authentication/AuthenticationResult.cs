@@ -10,12 +10,20 @@ namespace PSManagement.Application.Contracts.Authentication
 {
     public class AuthenticationResult
     {
-        public int Id { get; set; }
+        public int EmployeeId { get; set; }
         public String Email { get; set; }
         public String LastName { get; set; }
         public String FirstName { get; set; }
-        public ICollection<Role> Roles { get; set; } 
+        public ICollection<RoleDTO> Roles { get; set; }
         public String Token { get; set; }
 
     }
+
+    public class RoleDTO{
+        public String Name { get; set; }
+        public int Id { get; set; }
+
+    }
+
+
 }

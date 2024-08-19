@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <Folder Include="Behaviors\AuthorizationBehavior\" />
-    <Folder Include="Tracks\EventsHandlers\" />
+    <Folder Include="Projects\UseCases\Commands\ChangeParticipantPartialTime\" />
   </ItemGroup>
 
   <ItemGroup>

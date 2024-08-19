@@ -37,10 +37,11 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CancelProject
             else
             {
 
-                project.Cancel(_dateTime.UtcNow);
+                Result result = project.Cancel(_dateTime.UtcNow);
+
                 await _unitOfWork.SaveChangesAsync();
 
-                return Result.Success();
+                return result;
 
 
 

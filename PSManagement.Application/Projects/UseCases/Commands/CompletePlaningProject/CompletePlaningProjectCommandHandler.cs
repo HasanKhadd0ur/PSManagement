@@ -35,11 +35,11 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CompletePlaningPro
             else
             {
 
-                project.Plan();
+                Result result = project.Plan();
 
                 await _unitOfWork.SaveChangesAsync();
 
-                return Result.Success();
+                return result;
 
 
 

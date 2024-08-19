@@ -32,17 +32,11 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CompleteProgressPr
             {
                 return Result.Invalid(ProjectsErrors.InvalidEntryError);
             }
-            else
-            {
-
-                project.Complete();
-
+            else{
+                
+                Result result = project.Complete();
                 await _unitOfWork.SaveChangesAsync();
-
-                return Result.Success();
-
-
-
+                return result;
             }
         }
     }

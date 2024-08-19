@@ -35,10 +35,10 @@ namespace PSManagement.Application.Projects.UseCases.Commands.ApproveProject
             else
             {
 
-                project.Approve(request.ProjectAggreement);
+                Result result =project.Approve(request.ProjectAggreement);
                 await _unitOfWork.SaveChangesAsync();
 
-                return Result.Success();
+                return result;
 
 
 

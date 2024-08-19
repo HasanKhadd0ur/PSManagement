@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PSManagement.Application.Contracts.Authentication;
 using PSManagement.Application.Customers.Common;
 using PSManagement.Application.Employees.Common;
 using PSManagement.Application.FinancialSpends.Common;
@@ -12,6 +13,7 @@ using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Customers.ValueObjects;
 using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.FinancialSpends.Entities;
+using PSManagement.Domain.Identity.Entities;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.ValueObjects;
 using PSManagement.Domain.Tracking;
@@ -81,7 +83,7 @@ namespace PSManagement.Application.Mappers
                 ))
                 ;
 
-
+            CreateMap<Role,RoleDTO>().ReverseMap();
 
         }
     }
