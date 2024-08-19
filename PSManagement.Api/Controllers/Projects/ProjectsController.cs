@@ -18,6 +18,11 @@ using PSManagement.Application.Projects.UseCases.Commands.ChangeProjectTeamLeade
 using PSManagement.Application.Projects.UseCases.Commands.ApproveProject;
 using PSManagement.Application.Projects.UseCases.Queries.GetParticipants;
 using PSManagement.Application.Projects.UseCases.Queries.GetProjectAttachments;
+using PSManagement.Application.Projects.UseCases.Queries.GetProjectById;
+using PSManagement.Application.Projects.UseCases.Commands.CompleteProgressProject;
+using PSManagement.Application.Projects.UseCases.Commands.CompletePlaningProject;
+using PSManagement.Application.Contracts.Providers;
+using PSManagement.Application.Projects.UseCases.Commands.CancelProject;
 
 namespace PSManagement.Api.Controllers.Projects
 {
@@ -27,11 +32,17 @@ namespace PSManagement.Api.Controllers.Projects
     {
         private readonly IMediator _sender;
         private readonly IMapper _mapper;
+        private readonly ICurrentUserProvider _currentUserProvider;
 
-        public ProjectsController(IMapper mapper, IMediator sender)
+        public ProjectsController(
+            IMapper mapper,
+            IMediator sender,
+            ICurrentUserProvider currentUserProvider
+            )
         {
             _mapper = mapper;
             _sender = sender;
+            _currentUserProvider = currentUserProvider;
         }
 
 
@@ -57,7 +68,7 @@ namespace PSManagement.Api.Controllers.Projects
         }
     
         [HttpGet("ByProjectManager")]
-        public async Task<IActionResult> GetByBrojectManager([FromQuery] GetProjectsByProjectManagerRequest request )
+        public async Task<IActionResult> GetByPojectManager([FromQuery] GetProjectsByProjectManagerRequest request )
         {
             GetProjectsByFilterQuery query = _mapper.Map<GetProjectsByFilterQuery>(request);
 
@@ -66,7 +77,7 @@ namespace PSManagement.Api.Controllers.Projects
             return Ok(_mapper.Map<Result<IEnumerable<ProjectResponse>>>(result));
         }
 
-        [HttpGet("GetParticipants{id}")]
+        [HttpGet("GetParticipants/{id}")]
         public async Task<IActionResult> GetParticipants(int id)
         {
             GetProjectParticipantsQuery query = new (id);
@@ -76,16 +87,6 @@ namespace PSManagement.Api.Controllers.Projects
             return Ok( _mapper.Map<Result<IEnumerable<EmployeeParticipateResponse>>>(result));
         }
 
-
-        [HttpPost("ApproveProject")]
-        public async Task<IActionResult> PostApproveProjectRequest(ApproveProjectRequest request)
-        {
-            var query = _mapper.Map<ApproveProjectCommand>(request);
-
-            var result = await _sender.Send(query);
-
-            return Ok(result);
-        }
 
         [HttpPut("ChangeTeamLeader")]
         public async Task<IActionResult> PuttChangeTeamLeader(ChangeProjectTeamLeaderRequest request)
@@ -130,7 +131,48 @@ namespace PSManagement.Api.Controllers.Projects
             return Ok(result);
         }
 
+        #region project state operations
 
+        [HttpPost("ApproveProject")]
+        public async Task<IActionResult> PostApproveProjectRequest(ApproveProjectRequest request)
+        {
+            var query = _mapper.Map<ApproveProjectCommand>(request);
+
+            var result = await _sender.Send(query);
+
+            return Ok(result);
+        }
+
+        [HttpPost("CancelProject/{id}")]
+        public async Task<IActionResult> PostCancelProjectRequest(int id )
+        {
+            if (_currentUserProvider.EmployeeId is not null) {
+
+                int employeeId = _currentUserProvider.EmployeeId.Value;
+
+                var query = new CancelProjectCommand(id,employeeId);
+
+                var result = await _sender.Send(query);
+
+                return Ok(result);
+
+
+            }
+            return BadRequest();
+        }
+
+        [HttpPost("CompleteProject/{id}")]
+        public async Task<IActionResult> PostCompleteProjectRequest(int id )
+        {
+            var query = new CompleteProgressProjectCommand(id);
+
+            var result = await _sender.Send(query);
+
+            return Ok(result);
+        }
+        
+
+        #endregion project state operations
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
@@ -155,7 +197,7 @@ namespace PSManagement.Api.Controllers.Projects
                 var query = new GetProjectByIdQuery(result.Value);
                 var response = await _sender.Send(query);
 
-                return Ok(_mapper.Map<ProjectResponse>(response));
+                return Ok(_mapper.Map<Result<ProjectResponse>>(response));
 
             }
             else {
@@ -174,7 +216,7 @@ namespace PSManagement.Api.Controllers.Projects
             return Ok(result);
 
         }
-        [HttpGet("Attachments{id}")]
+        [HttpGet("Attachments/{id}")]
         public async Task<IActionResult> GetAttachments([FromQuery]GetProjectAttachmentsRequest request)
         {
             var query = _mapper.Map<GetProjectAttachmentsQuery>(request);

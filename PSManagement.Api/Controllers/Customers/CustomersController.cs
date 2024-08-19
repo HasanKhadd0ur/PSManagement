@@ -69,7 +69,7 @@ namespace PSManagement.Api.Controllers.Customers
 
                 var response = await _sender.Send(query);
 
-                return Ok(_mapper.Map<CustomerResponse>(response));
+                return Ok(_mapper.Map<Result<CustomerResponse>>(response));
 
             }
             else

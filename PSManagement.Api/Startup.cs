@@ -52,7 +52,7 @@ namespace PSManagement.Api
             }
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseCors("AllowFrontend");
             app.UseAuthentication();

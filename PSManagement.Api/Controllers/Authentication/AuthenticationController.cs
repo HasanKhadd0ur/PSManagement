@@ -25,10 +25,11 @@ namespace PSManagement.Api.Controllers.Authentication
 
             if (result.IsSuccess) {
                 AuthenticationResponse response = new (
-                        result.Value.Id,
+                        result.Value.EmployeeId,
                         result.Value.FirstName,
                         result.Value.LastName,
                         result.Value.Email,
+                        result.Value.Roles,
                         result.Value.Token);
                 return Ok(response);
             }
@@ -47,10 +48,11 @@ namespace PSManagement.Api.Controllers.Authentication
             if (result.IsSuccess)
             {
                 AuthenticationResponse response = new (
-                        result.Value.Id,
+                        result.Value.EmployeeId,
                         result.Value.FirstName,
                         result.Value.LastName,
                         result.Value.Email,
+                        result.Value.Roles,
                         result.Value.Token);
                 return Ok(response);
             }
