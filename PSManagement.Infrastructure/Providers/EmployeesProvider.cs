@@ -1,4 +1,5 @@
-﻿using PSManagement.Application.Contracts.Providers;
+﻿using PSManagement.Application.Contracts.Authentication;
+using PSManagement.Application.Contracts.Providers;
 using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.Identity.Entities;
 using System.Collections.Generic;

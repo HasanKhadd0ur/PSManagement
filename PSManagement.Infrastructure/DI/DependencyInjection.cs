@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PSManagement.Application.Contracts.Authentication;
 using PSManagement.Application.Contracts.Authorization;
 using PSManagement.Application.Contracts.Email;
+using PSManagement.Application.Contracts.Occupancy;
 using PSManagement.Application.Contracts.Providers;
 using PSManagement.Application.Contracts.Storage;
 using PSManagement.Application.Contracts.SyncData;
@@ -14,6 +16,7 @@ using PSManagement.Infrastructure.BackgroundServcies;
 using PSManagement.Infrastructure.Services.Authentication;
 using PSManagement.Infrastructure.Services.Authorization;
 using PSManagement.Infrastructure.Services.Email;
+using PSManagement.Infrastructure.Services.Occupancy;
 using PSManagement.Infrastructure.Services.Providers;
 using PSManagement.Infrastructure.Services.Storage;
 using PSManagement.Infrastructure.Settings;
@@ -38,6 +41,8 @@ namespace PSManagement.Infrastructure.DI
         {
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             services.AddScoped<IEmployeesProvider, EmployeesProvider>();
+            services.AddScoped<ICurrentUserProvider,CurrentUserProvider>();
+
             services.AddScoped<IFileService,FileService>();
             services.AddScoped<IEmailService,EmailService>();
             return services;
@@ -45,9 +50,10 @@ namespace PSManagement.Infrastructure.DI
         private static IServiceCollection AddBackgroundServices(this IServiceCollection services,IConfiguration configuration)
         {
             services.Configure<EmployeesSyncJobSettings>(configuration.GetSection("EmpoyeesSyncJobSettings"));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<ISyncEmployeesService, SyncEmployeesService>();
-            
+            services.AddScoped<IOccupancySystemNotifier,OccupancySystemNotifier>();   
             services.AddHostedService<BackgroundJobSyncEmployees>();
 
             return services;

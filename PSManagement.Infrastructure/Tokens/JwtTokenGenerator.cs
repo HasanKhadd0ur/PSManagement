@@ -31,10 +31,13 @@ namespace PSManagement.Infrastructure.Authentication
                     new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSetting.Secret)),
                     SecurityAlgorithms.HmacSha256
                 );
+
             List<Claim> claims = new List<Claim>{
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email)
+                new Claim(ClaimTypes.NameIdentifier, user.Employee.Id.ToString()),
+                new Claim(ClaimTypes.Name,user.UserName),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim("HiastId", user.Employee.HIASTId.ToString())
+
             };
 
             foreach (Role role  in user.Roles) {

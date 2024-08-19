@@ -26,7 +26,7 @@ namespace PSManagement.Infrastructure.Services.Storage
             {
                return Result.Invalid(new ValidationError("File type not allowed."));
             }
-            fileName = fileName + "." + Path.GetExtension(file.FileName);
+            fileName = fileName  + Path.GetExtension(file.FileName);
             var filePath = Path.Combine("wwwroot\\uploads", fileName);
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
