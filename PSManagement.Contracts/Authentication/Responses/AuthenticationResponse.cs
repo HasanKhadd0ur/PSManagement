@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PSManagement.Application.Contracts.Authentication;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +8,11 @@ using System.Threading.Tasks;
 namespace PSManagement.Contracts.Authentication
 {
     public record AuthenticationResponse(
-        int Id ,
+        int EmployeeId ,
         String FirstName,
         String LastName ,
         String Email ,
+        ICollection<RoleDTO> Roles,
         String Token
         );
 }

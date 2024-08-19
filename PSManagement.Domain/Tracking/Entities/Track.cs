@@ -31,7 +31,7 @@ namespace PSManagement.Domain.Tracking
         {
             TrackInfo = new (TrackInfo.TrackDate,true,TrackInfo.StatusDescription);
 
-            AddDomainEvent(new TrackCompleteddEvent(ProjectId, Id, completionDate));
+            AddDomainEvent(new TrackCompletedEvent(ProjectId, Id, completionDate));
 
         }
     }

@@ -5,6 +5,8 @@
      string TeamLeaderName,
      string DepartmentName,
      string ProposerName,
+     int? ProjectManagerId,
+     int? TeamLeaderId,
      int? PageNumber,
-     int? PagerSize);
+     int? PageSize);
 }

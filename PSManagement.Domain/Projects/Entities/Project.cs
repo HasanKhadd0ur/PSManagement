@@ -1,4 +1,5 @@
-﻿using PSManagement.Domain.Customers.Entities;
+﻿using Ardalis.Result;
+using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.FinancialSpends.Entities;
 using PSManagement.Domain.Projects.ValueObjects;
@@ -16,16 +17,22 @@ namespace PSManagement.Domain.Projects.Entities
 {
     public class Project : IAggregateRoot
     {
+
         // information about the project itself 
+        #region Project  informations
+        
         public ProposalInfo ProposalInfo { get; set; }
         public ProjectInfo ProjectInfo { get; set; }
         public Aggreement ProjectAggreement { get; set; }
 
-        // state management 
+        #endregion Project  informations
+
+        #region Project State 
         public string CurrentState { get; private set; }  // Persisted in the database
 
         [NotMapped]
         private IProjectState _state ;
+
         [NotMapped]
         public IProjectState State {
             get {
@@ -40,13 +47,21 @@ namespace PSManagement.Domain.Projects.Entities
             set => _state = value;
         }
 
+        #endregion Project State
+
         // information about who lead and execute the project 
+        #region Project Management Iformations 
+
         public int TeamLeaderId { get; set; }
         public Employee TeamLeader { get; set; }
         public int ProjectManagerId { get; set; }
         public Employee ProjectManager { get; set; }
         public int ExecuterId { get; set; }
         public Department Executer { get; set; }
+        public FinancialFund FinancialFund { get; set; }
+        public ICollection<FinancialSpending> FinancialSpending { get; set; }
+
+        #endregion Project Management Iformations 
 
         // the proposer of the project 
         public int ProposerId { get; private set; }
@@ -57,16 +72,22 @@ namespace PSManagement.Domain.Projects.Entities
         public ICollection<Employee> Participants { get; set; }
         public ICollection<Attachment> Attachments { get; set; }
 
-        // finincial plan 
-        public FinancialFund FinancialFund { get; set; }
-        public ICollection<FinancialSpending> FinancialSpending { get; set; }
-
-
 
         public ICollection<EmployeeParticipate> EmployeeParticipates { get; set; }
         public ICollection<Track> Tracks { get; set; }
 
-        public void AddAttachment(Attachment attachment) {
+
+
+        #region Encapsulating the collection operations 
+        public void AddAttachment(Attachment attachment)
+        {
+
+            Attachments.Add(attachment);
+
+        }
+        public void AddAttachment(string attachmentUrl,string attachmentName,string attachmentDescription,int projectId)
+        {
+            Attachment attachment = new(attachmentUrl, attachmentName,attachmentDescription, projectId);
 
             Attachments.Add(attachment);
 
@@ -76,14 +97,43 @@ namespace PSManagement.Domain.Projects.Entities
             FinancialSpending.Add(financialSpending);
 
         }
-
         public void AddStep(Step step)
         {
             Steps.Add(step);
 
         }
 
+        #endregion Encapsulating the collection operations 
 
+        #region State Transitions
+
+        public Result Complete() 
+        {
+            return State.Complete(this);
+        
+        }
+        public Result Plan()
+        {
+            return State.Plan(this);
+
+        }
+        public Result Approve(Aggreement projectAggreement)
+        {
+            return State.Approve(this, projectAggreement);
+
+        }
+        public Result Cancel(DateTime canellationTime)
+        {
+            return State.Cancel(this,canellationTime);
+
+        }
+        public Result Propose()
+        {
+            return State.Propose(this);
+
+        }
+
+        #endregion State Transitions
         public Project(
             ProposalInfo proposalInfo,
             ProjectInfo projectInfo,
@@ -92,7 +142,8 @@ namespace PSManagement.Domain.Projects.Entities
             int teamLeaderId,
             int projectManagerId,
             int executerId,
-            string stateName)
+            string stateName
+            )
         {
             SetStateFromString(stateName);
             ProposalInfo = proposalInfo;
@@ -108,43 +159,20 @@ namespace PSManagement.Domain.Projects.Entities
             Steps = new List<Step>();
             Participants = new List<Employee>();
             EmployeeParticipates = new List<EmployeeParticipate>();
-            
+
 
         }
         public Project()
         {
         }
+
         public void SetState(IProjectState newState)
         {
             _state = newState;
-            CurrentState = _state.StateName; 
-        }
-        public void Complete() 
-        {
-            State.Complete(this);
-        
-        }
-        public void Plan()
-        {
-            State.Plan(this);
-
-        }
-        public void Approve(Aggreement projectAggreement)
-        {
-            State.Approve(this,projectAggreement);
-
-        }
-        public void Cancel(DateTime canellationTime)
-        {
-            State.Cancel(this,canellationTime);
-
-        }
-        public void Propose()
-        {
-            State.Propose(this);
-
+            CurrentState = _state.StateName;
         }
 
+        #region state extracting from state name 
         public void SetStateFromString(string stateName)
         {
             switch (stateName)
@@ -168,7 +196,7 @@ namespace PSManagement.Domain.Projects.Entities
                     throw new InvalidOperationException("Unknown state");
             }
         }
-
+        #endregion state extracting from state name 
     }
 
 }

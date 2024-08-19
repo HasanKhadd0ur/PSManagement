@@ -1,4 +1,7 @@
-﻿using PSManagement.Domain.Projects.ValueObjects;
+﻿using Ardalis.Result;
+using PSManagement.Domain.Projects.DomainErrors;
+using PSManagement.Domain.Projects.DomainEvents;
+using PSManagement.Domain.Projects.ValueObjects;
 using System;
 
 namespace PSManagement.Domain.Projects.Entities
@@ -7,29 +10,34 @@ namespace PSManagement.Domain.Projects.Entities
     {
         public string StateName => "Proposed";
 
-        public void Approve(Project project, Aggreement projectAggreement)
+        public Result Approve(Project project, Aggreement projectAggreement)
         {
+            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Proposed", "Approved"));
 
         }
 
-        public void Cancel(Project project, DateTime canellationTime)
+        public Result Cancel(Project project, DateTime canellationTime)
         {
-        
+            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Proposed", "Canceled"));
+
         }
 
-        public void Complete(Project project)
+        public Result Complete(Project project)
         {
-        
+            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Proposed", "Completed"));
+
         }
 
-        public void Plan(Project project)
+        public Result Plan(Project project)
         {
-        
+            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Propose", "In Planing"));
+
         }
 
-        public void Propose(Project project)
+        public Result Propose(Project project)
         {
             project.SetState(new InPlanState());
+            return Result.Success();
         }
     }
 

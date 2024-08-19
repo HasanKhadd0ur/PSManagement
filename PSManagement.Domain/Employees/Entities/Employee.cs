@@ -1,9 +1,11 @@
-﻿using PSManagement.Domain.Identity.Entities;
+﻿using PSManagement.Domain.Employees.DomainEvents;
+using PSManagement.Domain.Identity.Entities;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Tracking;
 using PSManagement.Domain.Tracking.Entities;
 using PSManagement.SharedKernel.Aggregate;
 using PSManagement.SharedKernel.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,6 +38,19 @@ namespace PSManagement.Domain.Employees.Entities
             Availability = availability;
             PersonalInfo = personalInfo;
             HIASTId = hiastId;
+        }
+
+        public void UpdateWorkHours(int workingHour)
+        {
+            int currentWorkHours = Availability.CurrentWorkingHours;
+
+            // change the employee working hours 
+            Availability = new(workingHour, Availability.IsAvailable);
+
+            // publish the events of changing the working hours  
+            AddDomainEvent(new EmployeeWorkHoursChangedEvent(Id,currentWorkHours,workingHour));
+
+            
         }
     }
 }
