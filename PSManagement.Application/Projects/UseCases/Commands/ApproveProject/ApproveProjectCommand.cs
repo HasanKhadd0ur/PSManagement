@@ -9,7 +9,6 @@ using System.Text;
 namespace PSManagement.Application.Projects.UseCases.Commands.ApproveProject
 {
     public record ApproveProjectCommand(
-        Aggreement ProjectAggreement,
         int ProjectId
         ): ICommand<Result>;
 

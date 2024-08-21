@@ -9,7 +9,7 @@ namespace PSManagement.Domain.Projects.Entities
     {
         public string StateName => "CancledState";
 
-        public Result Approve(Project project, Aggreement projectAggreement)
+        public Result Approve(Project project)
         {
             return Result.Invalid(ProjectsErrors.StateTracnsitionError("Cancelled","Approved"));
         }

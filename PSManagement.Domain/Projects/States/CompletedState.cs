@@ -9,30 +9,30 @@ namespace PSManagement.Domain.Projects.Entities
     {
         public string StateName => "Completed";
 
-        public Result Approve(Project project, Aggreement projectAggreement)
+        public Result Approve(Project project)
         {
-            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Approved", "Approved"));
+            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Completed", "Approved"));
         }
 
         public Result Cancel(Project project, DateTime canellationTime)
         {
-            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Approved", "Cancelled"));
+            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Completed", "Cancelled"));
         }
 
         public Result Complete(Project project)
         {
-            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Approved", "Completed"));
+            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Completed", "Completed"));
         }
 
         public Result Plan(Project project)
         {
-            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Approved", "InPlan"));
+            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Completed", "InPlan"));
 
         }
 
         public Result Propose(Project project)
         {
-            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Approved", "Proposed"));
+            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Completed", "Proposed"));
 
         }
     }

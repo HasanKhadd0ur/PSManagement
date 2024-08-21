@@ -9,6 +9,6 @@ namespace PSManagement.Application.Projects.UseCases.Queries.ListAllProject
         int? PageNumber,
         int? PageSize
 
-        ) : IQuery<Result<IEnumerable<ProjectDTO>>>;
+        ) : IQuery<Result<IEnumerable<ProjectDetailsDTO>>>;
 
 }

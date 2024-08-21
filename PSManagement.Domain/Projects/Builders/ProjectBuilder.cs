@@ -24,12 +24,17 @@ namespace PSManagement.Domain.Projects.Builders
         private int _executerId;
         private int _proposerId;
         private string _stateName;
+        private ProjectClassification _projectClassification;
         private ICollection<Step> _steps;
         private ICollection<EmployeeParticipate> _participants;
         private ICollection<Attachment> _attachments;
 
         private ICollection<FinancialSpending> _financialSpending;
-
+        public ProjectBuilder WithClassification(ProjectClassification projectClassification)
+        {
+            _projectClassification = projectClassification;
+            return this;
+        }
         public ProjectBuilder WithParticipants(ICollection<EmployeeParticipate> participates)
         {
             _participants = participates;
@@ -114,7 +119,8 @@ namespace PSManagement.Domain.Projects.Builders
                 _teamLeaderId,
                 _projectManagerId ,
                 _executerId,
-                _stateName);
+                _stateName,
+                _projectClassification);
             project.FinancialFund = _financialFund;
 
             if (_attachments is not null) {

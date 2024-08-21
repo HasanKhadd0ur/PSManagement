@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Application.Projects.UseCases.Commands.CompletePlaningProject
 {
-    public class CompletePlaningProjectCommandHandler : ICommandHandler<CompletePlaningProjectCommand, Result>
+    public class RePlanProjectCommandHandler : ICommandHandler<RePlanProjectCommand, Result>
     {
         private readonly IProjectsRepository _projectsRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public CompletePlaningProjectCommandHandler(
+        public RePlanProjectCommandHandler(
             IProjectsRepository projectsRepository,
             IUnitOfWork unitOfWork
             )
@@ -25,7 +25,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CompletePlaningPro
 
         }
 
-        public async Task<Result> Handle(CompletePlaningProjectCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(RePlanProjectCommand request, CancellationToken cancellationToken)
         {
             Project project = await _projectsRepository.GetByIdAsync(request.ProjectId);
             if (project is null)

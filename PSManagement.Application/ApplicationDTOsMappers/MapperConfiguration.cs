@@ -68,9 +68,10 @@ namespace PSManagement.Application.Mappers
            
             
             CreateMap<Project, ProjectDTO>().ReverseMap();
+            CreateMap<Project, ProjectDetailsDTO>().ReverseMap();
 
 
-            CreateMap <CreateFinancialSpendItemCommand,FinancialSpending> ()
+            CreateMap<CreateFinancialSpendItemCommand,FinancialSpending> ()
                 .ForMember(d=>d.Id, op => op.Ignore())
                 .ForMember(d=> d.Events, op => op.Ignore())
                 .ConstructUsing(src => new FinancialSpending(

@@ -49,7 +49,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.AddParticipant
                 return Result.Invalid(ProjectsErrors.InvalidEntryError);
             }else {
 
-                if (project.EmployeeParticipates.Where(e => e.EmployeeId == request.ParticipantId).FirstOrDefault() is not  null)
+                if (project.HasParticipant(request.ParticipantId))
                 {
 
                     return Result.Invalid(ProjectsErrors.ParticipantExistError);
@@ -63,9 +63,8 @@ namespace PSManagement.Application.Projects.UseCases.Commands.AddParticipant
 
                     }
 
-                    await _employeeParticipateRepository.AddAsync(new (request.ParticipantId,request.ProjectId,request.Role,request.PartialTimeRatio));
-                    
-                    project.AddDomainEvent(new ParticipantAddedEvent(request.ParticipantId,request.ProjectId,request.PartialTimeRatio,request.Role));
+                    // this method encapsulate the event publishig 
+                    project.AddParticipation(request.ParticipantId, request.ProjectId, request.Role, request.PartialTimeRatio);
 
                     await _unitOfWork.SaveChangesAsync();
                     return Result.Success();

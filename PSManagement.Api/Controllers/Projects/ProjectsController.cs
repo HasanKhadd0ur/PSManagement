@@ -23,6 +23,7 @@ using PSManagement.Application.Projects.UseCases.Commands.CompleteProgressProjec
 using PSManagement.Application.Projects.UseCases.Commands.CompletePlaningProject;
 using PSManagement.Application.Contracts.Providers;
 using PSManagement.Application.Projects.UseCases.Commands.CancelProject;
+using PSManagement.Application.Projects.UseCases.Commands.ChangeProjectManager;
 
 namespace PSManagement.Api.Controllers.Projects
 {
@@ -98,6 +99,16 @@ namespace PSManagement.Api.Controllers.Projects
             return HandleResult(result);
         }
 
+        [HttpPut("ChangeProjectManager")]
+        public async Task<IActionResult> PutProjectManager(ChangeProjectManagerRequest request)
+        {
+            var query = _mapper.Map<ChangeProjectManagerCommand>(request);
+
+            var result = await _sender.Send(query);
+
+            return HandleResult(result);
+        }
+
 
         [HttpPost("AddProjectStep")]
         public async Task<IActionResult> PostAddParticipant(AddProjectStepRequest request)
@@ -161,6 +172,16 @@ namespace PSManagement.Api.Controllers.Projects
             return BadRequest();
         }
 
+        [HttpPost("RePlanProject")]
+        public async Task<IActionResult> PostCompleteProjectRequest(RePlanProjectRequest request)
+        {
+            var query = _mapper.Map<RePlanProjectCommand>(request);
+
+            var result = await _sender.Send(query);
+
+            return HandleResult(result);
+        }
+
         [HttpPost("CompleteProject/{id}")]
         public async Task<IActionResult> PostCompleteProjectRequest(int id )
         {
@@ -197,7 +218,7 @@ namespace PSManagement.Api.Controllers.Projects
                 var query = new GetProjectByIdQuery(result.Value);
                 var response = await _sender.Send(query);
 
-                return HandleResult(_mapper.Map<Result<ProjectResponse>>(response));
+                return HandleResult(_mapper.Map<Result<ProjectDetailsResponse>>(response));
 
             }
             else {

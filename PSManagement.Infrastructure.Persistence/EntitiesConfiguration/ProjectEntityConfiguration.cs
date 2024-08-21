@@ -26,6 +26,14 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                     p.Property(e => e.AggreementNumber).HasColumnName("AggreementNumber");
                 }
             );
+            builder.OwnsOne(c => c.ProjectClassification,
+                p => {
+                    p.Property(e => e.ProjectNature).HasColumnName("ProjectNature");
+                    p.Property(e => e.ProjectStatus).HasColumnName("ProjectStatus");
+                    p.Property(e => e.ProjectType).HasColumnName("ProjectType");
+                }
+            );
+
             builder.OwnsOne(c => c.ProjectInfo,
                 p => {
                     p.Property(e => e.Description).HasColumnName("Description");

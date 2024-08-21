@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Application.Projects.UseCases.Queries.ListAllProject
 {
-    public class GetProjectsByFilterQueryHandler : IQueryHandler<GetProjectsByFilterQuery, Result<IEnumerable<ProjectDTO>>>
+    public class GetProjectsByFilterQueryHandler : IQueryHandler<GetProjectsByFilterQuery, Result<IEnumerable<ProjectDetailsDTO>>>
     {
         private readonly IProjectsRepository _projectsRepository;
         private readonly IMapper _mapper;
@@ -29,7 +29,7 @@ namespace PSManagement.Application.Projects.UseCases.Queries.ListAllProject
 
         private readonly BaseSpecification<Project> _specification;
 
-        public async Task<Result<IEnumerable<ProjectDTO>>> Handle(GetProjectsByFilterQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<ProjectDetailsDTO>>> Handle(GetProjectsByFilterQuery request, CancellationToken cancellationToken)
         {
             _specification.AddInclude(e => e.TeamLeader);
             _specification.AddInclude(e => e.Executer);
@@ -68,7 +68,7 @@ namespace PSManagement.Application.Projects.UseCases.Queries.ListAllProject
             {
                 projects = projects.Where(p => p.TeamLeaderId == request.TeamLeaderId);
             }
-            return Result.Success(_mapper.Map<IEnumerable<ProjectDTO>>(projects));
+            return Result.Success(_mapper.Map<IEnumerable<ProjectDetailsDTO>>(projects));
         }
     }
 

@@ -10,7 +10,7 @@ namespace PSManagement.Domain.Projects.Entities
     {
         public string StateName => "Proposed";
 
-        public Result Approve(Project project, Aggreement projectAggreement)
+        public Result Approve(Project project)
         {
             return Result.Invalid(ProjectsErrors.StateTracnsitionError("Proposed", "Approved"));
 

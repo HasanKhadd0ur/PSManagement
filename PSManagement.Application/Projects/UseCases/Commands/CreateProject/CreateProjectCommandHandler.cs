@@ -39,6 +39,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
                 .WithProjectManager(request.ProjectManagerId)
                 .WithTeamLeader(request.TeamLeaderId)
                 .WithProposer(request.ProposerId)
+                .WithClassification(request.ProjectClassification)
                 .Build();
             
             project.Propose();

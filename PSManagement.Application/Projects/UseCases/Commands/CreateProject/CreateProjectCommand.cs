@@ -14,6 +14,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
         ProposalInfo ProposalInfo,
         Aggreement ProjectAggreement,
         FinancialFund FinancialFund,
+        ProjectClassification ProjectClassification,
         int TeamLeaderId ,
         int ProjectManagerId,
         int ProposerId,

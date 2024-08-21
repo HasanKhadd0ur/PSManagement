@@ -2,6 +2,7 @@
 using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.FinancialSpends.Entities;
+using PSManagement.Domain.Projects.DomainEvents;
 using PSManagement.Domain.Projects.ValueObjects;
 using PSManagement.Domain.Tracking;
 using PSManagement.SharedKernel.Aggregate;
@@ -24,7 +25,7 @@ namespace PSManagement.Domain.Projects.Entities
         public ProposalInfo ProposalInfo { get; set; }
         public ProjectInfo ProjectInfo { get; set; }
         public Aggreement ProjectAggreement { get; set; }
-
+        public ProjectClassification ProjectClassification { get; set; }
         #endregion Project  informations
 
         #region Project State 
@@ -46,6 +47,8 @@ namespace PSManagement.Domain.Projects.Entities
             
             set => _state = value;
         }
+
+
 
         #endregion Project State
 
@@ -85,6 +88,15 @@ namespace PSManagement.Domain.Projects.Entities
             Attachments.Add(attachment);
 
         }
+
+        public void AddParticipation(int participantId, int projectId, string role, int partialTimeRatio)
+        {
+            this.EmployeeParticipates.Add(new (participantId,projectId,role, partialTimeRatio));
+
+            AddDomainEvent(new ParticipantAddedEvent(participantId, projectId,partialTimeRatio, role));
+
+        }
+
         public void AddAttachment(string attachmentUrl,string attachmentName,string attachmentDescription,int projectId)
         {
             Attachment attachment = new(attachmentUrl, attachmentName,attachmentDescription, projectId);
@@ -117,9 +129,9 @@ namespace PSManagement.Domain.Projects.Entities
             return State.Plan(this);
 
         }
-        public Result Approve(Aggreement projectAggreement)
+        public Result Approve()
         {
-            return State.Approve(this, projectAggreement);
+            return State.Approve(this);
 
         }
         public Result Cancel(DateTime canellationTime)
@@ -132,8 +144,28 @@ namespace PSManagement.Domain.Projects.Entities
             return State.Propose(this);
 
         }
+        public void SetState(IProjectState newState)
+        {
+            _state = newState;
+            CurrentState = _state.StateName;
+        }
 
         #endregion State Transitions
+        public bool VailedSteps()
+        {
+            int weightSum = 0;
+            foreach (Step step in Steps) {
+                weightSum += step.Weight;
+            }
+            return weightSum == 100;
+
+        }
+        public bool HasParticipant(int participantId)
+        {
+            return EmployeeParticipates.Where(e => e.EmployeeId ==participantId).FirstOrDefault() is not null;
+        }
+
+        #region constructors 
         public Project(
             ProposalInfo proposalInfo,
             ProjectInfo projectInfo,
@@ -142,9 +174,11 @@ namespace PSManagement.Domain.Projects.Entities
             int teamLeaderId,
             int projectManagerId,
             int executerId,
-            string stateName
+            string stateName,
+            ProjectClassification projectClassification
             )
         {
+            ProjectClassification = projectClassification;
             SetStateFromString(stateName);
             ProposalInfo = proposalInfo;
             ProjectInfo = projectInfo;
@@ -166,12 +200,9 @@ namespace PSManagement.Domain.Projects.Entities
         {
         }
 
-        public void SetState(IProjectState newState)
-        {
-            _state = newState;
-            CurrentState = _state.StateName;
-        }
+        #endregion constructors 
 
+        
         #region state extracting from state name 
         public void SetStateFromString(string stateName)
         {
@@ -198,5 +229,5 @@ namespace PSManagement.Domain.Projects.Entities
         }
         #endregion state extracting from state name 
     }
-
+   
 }

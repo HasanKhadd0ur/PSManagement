@@ -10,11 +10,11 @@ namespace PSManagement.Domain.Projects.Entities
     {
         public string StateName => "InPlan";
 
-        public Result Approve(Project project, Aggreement projectAggreement)
+        public Result Approve(Project project)
         {
 
-            project.ProjectAggreement = projectAggreement;
-            project.AddDomainEvent(new ProjectApprovedEvent(project.Id,projectAggreement));
+            project.AddDomainEvent(new ProjectApprovedEvent(project.Id,project.ProjectAggreement));
+
             project.SetState(new InProgressState());
             return Result.Success();
         }
@@ -41,7 +41,7 @@ namespace PSManagement.Domain.Projects.Entities
 
         public Result Propose(Project project)
         {
-            return Result.Invalid(ProjectsErrors.StateTracnsitionError("Approved", "Proposed"));
+            return Result.Invalid(ProjectsErrors.StateTracnsitionError("In Planning", "Proposed"));
 
         }
     }

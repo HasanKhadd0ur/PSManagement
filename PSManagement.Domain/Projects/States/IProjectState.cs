@@ -8,7 +8,7 @@ namespace PSManagement.Domain.Projects.Entities
     {
         Result Complete(Project project);
         Result Plan(Project project);
-        Result Approve(Project project, Aggreement projectAggreement);
+        Result Approve(Project project);
         Result Cancel(Project project, DateTime canellationTime);
         Result Propose(Project project);
         string StateName { get; }
