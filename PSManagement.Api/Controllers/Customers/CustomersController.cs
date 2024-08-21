@@ -23,7 +23,7 @@ using PSManagement.Application.Customers.UseCases.Commands.RemoveContactInfo;
 namespace PSManagement.Api.Controllers.Customers
 {
     [Route("api/[controller]")]
-  //  [Authorize]
+    [Authorize]
     public class CustomersController : APIController
 {
         private readonly IMediator _sender;
@@ -42,7 +42,7 @@ namespace PSManagement.Api.Controllers.Customers
 
             var result = _mapper.Map<Result<IEnumerable<CustomerResponse>>>( await _sender.Send(query));
          
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpGet("{id}")]
@@ -53,7 +53,7 @@ namespace PSManagement.Api.Controllers.Customers
             var result = await _sender.Send(query);
 
 
-            return Ok(_mapper.Map<Result<CustomerResponse>>(result));
+            return HandleResult(_mapper.Map<Result<CustomerResponse>>(result));
         }
         [HttpPost]
         public async Task<IActionResult> Post(CreateCustomerRequest request)
@@ -69,13 +69,13 @@ namespace PSManagement.Api.Controllers.Customers
 
                 var response = await _sender.Send(query);
 
-                return Ok(_mapper.Map<Result<CustomerResponse>>(response));
+                return HandleResult(_mapper.Map<Result<CustomerResponse>>(response));
 
             }
             else
             {
 
-                return Ok(result);
+                return HandleResult(result);
 
             }
 
@@ -88,7 +88,7 @@ namespace PSManagement.Api.Controllers.Customers
 
             var result = await _sender.Send(command);
 
-            return Ok(result);
+            return HandleResult(result);
 
         }
 
@@ -102,7 +102,7 @@ namespace PSManagement.Api.Controllers.Customers
 
             var result = await _sender.Send(command);
 
-            return Ok(result);
+            return HandleResult(result);
 
         }
 
@@ -114,7 +114,7 @@ namespace PSManagement.Api.Controllers.Customers
 
             var result = await _sender.Send(command);
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
 
@@ -125,7 +125,7 @@ namespace PSManagement.Api.Controllers.Customers
 
             var result = await _sender.Send(command);
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
 

@@ -6,6 +6,7 @@ using PSManagement.Application.Contracts.Authentication;
 using PSManagement.Contracts.Authentication;
 using System.Threading.Tasks;
 using AuthenticationResponse = PSManagement.Contracts.Authentication.AuthenticationResponse;
+using AutoMapper;
 
 namespace PSManagement.Api.Controllers.Authentication
 {
@@ -13,29 +14,23 @@ namespace PSManagement.Api.Controllers.Authentication
     public class AuthenticationController : APIController
     {
         private readonly IAuthenticationService _authenticationService;
-
-        public AuthenticationController(IAuthenticationService authenticationService)
+        private readonly IMapper _mapper;
+        public AuthenticationController(IAuthenticationService authenticationService, IMapper mapper)
         {
             _authenticationService = authenticationService;
+            _mapper = mapper;
         }
+
+
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
             Result<AuthenticationResult> result = await _authenticationService.Login(loginRequest.Email, loginRequest.PassWord);
 
-            if (result.IsSuccess) {
-                AuthenticationResponse response = new (
-                        result.Value.EmployeeId,
-                        result.Value.FirstName,
-                        result.Value.LastName,
-                        result.Value.Email,
-                        result.Value.Roles,
-                        result.Value.Token);
-                return Ok(response);
-            }
-
-            return Problem(title: result.ValidationErrors.FirstOrDefault().ErrorCode,detail:result.ValidationErrors.FirstOrDefault().ErrorMessage,statusCode:401);
+            return HandleResult(_mapper.Map<Result<AuthenticationResponse>>(result));
         }
+
+
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody]  RegisterRequest registerRequest)
         {

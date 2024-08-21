@@ -32,7 +32,7 @@ namespace PSManagement.Api.Controllers.Roles
         public async Task<IActionResult> GetRoleByIdAsync(int id)
         {
             var getRolesById = await _roleService.GetRoleByIdAsync(id);
-            return Ok(getRolesById);
+            return HandleResult(getRolesById);
         }
 
         [Authorize( Roles = "Admin")]
@@ -40,7 +40,7 @@ namespace PSManagement.Api.Controllers.Roles
         public async Task<IActionResult> CreateRoleAsync(string roleName)
         {
             var roleCreated = await _roleService.CreateRoleAsync(roleName);
-            return Ok(roleCreated);
+            return HandleResult(roleCreated);
         }
 
         [Authorize(Roles = "Admin")]
@@ -48,15 +48,15 @@ namespace PSManagement.Api.Controllers.Roles
         public async Task<IActionResult> DeleteRoleAsync(int id)
         {
             var deleteRole = await _roleService.DeleteRoleAsync(id);
-            return Ok(deleteRole);
+            return HandleResult(deleteRole);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPut("Edit/{id}")]
-        public async Task<ActionResult> UpdateRoleAsync(int id, string roleName)
+        public async Task<IActionResult> UpdateRoleAsync(int id, string roleName)
         {
             var updateRole = await _roleService.UpdateRole(id, roleName);
-            return Ok(updateRole);
+            return HandleResult(updateRole);
         }
     }
 }

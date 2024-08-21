@@ -53,7 +53,7 @@ namespace PSManagement.Api.Controllers.Projects
 
             var result = _mapper.Map<Result<IEnumerable<ProjectResponse>>>(await _sender.Send(query));
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
 
@@ -64,7 +64,7 @@ namespace PSManagement.Api.Controllers.Projects
 
             var result = await _sender.Send(query);
 
-            return Ok(_mapper.Map<Result<IEnumerable<ProjectResponse>>>(result));
+            return HandleResult(_mapper.Map<Result<IEnumerable<ProjectResponse>>>(result));
         }
     
         [HttpGet("ByProjectManager")]
@@ -74,7 +74,7 @@ namespace PSManagement.Api.Controllers.Projects
 
             var result = await _sender.Send(query);
 
-            return Ok(_mapper.Map<Result<IEnumerable<ProjectResponse>>>(result));
+            return HandleResult(_mapper.Map<Result<IEnumerable<ProjectResponse>>>(result));
         }
 
         [HttpGet("GetParticipants/{id}")]
@@ -84,7 +84,7 @@ namespace PSManagement.Api.Controllers.Projects
 
             var result = await _sender.Send(query);
 
-            return Ok( _mapper.Map<Result<IEnumerable<EmployeeParticipateResponse>>>(result));
+            return HandleResult( _mapper.Map<Result<IEnumerable<EmployeeParticipateResponse>>>(result));
         }
 
 
@@ -95,7 +95,7 @@ namespace PSManagement.Api.Controllers.Projects
 
             var result = await _sender.Send(query);
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
 
@@ -106,7 +106,7 @@ namespace PSManagement.Api.Controllers.Projects
 
             var result = await _sender.Send(query);
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
 
@@ -117,7 +117,7 @@ namespace PSManagement.Api.Controllers.Projects
 
             var result = await _sender.Send(query);
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
 
@@ -128,7 +128,7 @@ namespace PSManagement.Api.Controllers.Projects
 
             var result = await _sender.Send(query);
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
         #region project state operations
@@ -140,7 +140,7 @@ namespace PSManagement.Api.Controllers.Projects
 
             var result = await _sender.Send(query);
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpPost("CancelProject/{id}")]
@@ -154,7 +154,7 @@ namespace PSManagement.Api.Controllers.Projects
 
                 var result = await _sender.Send(query);
 
-                return Ok(result);
+                return HandleResult(result);
 
 
             }
@@ -168,7 +168,7 @@ namespace PSManagement.Api.Controllers.Projects
 
             var result = await _sender.Send(query);
 
-            return Ok(result);
+            return HandleResult(result);
         }
         
 
@@ -181,7 +181,7 @@ namespace PSManagement.Api.Controllers.Projects
 
             var result = await _sender.Send(query);
 
-            return Ok(_mapper.Map<Result<ProjectResponse>>(result));
+            return HandleResult(_mapper.Map<Result<ProjectResponse>>(result));
         }
 
 
@@ -197,12 +197,12 @@ namespace PSManagement.Api.Controllers.Projects
                 var query = new GetProjectByIdQuery(result.Value);
                 var response = await _sender.Send(query);
 
-                return Ok(_mapper.Map<Result<ProjectResponse>>(response));
+                return HandleResult(_mapper.Map<Result<ProjectResponse>>(response));
 
             }
             else {
 
-                return Ok(result);
+                return HandleResult(result);
             
             }
         
@@ -213,7 +213,7 @@ namespace PSManagement.Api.Controllers.Projects
         {
             var command = _mapper.Map<AddAttachmentCommand>(request);
             var result = await _sender.Send(command);
-            return Ok(result);
+            return HandleResult(result);
 
         }
         [HttpGet("Attachments/{id}")]
@@ -222,7 +222,7 @@ namespace PSManagement.Api.Controllers.Projects
             var query = _mapper.Map<GetProjectAttachmentsQuery>(request);
             var result = await _sender.Send(query);
 
-            return Ok(_mapper.Map<Result<IEnumerable<AttachmentReponse>>>(result));
+            return HandleResult(_mapper.Map<Result<IEnumerable<AttachmentReponse>>>(result));
 
         }
 

@@ -38,7 +38,7 @@ namespace PSManagement.Api.Controllers.Steps
 
             var result = _mapper.Map<Result<StepResponse>>(await _sender.Send(query));
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpGet("ByProject")]
@@ -48,20 +48,20 @@ namespace PSManagement.Api.Controllers.Steps
 
             var result = _mapper.Map<Result<IEnumerable<StepResponse>>>(await _sender.Send(query));
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutChangeStepWeight(ChangeStepWeightRequest request,[FromRoute]int id)
         {
             if (request.StepId != id) {
-                return Ok(Result.NotFound("the step not found"));
+                return HandleResult(Result.NotFound("the step not found"));
             }
             var query =  _mapper.Map<ChangeStepWeightCommand>(request); ;
 
             var result = _mapper.Map<Result>(await _sender.Send(query));
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
 
@@ -72,7 +72,7 @@ namespace PSManagement.Api.Controllers.Steps
 
             var result = _mapper.Map<Result<IEnumerable<StepTrackResponse>>>(await _sender.Send(query));
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpPut]
@@ -82,7 +82,7 @@ namespace PSManagement.Api.Controllers.Steps
 
             var result = _mapper.Map<Result>(await _sender.Send(query));
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpDelete("{id}")]
@@ -92,7 +92,7 @@ namespace PSManagement.Api.Controllers.Steps
 
             var result = _mapper.Map<Result>(await _sender.Send(query));
 
-            return Ok(result);
+            return HandleResult(result);
         }
     }
 }

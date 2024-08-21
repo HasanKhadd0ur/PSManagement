@@ -45,13 +45,13 @@ namespace PSManagement.Api.Controllers.FinancialSpends
                 var query = new GetFinancialSpendItemByIdQuery(result.Value);
                 var response = await _sender.Send(query);
 
-                return Ok(_mapper.Map<FinancialSpendingResponse>(response));
+                return HandleResult(_mapper.Map<Result<FinancialSpendingResponse>>(response));
 
             }
             else
             {
 
-                return Ok(result);
+                return HandleResult(result);
 
             }
         }
@@ -63,7 +63,7 @@ namespace PSManagement.Api.Controllers.FinancialSpends
 
             var result = await _sender.Send(query);
 
-            return Ok(_mapper.Map<Result<FinancialSpendingResponse>>(result)); ;
+            return HandleResult(_mapper.Map<Result<FinancialSpendingResponse>>(result)); ;
         }
 
         [HttpGet("GetByProject")]
@@ -73,7 +73,7 @@ namespace PSManagement.Api.Controllers.FinancialSpends
 
             var result = await _sender.Send(query);
 
-            return Ok(_mapper.Map<Result<IEnumerable<FinancialSpendingResponse>>>(result)); ;
+            return HandleResult(_mapper.Map<Result<IEnumerable<FinancialSpendingResponse>>>(result)); ;
         }
 
         [HttpDelete("{id}")]
@@ -87,7 +87,7 @@ namespace PSManagement.Api.Controllers.FinancialSpends
 
             var result = await _sender.Send(query);
 
-            return Ok(result); ;
+            return HandleResult(result); ;
         }
 
         [HttpPut("{id}")]
@@ -102,7 +102,7 @@ namespace PSManagement.Api.Controllers.FinancialSpends
 
             var result = await _sender.Send(query);
 
-            return Ok(result); ;
+            return HandleResult(result); ;
         }
 
     }

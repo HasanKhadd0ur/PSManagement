@@ -47,7 +47,7 @@ namespace PSManagement.Api.Controllers.Employees
 
             var result = await _sender.Send(query);
 
-            return Ok(_mapper.Map<Result<EmployeeResponse>>(result));
+            return HandleResult(_mapper.Map<Result<EmployeeResponse>>(result));
         }
 
         [HttpGet("ByFilter")]
@@ -57,37 +57,37 @@ namespace PSManagement.Api.Controllers.Employees
 
             var result = await _sender.Send(query);
 
-            return Ok(_mapper.Map<Result<IEnumerable<EmployeeResponse>>>(result));
+            return HandleResult(_mapper.Map<Result<IEnumerable<EmployeeResponse>>>(result));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery]GetAvailableEmployeesRequest request)
+        [HttpGet("Available")]
+        public async Task<IActionResult> GetAllAvailable([FromQuery]GetAvailableEmployeesRequest request)
         {
             GetAvailableEmployeesQuery query = _mapper.Map<GetAvailableEmployeesQuery>(request);
 
             var result = await _sender.Send(query);
 
-            return Ok(_mapper.Map<Result<IEnumerable<EmployeeResponse>>>(result));
+            return HandleResult(_mapper.Map<Result<IEnumerable<EmployeeResponse>>>(result));
         }
 
 
-        [HttpPost("EmployeeParticipations")]
-        public async Task<IActionResult> GetEmployeeParticipations([FromForm] GetEmployeeParticipationRequest request)
+        [HttpGet("EmployeeParticipations")]
+        public async Task<IActionResult> GetEmployeeParticipations([FromQuery] GetEmployeeParticipationRequest request)
         {
             var command = _mapper.Map<GetEmployeeParticipationQuery>(request);
             var result = await _sender.Send(command);
 
-            return Ok(_mapper.Map<Result<IEnumerable<EmployeeParticipateResponse>>>(result));
+            return HandleResult(_mapper.Map<Result<IEnumerable<EmployeeParticipateResponse>>>(result));
 
         }
        
-        [HttpPost("TrackHistory")]
+        [HttpGet("TrackHistory")]
         public async Task<IActionResult> GetEmployeeTrackHistory([FromForm] GetEmployeeTrackHistoryRequest request)
         {
             var command = _mapper.Map<GetEmployeeTrackHistoryQuery>(request);
             var result = await _sender.Send(command);
 
-            return Ok(_mapper.Map<Result<IEnumerable<EmployeeTrackResponse>>>(result));
+            return HandleResult(_mapper.Map<Result<IEnumerable<EmployeeTrackResponse>>>(result));
 
         }
 
@@ -108,7 +108,7 @@ namespace PSManagement.Api.Controllers.Employees
 
             var result = await _sender.Send(query);
 
-            return Ok(result);
+            return HandleResult(result);
 
         }
         

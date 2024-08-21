@@ -35,6 +35,7 @@ namespace PSManagement.Application.Steps.UseCases.Queries.GetStepsByProject
 
             _specification.ApplyPaging((pageNumber - 1) * pageSize, pageSize);
 
+            _specification.Criteria = p => p.ProjectId == request.ProjectId;
             var steps = await _stepsRepository.ListAsync(_specification);
 
             return Result.Success(_mapper.Map<IEnumerable<StepDTO>>(steps));

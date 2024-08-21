@@ -49,7 +49,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.AddParticipant
                 return Result.Invalid(ProjectsErrors.InvalidEntryError);
             }else {
 
-                if (project.EmployeeParticipates.Where(e => e.Id == request.ParticipantId).FirstOrDefault() is not  null)
+                if (project.EmployeeParticipates.Where(e => e.EmployeeId == request.ParticipantId).FirstOrDefault() is not  null)
                 {
 
                     return Result.Invalid(ProjectsErrors.ParticipantExistError);

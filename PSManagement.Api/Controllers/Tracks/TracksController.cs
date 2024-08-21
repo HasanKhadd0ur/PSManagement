@@ -41,7 +41,7 @@ namespace PSManagement.Api.Controllers.Tracks
 
             var result = _mapper.Map<Result<TrackResponse>>(await _sender.Send(query));
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpGet("GetStepsTrack{id}")]
@@ -51,7 +51,7 @@ namespace PSManagement.Api.Controllers.Tracks
 
             var result = _mapper.Map<Result<IEnumerable<StepTrackResponse>>>(await _sender.Send(query));
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpGet("GetEmployeesTrack{id}")]
@@ -61,7 +61,7 @@ namespace PSManagement.Api.Controllers.Tracks
 
             var result = _mapper.Map<Result<IEnumerable<EmployeeTrackResponse>>>(await _sender.Send(query));
 
-            return Ok(result);
+            return HandleResult(result);
 
         }
 
@@ -72,7 +72,7 @@ namespace PSManagement.Api.Controllers.Tracks
 
             var result = _mapper.Map<Result<IEnumerable<TrackResponse>>>(await _sender.Send(query));
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpPost("AddStepTrack")]
@@ -82,7 +82,7 @@ namespace PSManagement.Api.Controllers.Tracks
 
             var result = _mapper.Map<Result<int>>(await _sender.Send(command));
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpPost("AddEmployeeTrack")]
@@ -92,7 +92,7 @@ namespace PSManagement.Api.Controllers.Tracks
 
             var result = _mapper.Map<Result<int>>(await _sender.Send(command));
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpPost("CompleteTrack")]
@@ -102,7 +102,7 @@ namespace PSManagement.Api.Controllers.Tracks
 
             var result =await _sender.Send(command);
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpPost("RemoveTrack")]
@@ -112,7 +112,7 @@ namespace PSManagement.Api.Controllers.Tracks
 
             var result =await _sender.Send(command);
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
         [HttpPost]
@@ -128,13 +128,13 @@ namespace PSManagement.Api.Controllers.Tracks
                 var query = new GetTrackByIdQuery(result.Value);
                 var response = await _sender.Send(query);
 
-                return Ok(_mapper.Map<TrackResponse>(response));
+                return HandleResult(_mapper.Map<Result<TrackResponse>>(response));
 
             }
             else
             {
 
-                return Ok(result);
+                return HandleResult(result);
 
             }
         }
@@ -146,7 +146,7 @@ namespace PSManagement.Api.Controllers.Tracks
 
             var result =await _sender.Send(command);
 
-            return Ok(result);
+            return HandleResult(result);
         }
         [HttpPut("UpdateStepTrack")]
         public async Task<IActionResult> PutStepTrack(UpdateStepTrackRequest request)
@@ -155,7 +155,7 @@ namespace PSManagement.Api.Controllers.Tracks
 
             var result = await _sender.Send(command);
 
-            return Ok(result);
+            return HandleResult(result);
         }
 
 
