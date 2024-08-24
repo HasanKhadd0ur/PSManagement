@@ -6,7 +6,7 @@ namespace PSManagement.Domain.Tracking
 {
     public class EmployeeTrack :BaseEntity
     {
-        public int EmloyeeId { get; set; }
+        public int EmployeeId { get; set; }
         public int TrackId { get; set; }
         public Employee Employee { get; set; }
         public Track Track { get; set; }

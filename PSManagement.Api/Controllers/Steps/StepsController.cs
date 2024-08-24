@@ -51,7 +51,7 @@ namespace PSManagement.Api.Controllers.Steps
             return HandleResult(result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("ChangeStepWeight/{id}")]
         public async Task<IActionResult> PutChangeStepWeight(ChangeStepWeightRequest request,[FromRoute]int id)
         {
             if (request.StepId != id) {
@@ -75,7 +75,7 @@ namespace PSManagement.Api.Controllers.Steps
             return HandleResult(result);
         }
 
-        [HttpPut]
+        [HttpPut("ChangeCompletionRatio/{id}")]
         public async Task<IActionResult> PutCompletionRatio(UpdateCompletionRatioRequest request)
         {
             var query = _mapper.Map<UpdateCompletionRatioCommand>(request);
@@ -90,7 +90,7 @@ namespace PSManagement.Api.Controllers.Steps
         {
             var query = new RemoveStepCommand(id);
 
-            var result = _mapper.Map<Result>(await _sender.Send(query));
+            var result =await _sender.Send(query);
 
             return HandleResult(result);
         }

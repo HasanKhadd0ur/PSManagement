@@ -47,7 +47,7 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.UpdateEmployeeWorkTra
                 return Result.Invalid(TracksErrors.InvalidEntryError);
 
             }
-            if (request.EmployeeId != employeeTrack.EmloyeeId)
+            if (request.EmployeeId != employeeTrack.EmployeeId)
             {
 
                 return Result.Invalid(TracksErrors.InvalidEntryError);

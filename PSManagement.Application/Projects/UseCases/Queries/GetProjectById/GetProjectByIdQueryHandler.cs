@@ -31,9 +31,9 @@ namespace PSManagement.Application.Projects.UseCases.Queries.GetProject
         {
             _specification.Includes.Add(p=> p.EmployeeParticipates);
             _specification.Includes.Add(p => p.FinancialSpending);
-            _specification.Includes.Add(p => p.ProjectManager);
+            _specification.Includes.Add(p => p.ProjectManager.Department);
             _specification.Includes.Add(p => p.Attachments);
-            _specification.Includes.Add(p => p.TeamLeader);
+            _specification.Includes.Add(p => p.TeamLeader.Department);
             _specification.Includes.Add(p => p.Executer);
             _specification.Includes.Add(p => p.Proposer);
 

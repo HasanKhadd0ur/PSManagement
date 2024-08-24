@@ -40,7 +40,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.AddProjectStep
             }
             else
             {    
-                Step  step = await _stepsRepository.AddAsync(new(request.StepInfo ,request.ProjectId,request.Weight));
+                Step  step = await _stepsRepository.AddAsync(new(request.StepInfo ,request.ProjectId,request.CurrentCompletionRatio,request.Weight));
                 
                 await _unitOfWork.SaveChangesAsync();
                 

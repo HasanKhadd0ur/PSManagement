@@ -44,7 +44,7 @@ namespace PSManagement.Api.Controllers.Tracks
             return HandleResult(result);
         }
 
-        [HttpGet("GetStepsTrack{id}")]
+        [HttpGet("GetStepsTrack/{id}")]
         public async Task<IActionResult> GetStepsTrack([FromRoute]int id)
         {
             var query = new GetStepsTrackQuery(id);
@@ -54,7 +54,7 @@ namespace PSManagement.Api.Controllers.Tracks
             return HandleResult(result);
         }
 
-        [HttpGet("GetEmployeesTrack{id}")]
+        [HttpGet("GetEmployeesTrack/{id}")]
         public async Task<IActionResult> GetEmployeesTrack([FromRoute] int id)
         {
             var query = new GetEmployeesTrackQuery(id);
@@ -148,6 +148,8 @@ namespace PSManagement.Api.Controllers.Tracks
 
             return HandleResult(result);
         }
+
+        
         [HttpPut("UpdateStepTrack")]
         public async Task<IActionResult> PutStepTrack(UpdateStepTrackRequest request)
         {

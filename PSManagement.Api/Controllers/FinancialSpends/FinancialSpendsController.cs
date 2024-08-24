@@ -66,7 +66,7 @@ namespace PSManagement.Api.Controllers.FinancialSpends
             return HandleResult(_mapper.Map<Result<FinancialSpendingResponse>>(result)); ;
         }
 
-        [HttpGet("GetByProject")]
+        [HttpGet("ByProject")]
         public async Task<IActionResult> GetByProject([FromQuery] GetFinancialSpendItemByProjecRequest request)
         {
             var query = _mapper.Map<GetFinancialSpendItemByProjectQuery>(request);
@@ -77,7 +77,7 @@ namespace PSManagement.Api.Controllers.FinancialSpends
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete( RemoveFinancialSpendItemRequest request,[FromRoute]int id)
+        public async Task<IActionResult> Delete([FromQuery] RemoveFinancialSpendItemRequest request,[FromRoute]int id)
         {
             if (id != request.Id) {
                 Result.Conflict();

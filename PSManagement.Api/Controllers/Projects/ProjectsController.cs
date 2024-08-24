@@ -52,7 +52,7 @@ namespace PSManagement.Api.Controllers.Projects
         {
             var query =  _mapper.Map<ListAllProjectsQuery>(request);
 
-            var result = _mapper.Map<Result<IEnumerable<ProjectResponse>>>(await _sender.Send(query));
+            var result = _mapper.Map<Result<IEnumerable<ProjectDetailsResponse>>>(await _sender.Send(query));
 
             return HandleResult(result);
         }
@@ -65,7 +65,7 @@ namespace PSManagement.Api.Controllers.Projects
 
             var result = await _sender.Send(query);
 
-            return HandleResult(_mapper.Map<Result<IEnumerable<ProjectResponse>>>(result));
+            return HandleResult(_mapper.Map<Result<IEnumerable<ProjectDetailsResponse>>>(result));
         }
     
         [HttpGet("ByProjectManager")]
@@ -75,7 +75,7 @@ namespace PSManagement.Api.Controllers.Projects
 
             var result = await _sender.Send(query);
 
-            return HandleResult(_mapper.Map<Result<IEnumerable<ProjectResponse>>>(result));
+            return HandleResult(_mapper.Map<Result<IEnumerable<ProjectDetailsResponse>>>(result));
         }
 
         [HttpGet("GetParticipants/{id}")]

@@ -11,6 +11,7 @@ using PSManagement.SharedKernel.Specification;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
+using System;
 
 namespace PSManagement.Application.Tracks.UseCaes.Commands.AddEmployeeTrack
 {
@@ -53,12 +54,13 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.AddEmployeeTrack
                 return Result.Invalid(TracksErrors.TrackCompletedUpdateError);
             }
 
-            if (track.EmployeeTracks.Any(e => e.EmloyeeId == request.EmployeeId)) {
+            if (track.EmployeeTracks.Any(e => e.EmployeeId == request.EmployeeId)) {
 
                 return Result.Invalid(TracksErrors.ParticipantTrackExistError);
             
             }
-
+            var r =_mapper.Map<EmployeeTrack>(request);
+            //Console.WriteLine(r.EmloyeeId);
             EmployeeTrack employeeTrack = await _employeeTracksRepository.AddAsync(_mapper.Map<EmployeeTrack>(request));
 
             await _unitOfWork.SaveChangesAsync();

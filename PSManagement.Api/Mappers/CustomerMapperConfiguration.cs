@@ -59,7 +59,11 @@ namespace PSManagement.Api.Mappers
             CreateMap<ChangeProjectTeamLeaderRequest, ChangeProjectTeamLeaderCommand>().ReverseMap();
             CreateMap<RemoveParticipantRequest, RemoveParticipantCommand>().ReverseMap();
             CreateMap<ProjectDTO,ProjectResponse>().ReverseMap();
-
+            CreateMap<GetProjectsByProjectManagerRequest,GetProjectsByFilterQuery>().ConstructUsing(
+                s => new GetProjectsByFilterQuery(null,null,null,null,s.ProjectManagerId,null,null,null)
+            );
+            
+            
             CreateMap<EmployeeResponse, EmployeeDTO>().ReverseMap();
             CreateMap<EmployeeParticipateResponse, EmployeeParticipateDTO>().ReverseMap();
 

@@ -12,6 +12,7 @@ namespace PSManagement.Contracts.Projects.Response
         public string CurrentState { get; set; }
         public Aggreement ProjectAggreement { get; set; }
         
+        public ProjectClassification ProjectClassification { get; set; }
         public EmployeeResponse TeamLeader { get; set; }
         public EmployeeResponse ProjectManager { get; set; }
         public Department Executer { get; set; }

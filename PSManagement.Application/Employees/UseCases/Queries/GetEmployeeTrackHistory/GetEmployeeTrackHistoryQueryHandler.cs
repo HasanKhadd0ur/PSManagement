@@ -34,7 +34,9 @@ namespace PSManagement.Application.Employees.UseCases.Queries.GetEmployeeTrackHi
             int pageSize = request.PageSize.HasValue && request.PageSize.Value > 0 && request.PageSize.Value <= 30 ? request.PageSize.Value : 30;
             _specification.AddInclude(e => e.Track);
             _specification.AddInclude(e => e.Employee);
-            _specification.Criteria = e => e.EmloyeeId == request.EmployeeId  && e.Track.ProjectId == request.ProjectId;
+            _specification.AddInclude(e => e.Employee.User);
+
+            _specification.Criteria = e => e.EmployeeId == request.EmployeeId  && e.Track.ProjectId == request.ProjectId;
             _specification.ApplyPaging((pageNumber - 1) * pageSize, pageSize);
 
             IEnumerable<EmployeeTrack> employeeTracks = await _employeeTracksRepository.ListAsync( _specification);

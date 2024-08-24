@@ -37,7 +37,9 @@ namespace PSManagement.Application.Mappers
              ;
 
             CreateMap<Employee, EmployeeDTO>()
-                .ForMember(e => e.DepartmentName, op => op.MapFrom(e => e.Department.Name));
+                .ForMember(e => e.DepartmentName, op => op.MapFrom(e => e.Department.Name))
+                .ForMember(e => e.Email, op => op.MapFrom(e => e.User.Email))
+                ;
 
 
             CreateMap< EmployeeParticipate, EmployeeParticipateDTO>()
@@ -56,7 +58,9 @@ namespace PSManagement.Application.Mappers
             CreateMap<Project, ProjectInfo>()
                 .ConvertUsing(project => project.ProjectInfo);
 
-            CreateMap<Track, TrackDTO>();
+            CreateMap<Track, TrackDTO>()
+                .ForMember(e => e.ProjectInfo , op =>op.MapFrom(s => s.Project.ProjectInfo))
+            ;
 
             CreateMap<CreateTrackCommand, Track>().ReverseMap();
             CreateMap<AddEmployeeTrackCommand, EmployeeTrack>().ReverseMap();

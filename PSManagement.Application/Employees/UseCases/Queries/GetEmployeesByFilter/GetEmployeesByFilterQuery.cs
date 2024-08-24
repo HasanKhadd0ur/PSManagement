@@ -8,6 +8,7 @@ namespace PSManagement.Application.Employees.UseCases.Queries.GetEmployeesByFilt
     public record GetEmployeesByFilterQuery(
          string EmployeeFirstName,
          int? HiastId,
+         string Email,
          string DepartmentName,
          string WorkType,
          int? PageNumber,

@@ -1,4 +1,6 @@
 ﻿using PSManagement.Domain.Tracking.ValueObjects;
+using PSManagement.Domain.Projects.ValueObjects;
+
 using System;
 
 namespace PSManagement.Contracts.Tracks.Response
@@ -7,6 +9,7 @@ namespace PSManagement.Contracts.Tracks.Response
         int Id ,
         TrackInfo TrackInfo ,
         String Notes ,
-        int ProjectId 
+        int ProjectId ,
+        ProjectInfo ProjectInfo 
         );
 }

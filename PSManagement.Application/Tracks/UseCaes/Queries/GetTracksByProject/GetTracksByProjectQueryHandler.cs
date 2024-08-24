@@ -37,7 +37,8 @@ namespace PSManagement.Application.Tracks.UseCaes.Queries.GetTracksByProject
             int pageNumber = request.PageNumber.HasValue && request.PageNumber.Value > 0 ? request.PageNumber.Value : 1;
             int pageSize = request.PageSize.HasValue && request.PageSize.Value > 0 && request.PageSize.Value <= 30 ? request.PageSize.Value : 30;
             
-
+            _specification.AddInclude(e => e.Project);
+            
             _specification.ApplyPaging((pageNumber - 1) * pageSize, pageSize);
             
             _specification.Criteria = t => t.ProjectId == request.ProjectId;

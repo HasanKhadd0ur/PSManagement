@@ -81,10 +81,10 @@ namespace PSManagement.Api.Controllers.Customers
 
         }
         
-        [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteCustomerRequest request)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            var command = _mapper.Map<DeleteCustomerCommand>(request);
+            var command = new DeleteCustomerCommand(id);
 
             var result = await _sender.Send(command);
 

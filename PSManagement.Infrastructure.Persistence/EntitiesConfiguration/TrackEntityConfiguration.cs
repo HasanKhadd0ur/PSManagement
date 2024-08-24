@@ -50,7 +50,7 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
         {
             builder.HasOne(st => st.Employee)
                 .WithMany(s => s.EmployeeTracks)
-                .HasForeignKey(st => st.EmloyeeId)
+                .HasForeignKey(st => st.EmployeeId)
             ;
 
             builder.OwnsOne(e => e.EmployeeWorkInfo, p =>

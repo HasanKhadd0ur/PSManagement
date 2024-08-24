@@ -28,8 +28,9 @@ namespace PSManagement.Domain.Projects.Entities
 
         }
 
-        public Step(StepInfo stepInfo, int projectId, int weight)
+        public Step(StepInfo stepInfo, int projectId,int currentCompletionRatio, int weight)
         {
+            CurrentCompletionRatio =currentCompletionRatio;
             StepInfo = stepInfo;
             ProjectId = projectId;
             Weight = weight;

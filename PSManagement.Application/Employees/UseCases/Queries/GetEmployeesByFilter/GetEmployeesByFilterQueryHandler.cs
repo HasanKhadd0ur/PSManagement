@@ -34,6 +34,7 @@ namespace PSManagement.Application.Employees.UseCases.Queries.GetEmployeesByFilt
             _specification.ApplyPaging((pageNumber - 1) * pageSize, pageSize);
 
             _specification.AddInclude(e=>e.Department);
+            _specification.AddInclude(e => e.User);
 
             IEnumerable<Employee> employees =await _employeesRepository.ListAsync(_specification);
             if (!string.IsNullOrEmpty(request.DepartmentName))
@@ -53,6 +54,10 @@ namespace PSManagement.Application.Employees.UseCases.Queries.GetEmployeesByFilt
             if (!string.IsNullOrEmpty(request.WorkType))
             {
                 employees = employees.Where(e => e.WorkInfo.WorkType.ToLower().Contains(request.WorkType.ToLower().Trim()));
+            }
+            if (!string.IsNullOrEmpty(request.Email))
+            {
+                employees = employees.Where(e => e.User.Email.ToLower().Contains(request.Email.ToLower().Trim()));
             }
 
             return Result.Success(_mapper.Map<IEnumerable<EmployeeDTO>>(employees));
