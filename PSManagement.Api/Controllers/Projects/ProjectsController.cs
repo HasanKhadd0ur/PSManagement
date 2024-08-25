@@ -185,7 +185,7 @@ namespace PSManagement.Api.Controllers.Projects
         [HttpPost("CompleteProject/{id}")]
         public async Task<IActionResult> PostCompleteProjectRequest(int id )
         {
-            var query = new CompleteProgressProjectCommand(id);
+            var query = new CompleteProjectCommand(id);
 
             var result = await _sender.Send(query);
 

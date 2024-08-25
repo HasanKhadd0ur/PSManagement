@@ -82,7 +82,7 @@ namespace PSManagement.Api.Controllers.Employees
         }
        
         [HttpGet("TrackHistory")]
-        public async Task<IActionResult> GetEmployeeTrackHistory([FromForm] GetEmployeeTrackHistoryRequest request)
+        public async Task<IActionResult> GetEmployeeTrackHistory([FromQuery] GetEmployeeTrackHistoryRequest request)
         {
             var command = _mapper.Map<GetEmployeeTrackHistoryQuery>(request);
             var result = await _sender.Send(command);
