@@ -20,4 +20,8 @@ namespace PSManagement.Application.Employees.Common
         public Availability Availability { get; set; }
 
     }
+    public class DepartmentDTO {
+        public int Id { get; set; }
+        public String Name { get; set; }
+    }
 }

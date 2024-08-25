@@ -14,9 +14,26 @@ namespace PSManagement.Domain.Customers.Entities
         public string CustomerName { get; set; }
         public Address Address { get; set; }
         public string Email { get; set; }
+
+        #region Association 
         public ICollection<ContactInfo> ContactInfo { get; private set; }
         public ICollection<Project> Projects { get; private set; }
+        #endregion Association 
 
+        #region Encapsulation
+        public void AddContactInfo(ContactInfo contactInfo)
+        {
+            if (ContactInfo is null)
+            {
+                ContactInfo = new List<ContactInfo>();
+            }
+            ContactInfo.Add(contactInfo);
+
+        }
+
+        #endregion Encapsulation
+
+        #region Constructors
         public Customer()
         {
 
@@ -29,15 +46,8 @@ namespace PSManagement.Domain.Customers.Entities
             Email = email;
         }
 
-        public void AddContactInfo(ContactInfo contactInfo)
-        {
-            if (ContactInfo is null)
-            {
-                ContactInfo = new List<ContactInfo>();
-            }
-            ContactInfo.Add(contactInfo);
+        #endregion Construtors
 
-        }
 
     }
 }

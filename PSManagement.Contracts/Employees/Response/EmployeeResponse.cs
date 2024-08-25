@@ -13,4 +13,9 @@ namespace PSManagement.Contracts.Projects.Response
         public Availability Availability { get; set; }
         public WorkInfo WorkInfo { get; set; }
     }
+
+    public record DepartmentResponse (
+        int Id ,
+        string Name 
+        );
 }

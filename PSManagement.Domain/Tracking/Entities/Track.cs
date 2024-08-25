@@ -18,15 +18,26 @@ namespace PSManagement.Domain.Tracking
         public TrackInfo TrackInfo { get; set; }
         public String Notes { get; set; }
         public int ProjectId { get; set; }
-        public Project Project { get; set; }
+
+        public Project Project { get; set; }        
         public ICollection<StepTrack> StepTracks { get; set; }
-        public ICollection<Employee> TrackedEmployees { get; set; }
         public ICollection<EmployeeTrack> EmployeeTracks { get; set; }
+        
+        
+        #region Association 
+        public ICollection<Employee> TrackedEmployees { get; set; }
+        #endregion Association 
+  
+        #region  Constructors
         public Track()
         {
 
         }
 
+        #endregion  Constructors
+
+
+        // this method hide the publishing of the domain events 
         public void Complete(DateTime completionDate)
         {
             TrackInfo = new (TrackInfo.TrackDate,true,TrackInfo.StatusDescription);

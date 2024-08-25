@@ -5,6 +5,8 @@ using PSManagement.Application.Employees.Common;
 using PSManagement.Application.FinancialSpends.Common;
 using PSManagement.Application.FinancialSpends.UseCases.Commands.CreateFinancialSpendItem;
 using PSManagement.Application.Projects.Common;
+using PSManagement.Application.Projects.UseCases.Commands.CompleteProgressProject;
+using PSManagement.Application.ProjectsTypes.UseCases.Commands.CreateNewType;
 using PSManagement.Application.Tracks.Common;
 using PSManagement.Application.Tracks.UseCaes.Commands.AddEmployeeTrack;
 using PSManagement.Application.Tracks.UseCaes.Commands.AddStepTrack;
@@ -41,12 +43,6 @@ namespace PSManagement.Application.Mappers
                 .ForMember(e => e.Email, op => op.MapFrom(e => e.User.Email))
                 ;
 
-
-            CreateMap< EmployeeParticipate, EmployeeParticipateDTO>()
-                .ForMember(d => d.ProjectInfo, opt => opt.MapFrom(s => s.Project.ProjectInfo))
-                .ForMember(d => d.Employee, op => op.MapFrom(e => e.Employee))
-                
-                ;
             CreateMap<StepTrack, StepTrackDTO>()
                 .ForMember(d => d.StepInfo, opt => opt.MapFrom(s => s.Step.StepInfo))
                 .ForMember(d => d.TrackInfo, op => op.MapFrom(e => e.Track.TrackInfo))
@@ -54,30 +50,60 @@ namespace PSManagement.Application.Mappers
             CreateMap<EmployeeTrack, EmployeeTrackDTO>()
                 .ForMember(d => d.TrackInfo, op => op.MapFrom(e => e.Track.TrackInfo))
                 ;
-
-            CreateMap<Project, ProjectInfo>()
-                .ConvertUsing(project => project.ProjectInfo);
-
             CreateMap<Track, TrackDTO>()
                 .ForMember(e => e.ProjectInfo , op =>op.MapFrom(s => s.Project.ProjectInfo))
             ;
 
             CreateMap<CreateTrackCommand, Track>().ReverseMap();
+
             CreateMap<AddEmployeeTrackCommand, EmployeeTrack>().ReverseMap();
 
             CreateMap<AddStepTrackCommand, StepTrack>()
                 .ForMember(e => e.OldExecutionRatio, op => op.Ignore());
 
-            CreateMap<FinancialSpendingDTO, FinancialSpending>().ReverseMap();
-           
             
+            CreateMap<Role,RoleDTO>().ReverseMap();
+
+        }
+    }
+
+    public class ProjectDTOMapperConfiguration : Profile {
+
+        public ProjectDTOMapperConfiguration()
+        {
+
             CreateMap<Project, ProjectDTO>().ReverseMap();
             CreateMap<Project, ProjectDetailsDTO>().ReverseMap();
 
+            CreateMap<Project, ProjectInfo>()
+                .ConvertUsing(project => project.ProjectInfo);
 
-            CreateMap<CreateFinancialSpendItemCommand,FinancialSpending> ()
-                .ForMember(d=>d.Id, op => op.Ignore())
-                .ForMember(d=> d.Events, op => op.Ignore())
+
+            CreateMap<EmployeeParticipate, EmployeeParticipateDTO>()
+                .ForMember(d => d.ProjectInfo, opt => opt.MapFrom(s => s.Project.ProjectInfo))
+                .ForMember(d => d.Employee, op => op.MapFrom(e => e.Employee))
+
+                ;
+
+            CreateMap<CreateNewTypeCommand, ProjectType>();
+            CreateMap<UpdateTypeCommand, ProjectType>();
+            CreateMap <CompleteProjectCommand, ProjectCompletion>();
+
+        }
+    }
+
+    public class FinanialSpendingDTOMapperConfiguration : Profile {
+
+
+        public FinanialSpendingDTOMapperConfiguration()
+        {
+            CreateMap<FinancialSpendingDTO, FinancialSpending>().ReverseMap();
+
+
+
+            CreateMap<CreateFinancialSpendItemCommand, FinancialSpending>()
+                .ForMember(d => d.Id, op => op.Ignore())
+                .ForMember(d => d.Events, op => op.Ignore())
                 .ConstructUsing(src => new FinancialSpending(
                     src.ProjectId,
                     src.LocalPurchase,
@@ -87,8 +113,6 @@ namespace PSManagement.Application.Mappers
                     src.ExpectedSpendingDate
                 ))
                 ;
-
-            CreateMap<Role,RoleDTO>().ReverseMap();
 
         }
     }

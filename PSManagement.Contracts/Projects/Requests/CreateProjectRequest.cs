@@ -15,5 +15,6 @@ namespace PSManagement.Contracts.Projects.Requests
         int TeamLeaderId,
         int ProjectManagerId,
         int ProposerId,
-        int ExecuterId);
+        int ExecuterId,
+        int ProjectTypeId);
 }

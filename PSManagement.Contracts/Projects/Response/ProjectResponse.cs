@@ -1,4 +1,5 @@
 ﻿using PSManagement.Contracts.Customers.Responses;
+using PSManagement.Contracts.ProjectsTypes.Request;
 using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.ValueObjects;
@@ -12,15 +13,17 @@ namespace PSManagement.Contracts.Projects.Response
         public ProposalInfo ProposalInfo { get; set; }
         public ProjectInfo ProjectInfo { get; set; }
         public string CurrentState { get; set; }
+        public ProjectTypeResponse ProjectType { get; set; }
         public Aggreement ProjectAggreement { get; set; }
         public int TeamLeaderId { get; set; }
+        public int ProjecTypeId { get; set; }
 
         public ProjectClassification ProjectClassification { get; set; }
         public EmployeeResponse TeamLeader { get; set; }
         public int ProjectManagerId { get; set; }
         public EmployeeResponse ProjectManager { get; set; }
         public int ExecuterId { get; set; }
-        public Department Executer { get; set; }
+        public DepartmentResponse Executer { get; set; }
 
         public int ProposerId { get; private set; }
         public CustomerResponse Proposer { get; set; }
@@ -33,5 +36,4 @@ namespace PSManagement.Contracts.Projects.Response
         public ICollection<EmployeeParticipateResponse> EmployeeParticipates { get; set; }
 
     }
-
-}
+    }

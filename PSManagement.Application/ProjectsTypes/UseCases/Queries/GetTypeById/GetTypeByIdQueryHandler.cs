@@ -23,7 +23,7 @@ namespace PSManagement.Application.ProjectsTypes.UseCases.Queries.GetTypeById
             _mapper = mapper;
         }
 
-        public async Task<Result<ProjectTypeDTO>> Handle(GetProjectsTypesQuery request, CancellationToken cancellationToken)
+        public async Task<Result<ProjectTypeDTO>> Handle(GetTypeByIdQuery request, CancellationToken cancellationToken)
         {
             var result = await _projectTypesRepository.ListAsync();
 
@@ -33,7 +33,7 @@ namespace PSManagement.Application.ProjectsTypes.UseCases.Queries.GetTypeById
                 return Result.Invalid(PrjectTypesErrors.InvalidEntryError);
             }
 
-            return Result.Success(_mapper.Map<Result<ProjectTypeDTO>>(result)); ;
+            return Result.Success(_mapper.Map<ProjectTypeDTO>(result)); ;
         }
     }
 }

@@ -12,4 +12,6 @@ namespace PSManagement.Application.Employees.UseCases.Queries.GetAvailableEmploy
     public record GetAvailableEmployeesQuery (
         int? PageNumber,
         int? PageSize) : IQuery<Result<IEnumerable<EmployeeDTO>>>;
+
 }
+

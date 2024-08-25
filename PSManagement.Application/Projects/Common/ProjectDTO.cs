@@ -17,6 +17,7 @@ namespace PSManagement.Application.Projects.Common
         public ProjectClassification ProjectClassification { get; set; }
         public ProjectInfo ProjectInfo { get; set; }
         public ProjectTypeDTO ProjectType { get; set; }
+        public int ProjectTypeId { get; set; }
         public string CurrentState { get; set; }
         public Aggreement ProjectAggreement { get; set; }
         public int TeamLeaderId { get; set; }

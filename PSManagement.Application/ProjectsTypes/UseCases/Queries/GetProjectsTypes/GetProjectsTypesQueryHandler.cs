@@ -34,7 +34,7 @@ namespace PSManagement.Application.ProjectsTypes.UseCases.Queries.GetProjectsTyp
                 result = new List<ProjectType>();
             }
 
-            return Result.Success(_mapper.Map<Result<IEnumerable<ProjectTypeDTO>>>(result)); ;
+            return Result.Success(_mapper.Map<IEnumerable<ProjectTypeDTO>>(result)); ;
         }
     }
 }

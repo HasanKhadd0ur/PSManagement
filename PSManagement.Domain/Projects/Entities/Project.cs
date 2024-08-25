@@ -20,16 +20,46 @@ namespace PSManagement.Domain.Projects.Entities
     {
 
         // information about the project itself 
+
         #region Project  informations
-        
+
+        // the proposal information 
+        //  -- hide the details of the proposing in a value object 
+        //  -- conatain the proposing book and date 
         public ProposalInfo ProposalInfo { get; set; }
+
+
+        // the value object project info 
+        //  -- hide the subjective info of the project 
+        //  -- conatin code ,name , start and expect end date 
         public ProjectInfo ProjectInfo { get; set; }
+
+
+        // the aggremenet information  value object 
+        //  -- hide the details of the aggrement in a value object 
+        //  -- conatain the aggrement book and date 
+
         public Aggreement ProjectAggreement { get; set; }
+
+        // the type of the project 
+        public int ProjectTypeId { get; set; }
         public ProjectType ProjectType { get; set; }
-        public ProjectCompletion ProjectCompletion { get; set; }
+
+        // the classiccation information of the project         
         public ProjectClassification ProjectClassification { get; set; }
+
         #endregion Project  informations
 
+        // the completion information of the project 
+
+        #region Completion 
+        // -- its an associated entity contain the details of the completion of the project 
+        public ProjectCompletion ProjectCompletion { get; set; }
+
+        #endregion Completion 
+
+        // the  current state (phase) of the project 
+        // its control the behavior of the project 
         #region Project State 
         public string CurrentState { get; private set; }  // Persisted in the database
 
@@ -63,24 +93,37 @@ namespace PSManagement.Domain.Projects.Entities
         public Employee ProjectManager { get; set; }
         public int ExecuterId { get; set; }
         public Department Executer { get; set; }
-        public FinancialFund FinancialFund { get; set; }
-        public ICollection<FinancialSpending> FinancialSpending { get; set; }
 
         #endregion Project Management Iformations 
 
+        // the financial inforamtion 
+        #region Financial fund and plan 
+        public FinancialFund FinancialFund { get; set; }
+        public ICollection<FinancialSpending> FinancialSpending { get; set; }
+
+        #endregion Financial fund and plan
+
+
         // the proposer of the project 
+        #region Project Proposer 
         public int ProposerId { get; private set; }
         public Customer Proposer { get; set; }
 
-        // 
+        #endregion Project Proposer
+
+        // the steps and paticipand and attachment
+        #region Execution Plaining  
         public ICollection<Step> Steps { get; set; }
         public ICollection<Employee> Participants { get; set; }
         public ICollection<Attachment> Attachments { get; set; }
 
+        #endregion  Execution Plaining 
 
+        #region Association 
         public ICollection<EmployeeParticipate> EmployeeParticipates { get; set; }
         public ICollection<Track> Tracks { get; set; }
 
+        #endregion Association 
 
 
         #region Encapsulating the collection operations 
@@ -119,6 +162,11 @@ namespace PSManagement.Domain.Projects.Entities
 
         #endregion Encapsulating the collection operations 
 
+
+        // the transition of the project state 
+        // each handler (stated transition) move the project state form one ot other 
+        // its hide the actual behavior
+
         #region State Transitions
 
         public Result Complete(ProjectCompletion projectCompletion) 
@@ -153,6 +201,12 @@ namespace PSManagement.Domain.Projects.Entities
         }
 
         #endregion State Transitions
+
+        // validating data 
+        // this methods help to hide the buissness rules 
+        // and encapsulate it 
+
+        #region Busines rules validators 
         public bool VailedSteps()
         {
             int weightSum = 0;
@@ -162,10 +216,27 @@ namespace PSManagement.Domain.Projects.Entities
             return weightSum == 100;
 
         }
+
+        public void ChangeParticipant(int participantId, int partialTimeRation, string role)
+        {
+            var participate = EmployeeParticipates.Where(e => e.EmployeeId == participantId).FirstOrDefault();
+            AddDomainEvent(new ParticipationChanged(
+                participantId,
+                participate.PartialTimeRatio,partialTimeRation,
+                role,participate.Role, Id, DateTime.Now));
+
+            participate.Role = role;
+        
+            participate.PartialTimeRatio = partialTimeRation;
+        }
         public bool HasParticipant(int participantId)
         {
             return EmployeeParticipates.Where(e => e.EmployeeId ==participantId).FirstOrDefault() is not null;
         }
+        #endregion Busines rules validators 
+
+        // the constructor 
+        // thsi is mainly use by the builder of the project 
 
         #region constructors 
         public Project(
@@ -206,7 +277,7 @@ namespace PSManagement.Domain.Projects.Entities
 
         #endregion constructors 
 
-        
+        // the methds responsible for extract the state when load the object for Data Store 
         #region state extracting from state name 
         public void SetStateFromString(string stateName)
         {
@@ -232,6 +303,7 @@ namespace PSManagement.Domain.Projects.Entities
             }
         }
         #endregion state extracting from state name 
+
     }
    
 }

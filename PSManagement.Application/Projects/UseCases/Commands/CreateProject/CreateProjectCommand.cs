@@ -18,6 +18,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
         int TeamLeaderId ,
         int ProjectManagerId,
         int ProposerId,
-        int ExecuterId
+        int ExecuterId,
+        int ProjectTypeId
         ) : ILoggableCommand<Result<int>>;
 }

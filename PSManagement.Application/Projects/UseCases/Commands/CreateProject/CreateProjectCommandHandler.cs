@@ -1,6 +1,7 @@
 ﻿using Ardalis.Result;
 using PSManagement.Application.Projects.Common;
 using PSManagement.Domain.Projects.Builders;
+using PSManagement.Domain.Projects.DomainErrors;
 using PSManagement.Domain.Projects.DomainEvents;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.Repositories;
@@ -14,6 +15,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
     public class CreateProjectCommandHandler : ICommandHandler<CreateProjectCommand, Result<int>>
     {
         private readonly IProjectsRepository _projectsRepository;
+        private readonly IProjectTypesRepository _projectTypesRepository;
         private readonly ProjectBuilder _projectBuilder;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -21,15 +23,23 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
         public CreateProjectCommandHandler(
             IProjectsRepository projectsRepository,
             ProjectBuilder projectBuilder,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork, IProjectTypesRepository projectTypesRepository)
         {
             _projectsRepository = projectsRepository;
             _projectBuilder = projectBuilder;
             _unitOfWork = unitOfWork;
+            _projectTypesRepository = projectTypesRepository;
         }
 
         public async Task<Result<int>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
+
+            var type = await _projectTypesRepository.GetByIdAsync(request.ProjectTypeId);
+            if (type is null) { 
+            
+                return Result.Invalid(PrjectTypesErrors.InvalidEntryError);
+            }
+
             Project project = _projectBuilder
                 .WithProjectAggreement(request.ProjectAggreement)
                 .WithProjectInfo(request.ProjectInfo)
@@ -41,23 +51,17 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
                 .WithProposer(request.ProposerId)
                 .WithClassification(request.ProjectClassification)
                 .Build();
-            
+
+            project.ProjectTypeId = request.ProjectTypeId;
+
             project.Propose();
 
             project =await _projectsRepository.AddAsync(project);
-            CreateProjectResult response = new (
-                project.Id,
-                project.ProposalInfo,
-                project.ProjectInfo,
-                project.ProjectAggreement,
-                project.TeamLeaderId,
-                project.ProjectManagerId,
-                project.ExecuterId
-                );
+           
 
             project.AddDomainEvent(new ProjectCreatedEvent(project.Id,project.TeamLeaderId,project.ProjectManagerId));
             await _unitOfWork.SaveChangesAsync();
-            return Result.Success(response.ProjectId);
+            return Result.Success(project.Id);
 
         }
     }

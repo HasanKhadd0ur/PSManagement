@@ -12,6 +12,8 @@ namespace PSManagement.Domain.Projects.Entities
         public Project Project { get; set; }
         public int PartialTimeRatio { get; set; }
         public string Role { get; set; }
+
+        #region Constructors 
         public EmployeeParticipate(int employeeId, int projectId, string role, int partialTimeRatio)
         {
             EmployeeId = employeeId;
@@ -23,5 +25,6 @@ namespace PSManagement.Domain.Projects.Entities
         {
 
         }
+        #endregion Constuctors
     }
 }

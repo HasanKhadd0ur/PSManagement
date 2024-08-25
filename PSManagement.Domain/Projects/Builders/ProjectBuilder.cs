@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Domain.Projects.Builders
 {
+    // this class repsponsible for crate and instance of the project 
+    // we use this class to give and uniform interface to the other layer to get 
+    // instance as it like 
     public class ProjectBuilder
     {
         private ProposalInfo _proposalInfo;
@@ -18,7 +21,6 @@ namespace PSManagement.Domain.Projects.Builders
         private FinancialFund _financialFund;
         private Aggreement _projectAggreement;
         private ProjectType _projectType;
-        // information about who lead and execute the project 
         private int _teamLeaderId;
         private int _projectManagerId;
         private int _executerId;

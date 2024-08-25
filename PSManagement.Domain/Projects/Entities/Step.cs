@@ -15,14 +15,15 @@ namespace PSManagement.Domain.Projects.Entities
     {
         
         public StepInfo StepInfo { get; set; }
+        // this field can be calculated from the track 
+        // but we use it for performance matter 
         public int CurrentCompletionRatio { get; set; }
         public int Weight { get; set; }
-
         public int ProjectId { get; set; }
         public Project Project { get; set; }
         public ICollection<StepTrack> StepTracks { get; set; }
 
-
+        #region Constructors
         public Step()
         {
 
@@ -35,6 +36,8 @@ namespace PSManagement.Domain.Projects.Entities
             ProjectId = projectId;
             Weight = weight;
         }
+
+        #endregion Constructors
     }
 
 }

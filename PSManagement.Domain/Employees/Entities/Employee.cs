@@ -22,13 +22,19 @@ namespace PSManagement.Domain.Employees.Entities
         public Department Department { get; set; }
         public PersonalInfo PersonalInfo { get; set; }
         public WorkInfo WorkInfo { get; set; }
+        public Availability Availability { get; set; }
 
+
+        #region Asscociation 
         public ICollection<Project> Projects { get; set; }
         
         public ICollection<EmployeeTrack> EmployeeTracks { get; set; }
-        public Availability Availability { get; set; }
-
+        
         public ICollection<EmployeeParticipate> EmployeeParticipates { get; set; }
+        #endregion Asscociation 
+
+        #region  Constructors
+
         public Employee()
         {
 
@@ -39,9 +45,12 @@ namespace PSManagement.Domain.Employees.Entities
             PersonalInfo = personalInfo;
             HIASTId = hiastId;
         }
+        #endregion  Constructors
+
 
         public void UpdateWorkHours(int workingHour)
         {
+
             int currentWorkHours = Availability.CurrentWorkingHours;
 
             // change the employee working hours 

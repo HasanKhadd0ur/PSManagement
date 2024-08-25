@@ -8,6 +8,8 @@ namespace PSManagement.Domain.Projects.Entities
         public string AttachmentUrl { get; set; }
         public string AttachmentName { get; set; }
         public string AttachmentDescription { get; set; }
+
+        #region Constructors
         public Attachment(string attachmentUrl, string attachmentName, string attachmentDescription, int projectId)
         {
             AttachmentUrl = attachmentUrl;
@@ -15,6 +17,7 @@ namespace PSManagement.Domain.Projects.Entities
             AttachmentDescription = attachmentDescription;
             ProjectId = projectId;
         }
+        #endregion  Constructors
 
     }
 }

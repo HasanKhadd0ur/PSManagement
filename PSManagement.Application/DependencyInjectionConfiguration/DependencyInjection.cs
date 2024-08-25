@@ -16,20 +16,36 @@ namespace PSManagement.Application.DI
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            //services.AddMediatR();
 
-
-            services.AddMediatR(typeof(DependencyInjection).Assembly);
-            // Register the pipeline behaviors explicitly
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-            // Register FluentValidation validators
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddMyMediatR()
+                .AddMappers();
 
             
+
+            return services;
+        }
+
+        private static IServiceCollection AddMyMediatR(this IServiceCollection services) {
+
+            services.AddMediatR(typeof(DependencyInjection).Assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+
+            return services;
+        }
+
+        private static IServiceCollection AddMappers(this IServiceCollection services)
+        {
+
             services.AddAutoMapper(cfg => {
                 cfg.AddProfile<MapperConfiguration>();
+                cfg.AddProfile<ProjectDTOMapperConfiguration>();
+                cfg.AddProfile<FinanialSpendingDTOMapperConfiguration>();
+
             });
+
 
             return services;
         }

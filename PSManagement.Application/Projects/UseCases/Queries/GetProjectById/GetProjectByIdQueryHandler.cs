@@ -37,6 +37,8 @@ namespace PSManagement.Application.Projects.UseCases.Queries.GetProject
             _specification.Includes.Add(p => p.Executer);
             _specification.Includes.Add(p => p.Proposer);
 
+            _specification.Includes.Add(p => p.ProjectType);
+
 
 
             var project = await _projectRepository.GetByIdAsync(request.ProjectId,_specification);

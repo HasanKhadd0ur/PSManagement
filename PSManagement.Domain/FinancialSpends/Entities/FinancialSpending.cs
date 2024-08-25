@@ -6,7 +6,14 @@ namespace PSManagement.Domain.FinancialSpends.Entities
 {
     public class FinancialSpending : BaseEntity
     {
-       
+        public int ProjectId { get; set; }
+        public DateTime ExpectedSpendingDate { get; set; }
+        public string CostType { get; set; }
+        public string Description { get; set; }
+        public int LocalPurchase { get; set; }
+        public Money ExternalPurchase { get; set; }
+
+        #region  Constructors
         public FinancialSpending()
         {
 
@@ -27,14 +34,7 @@ namespace PSManagement.Domain.FinancialSpends.Entities
             Description = description;
             ExpectedSpendingDate = expectedSpendingDate;
         }
-
-        public int ProjectId { get; set; }
-        public DateTime ExpectedSpendingDate { get; set; }
-        public string CostType { get; set; }
-        public string Description { get; set; }
-        public int LocalPurchase { get; set; }
-        public Money ExternalPurchase { get; set; }
-
+        #endregion  Constructors
 
 
     }
