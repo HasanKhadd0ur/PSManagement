@@ -25,7 +25,7 @@ namespace PSManagement.Api.Controllers.Customers
     [Route("api/[controller]")]
     [Authorize]
     public class CustomersController : APIController
-{
+    {
         private readonly IMediator _sender;
         private readonly IMapper _mapper;
 

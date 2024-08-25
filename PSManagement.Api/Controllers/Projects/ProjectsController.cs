@@ -182,18 +182,28 @@ namespace PSManagement.Api.Controllers.Projects
             return HandleResult(result);
         }
 
-        [HttpPost("CompleteProject/{id}")]
-        public async Task<IActionResult> PostCompleteProjectRequest(int id )
+        [HttpPost("CompleteProject")]
+        public async Task<IActionResult> PostCompleteProjectRequest(CompleteProjectRequest request )
         {
-            var query = new CompleteProjectCommand(id);
+            var query = _mapper.Map<CompleteProjectCommand>(request);
 
             var result = await _sender.Send(query);
 
             return HandleResult(result);
         }
-        
+
 
         #endregion project state operations
+        [HttpPost("ChangeParticipation")]
+        public async Task<IActionResult> PostChangePArticipation(ChangeEmployeeParticipationRequest request)
+        {
+            var query = _mapper.Map<ChangeEmployeeParticipationCommand>(request);
+
+            var result = await _sender.Send(query);
+
+            return HandleResult(result);
+        }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)

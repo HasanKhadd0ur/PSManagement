@@ -14,6 +14,7 @@ using PSManagement.Application.Tracks.UseCaes.Queries.GetEmployeesTrack;
 using PSManagement.Application.Tracks.UseCaes.Queries.GetStepsTrack;
 using PSManagement.Application.Tracks.UseCaes.Queries.GetTrackById;
 using PSManagement.Application.Tracks.UseCaes.Queries.GetTracksByProject;
+using PSManagement.Application.Tracks.UseCaes.Queries.GetUncompletedTracks;
 using PSManagement.Contracts.Tracks.Requests;
 using PSManagement.Contracts.Tracks.Response;
 using System.Collections.Generic;
@@ -50,6 +51,15 @@ namespace PSManagement.Api.Controllers.Tracks
             var query = new GetStepsTrackQuery(id);
 
             var result = _mapper.Map<Result<IEnumerable<StepTrackResponse>>>(await _sender.Send(query));
+
+            return HandleResult(result);
+        }
+        [HttpGet("UnCompleted")]
+        public async Task<IActionResult> GetUnCompleted()
+        {
+            var query = new GetUnCompletedTracksQuery();
+
+            var result = _mapper.Map<Result<IEnumerable<TrackResponse>>>(await _sender.Send(query));
 
             return HandleResult(result);
         }

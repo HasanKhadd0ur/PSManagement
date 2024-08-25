@@ -8,6 +8,7 @@ using PSManagement.Application.Contracts.Providers;
 using PSManagement.Application.Contracts.SyncData;
 using PSManagement.Application.Employees.UseCases.Commands.UpdateEmployeeWorkHours;
 using PSManagement.Application.Employees.UseCases.Queries.GetAvailableEmployees;
+using PSManagement.Application.Employees.UseCases.Queries.GetDepartments;
 using PSManagement.Application.Employees.UseCases.Queries.GetEmployeeById;
 using PSManagement.Application.Employees.UseCases.Queries.GetEmployeesByFilter;
 using PSManagement.Application.Employees.UseCases.Queries.GetEmployeeTrackHistory;
@@ -32,11 +33,13 @@ namespace PSManagement.Api.Controllers.Employees
         public EmployeesController(
             ISyncEmployeesService syncEmployeesService,
             IMapper mapper,
-            IMediator sender)
+            IMediator sender, 
+            IEmployeesProvider employeesProvider)
         {
             _syncEmployeesService = syncEmployeesService;
             _mapper = mapper;
             _sender = sender;
+            _employeesProvider = employeesProvider;
         }
 
 
@@ -68,6 +71,17 @@ namespace PSManagement.Api.Controllers.Employees
             var result = await _sender.Send(query);
 
             return HandleResult(_mapper.Map<Result<IEnumerable<EmployeeResponse>>>(result));
+        }
+
+        [HttpGet("Departments")]
+        public async Task<IActionResult> GetDepartments()
+        {
+            var  query = new GetDepartmentsQuery();
+
+            var result = await _sender.Send(query);
+
+            return HandleResult(_mapper.Map<Result<IEnumerable<DepartmentResponse>>>(result));
+        
         }
 
 
