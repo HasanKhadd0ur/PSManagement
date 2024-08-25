@@ -6,7 +6,7 @@ namespace PSManagement.Domain.Projects.Entities
 {
     public interface IProjectState
     {
-        Result Complete(Project project);
+        Result Complete(Project project, ProjectCompletion projectCompletion);
         Result Plan(Project project);
         Result Approve(Project project);
         Result Cancel(Project project, DateTime canellationTime);

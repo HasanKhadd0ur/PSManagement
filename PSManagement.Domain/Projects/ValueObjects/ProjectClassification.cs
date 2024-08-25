@@ -2,8 +2,7 @@
 {
     public record ProjectClassification(
         string ProjectNature,
-        string ProjectStatus,
-        string ProjectType
+        string ProjectStatus
         );
 
 }

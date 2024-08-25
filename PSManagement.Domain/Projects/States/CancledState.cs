@@ -19,7 +19,7 @@ namespace PSManagement.Domain.Projects.Entities
             return Result.Invalid(ProjectsErrors.StateTracnsitionError("Cancelled", "Cancelled"));
         }
 
-        public Result Complete(Project project)
+        public Result Complete(Project project, ProjectCompletion projectCompletion)
         {
             return Result.Invalid(ProjectsErrors.StateTracnsitionError("Cancelled", "Completed"));
         }

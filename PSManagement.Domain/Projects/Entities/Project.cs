@@ -25,6 +25,8 @@ namespace PSManagement.Domain.Projects.Entities
         public ProposalInfo ProposalInfo { get; set; }
         public ProjectInfo ProjectInfo { get; set; }
         public Aggreement ProjectAggreement { get; set; }
+        public ProjectType ProjectType { get; set; }
+        public ProjectCompletion ProjectCompletion { get; set; }
         public ProjectClassification ProjectClassification { get; set; }
         #endregion Project  informations
 
@@ -119,9 +121,9 @@ namespace PSManagement.Domain.Projects.Entities
 
         #region State Transitions
 
-        public Result Complete() 
+        public Result Complete(ProjectCompletion projectCompletion) 
         {
-            return State.Complete(this);
+            return State.Complete(this, projectCompletion );
         
         }
         public Result Plan()
@@ -175,9 +177,11 @@ namespace PSManagement.Domain.Projects.Entities
             int projectManagerId,
             int executerId,
             string stateName,
-            ProjectClassification projectClassification
+            ProjectClassification projectClassification,
+            ProjectType projectType
             )
         {
+            ProjectType = projectType;
             ProjectClassification = projectClassification;
             SetStateFromString(stateName);
             ProposalInfo = proposalInfo;

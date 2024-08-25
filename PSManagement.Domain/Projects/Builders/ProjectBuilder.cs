@@ -17,7 +17,7 @@ namespace PSManagement.Domain.Projects.Builders
         private ProjectInfo _projectInfo;
         private FinancialFund _financialFund;
         private Aggreement _projectAggreement;
-
+        private ProjectType _projectType;
         // information about who lead and execute the project 
         private int _teamLeaderId;
         private int _projectManagerId;
@@ -30,6 +30,13 @@ namespace PSManagement.Domain.Projects.Builders
         private ICollection<Attachment> _attachments;
 
         private ICollection<FinancialSpending> _financialSpending;
+
+        public ProjectBuilder WithClassification(ICollection<FinancialSpending> financialSpendings)
+        {
+            _financialSpending = financialSpendings;
+            return this;
+        }
+
         public ProjectBuilder WithClassification(ProjectClassification projectClassification)
         {
             _projectClassification = projectClassification;
@@ -40,8 +47,13 @@ namespace PSManagement.Domain.Projects.Builders
             _participants = participates;
             return this;
         }
+        public ProjectBuilder WithType(ProjectType projectType)
+        {
+            _projectType = projectType;
+            return this;
+        }
 
-            public ProjectBuilder WithFinancialSpending(ICollection<FinancialSpending> financialSpending)
+        public ProjectBuilder WithFinancialSpending(ICollection<FinancialSpending> financialSpending)
         {
             _financialSpending = financialSpending;
             return this;
@@ -120,7 +132,8 @@ namespace PSManagement.Domain.Projects.Builders
                 _projectManagerId ,
                 _executerId,
                 _stateName,
-                _projectClassification);
+                _projectClassification,
+                _projectType);
             project.FinancialFund = _financialFund;
 
             if (_attachments is not null) {

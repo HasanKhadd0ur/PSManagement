@@ -5,7 +5,7 @@ using PSManagement.Domain.Projects.Entities;
 
 namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
 {
-    public class ProjectEntityConfiguration : IEntityTypeConfiguration<Project>
+    public class ProjectEntityConfiguration : IEntityTypeConfiguration<Project> ,IEntityTypeConfiguration<ProjectCompletion>
     {
         public void Configure(EntityTypeBuilder<Project> builder)
         {
@@ -30,9 +30,13 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                 p => {
                     p.Property(e => e.ProjectNature).HasColumnName("ProjectNature");
                     p.Property(e => e.ProjectStatus).HasColumnName("ProjectStatus");
-                    p.Property(e => e.ProjectType).HasColumnName("ProjectType");
                 }
             );
+
+            builder.HasOne(e => e.ProjectType)
+                .WithMany();
+
+
 
             builder.OwnsOne(c => c.ProjectInfo,
                 p => {
@@ -85,7 +89,12 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
             
         }
 
-
+        public void Configure(EntityTypeBuilder<ProjectCompletion> builder)
+        {
+            builder.HasOne(e => e.Project)
+               .WithOne(e => e.ProjectCompletion)
+            ;
+        }
     }
 
 }

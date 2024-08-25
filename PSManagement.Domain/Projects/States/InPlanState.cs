@@ -27,8 +27,9 @@ namespace PSManagement.Domain.Projects.Entities
 
         }
 
-        public Result Complete(Project project)
+        public Result Complete(Project project , ProjectCompletion projectCompletion)
         {
+            project.ProjectCompletion = projectCompletion;
             project.AddDomainEvent(new ProjectCompletedEvent(project.Id));
             project.SetState(new CompletedState());
             return Result.Success();

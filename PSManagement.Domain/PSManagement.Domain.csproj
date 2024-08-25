@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Identity\ValueObjects\" />
-    <Folder Include="XReports\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
