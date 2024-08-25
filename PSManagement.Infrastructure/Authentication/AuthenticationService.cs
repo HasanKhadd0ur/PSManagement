@@ -30,6 +30,7 @@ namespace PSManagement.Infrastructure.Services.Authentication
 
         public async Task<Result<AuthenticationResult>>  Login(String email, String password) {
             _specification.AddInclude(e => e.Employee);
+            _specification.AddInclude(e=> e.Roles);
 
             User u = await _userRepository.GetByEmail(email,_specification);
             if (u is null || u.HashedPassword != password) {
@@ -43,6 +44,7 @@ namespace PSManagement.Infrastructure.Services.Authentication
                        Email=u.Email,
                        FirstName=u.Employee.PersonalInfo.FirstName,
                        LastName =u.Employee.PersonalInfo.LastName,
+                       Roles=_mapper.Map<ICollection<RoleDTO>>(u.Roles),
                        Token=token};
         }
         public async Task<Result<AuthenticationResult>> Register(String email, String userName, String password) {
