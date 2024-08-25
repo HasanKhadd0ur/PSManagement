@@ -8,15 +8,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PSManagement.Application\PSManagement.Application.csproj" />
     <ProjectReference Include="..\PSManagement.Contracts\PSManagement.Contracts.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

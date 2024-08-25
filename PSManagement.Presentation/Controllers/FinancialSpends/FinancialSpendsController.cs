@@ -3,7 +3,6 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PSManagement.Api.Controllers.ApiBase;
 using PSManagement.Application.FinancialSpends.UseCases.Commands.CreateFinancialSpendItem;
 using PSManagement.Application.FinancialSpends.UseCases.Commands.RemoveFinancialSpendingItem;
 using PSManagement.Application.FinancialSpends.UseCases.Commands.UpateFinancialSpendingItem;
@@ -11,12 +10,13 @@ using PSManagement.Application.FinancialSpends.UseCases.Queries.GetFinancialSpen
 using PSManagement.Application.FinancialSpends.UseCases.Queries.GetFinancialSpendingByProject;
 using PSManagement.Contracts.FinancialSpends.Requests;
 using PSManagement.Contracts.Projects.Response;
+using PSManagement.Presentation.Controllers.ApiBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PSManagement.Api.Controllers.FinancialSpends
+namespace PSManagement.Presentation.Controllers.FinancialSpends
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -57,7 +57,7 @@ namespace PSManagement.Api.Controllers.FinancialSpends
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get( [FromQuery]GetFinancialSpendItemByIdRequest request)
+        public async Task<IActionResult> Get([FromQuery] GetFinancialSpendItemByIdRequest request)
         {
             var query = _mapper.Map<GetFinancialSpendItemByIdQuery>(request);
 
@@ -77,9 +77,10 @@ namespace PSManagement.Api.Controllers.FinancialSpends
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromQuery] RemoveFinancialSpendItemRequest request,[FromRoute]int id)
+        public async Task<IActionResult> Delete([FromQuery] RemoveFinancialSpendItemRequest request, [FromRoute] int id)
         {
-            if (id != request.Id) {
+            if (id != request.Id)
+            {
                 Result.Conflict();
             }
 

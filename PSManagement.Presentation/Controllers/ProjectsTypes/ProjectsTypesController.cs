@@ -3,17 +3,17 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PSManagement.Api.Controllers.ApiBase;
 using PSManagement.Application.ProjectsTypes.UseCases.Commands.CreateNewType;
 using PSManagement.Application.ProjectsTypes.UseCases.Queries.GetProjectsTypes;
 using PSManagement.Application.ProjectsTypes.UseCases.Queries.GetTypeById;
 using PSManagement.Contracts.ProjectsTypes.Request;
+using PSManagement.Presentation.Controllers.ApiBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PSManagement.Api.Controllers
+namespace PSManagement.Presentation.Controllers.ProjectsTypes
 {
     [Route("api/[controller]")]
     [ApiController]

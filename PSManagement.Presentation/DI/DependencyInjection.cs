@@ -7,7 +7,6 @@ namespace PSManagement.Presentaion.DI
     {
         public static IServiceCollection AddPresentation(this IServiceCollection services)
         {
-
             return services;
         }
 

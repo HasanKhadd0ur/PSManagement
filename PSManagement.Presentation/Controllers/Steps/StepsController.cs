@@ -3,7 +3,6 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PSManagement.Api.Controllers.ApiBase;
 using PSManagement.Application.Steps.UseCases.Commands.ChangeStepWeight;
 using PSManagement.Application.Steps.UseCases.Commands.RemoveStep;
 using PSManagement.Application.Steps.UseCases.Commands.UpdateCompletionRatio;
@@ -17,7 +16,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PSManagement.Contracts.Tracks.Response;
-namespace PSManagement.Api.Controllers.Steps
+using PSManagement.Presentation.Controllers.ApiBase;
+
+namespace PSManagement.Presentation.Controllers.Steps
 {
     [Route("api/[controller]")]
     public class StepsController : APIController
@@ -32,9 +33,9 @@ namespace PSManagement.Api.Controllers.Steps
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id )
+        public async Task<IActionResult> Get(int id)
         {
-            var query = new GetStepByIdQuery(id) ;
+            var query = new GetStepByIdQuery(id);
 
             var result = _mapper.Map<Result<StepResponse>>(await _sender.Send(query));
 
@@ -52,12 +53,13 @@ namespace PSManagement.Api.Controllers.Steps
         }
 
         [HttpPut("ChangeStepWeight/{id}")]
-        public async Task<IActionResult> PutChangeStepWeight(ChangeStepWeightRequest request,[FromRoute]int id)
+        public async Task<IActionResult> PutChangeStepWeight(ChangeStepWeightRequest request, [FromRoute] int id)
         {
-            if (request.StepId != id) {
+            if (request.StepId != id)
+            {
                 return HandleResult(Result.NotFound("the step not found"));
             }
-            var query =  _mapper.Map<ChangeStepWeightCommand>(request); ;
+            var query = _mapper.Map<ChangeStepWeightCommand>(request); ;
 
             var result = _mapper.Map<Result>(await _sender.Send(query));
 
@@ -68,7 +70,7 @@ namespace PSManagement.Api.Controllers.Steps
         [HttpGet("StepTrackHistory")]
         public async Task<IActionResult> Get([FromQuery] GetStepTrackHistoryRequest request)
         {
-            var query =_mapper.Map<GetStepTrackHistoryQuery>(request);
+            var query = _mapper.Map<GetStepTrackHistoryQuery>(request);
 
             var result = _mapper.Map<Result<IEnumerable<StepTrackResponse>>>(await _sender.Send(query));
 
@@ -86,11 +88,11 @@ namespace PSManagement.Api.Controllers.Steps
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute]int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var query = new RemoveStepCommand(id);
 
-            var result =await _sender.Send(query);
+            var result = await _sender.Send(query);
 
             return HandleResult(result);
         }

@@ -2,7 +2,6 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PSManagement.Api.Controllers.ApiBase;
 using PSManagement.Application.Tracks.UseCaes.Commands.AddEmployeeTrack;
 using PSManagement.Application.Tracks.UseCaes.Commands.AddStepTrack;
 using PSManagement.Application.Tracks.UseCaes.Commands.CompleteTrack;
@@ -17,10 +16,11 @@ using PSManagement.Application.Tracks.UseCaes.Queries.GetTracksByProject;
 using PSManagement.Application.Tracks.UseCaes.Queries.GetUncompletedTracks;
 using PSManagement.Contracts.Tracks.Requests;
 using PSManagement.Contracts.Tracks.Response;
+using PSManagement.Presentation.Controllers.ApiBase;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PSManagement.Api.Controllers.Tracks
+namespace PSManagement.Presentation.Controllers.Tracks
 {
     [Route("api/[controller]")]
     public class TracksController : APIController
@@ -46,7 +46,7 @@ namespace PSManagement.Api.Controllers.Tracks
         }
 
         [HttpGet("GetStepsTrack/{id}")]
-        public async Task<IActionResult> GetStepsTrack([FromRoute]int id)
+        public async Task<IActionResult> GetStepsTrack([FromRoute] int id)
         {
             var query = new GetStepsTrackQuery(id);
 
@@ -86,7 +86,7 @@ namespace PSManagement.Api.Controllers.Tracks
         }
 
         [HttpPost("AddStepTrack")]
-        public async Task<IActionResult>PostStepTrack(AddStepTrackRequest request)
+        public async Task<IActionResult> PostStepTrack(AddStepTrackRequest request)
         {
             var command = _mapper.Map<AddStepTrackCommand>(request);
 
@@ -110,7 +110,7 @@ namespace PSManagement.Api.Controllers.Tracks
         {
             var command = _mapper.Map<CompleteTrackCommand>(request);
 
-            var result =await _sender.Send(command);
+            var result = await _sender.Send(command);
 
             return HandleResult(result);
         }
@@ -120,7 +120,7 @@ namespace PSManagement.Api.Controllers.Tracks
         {
             var command = _mapper.Map<RemoveTrackCommand>(request);
 
-            var result =await _sender.Send(command);
+            var result = await _sender.Send(command);
 
             return HandleResult(result);
         }
@@ -154,12 +154,12 @@ namespace PSManagement.Api.Controllers.Tracks
         {
             var command = _mapper.Map<UpdateEmployeeWorkTrackCommand>(request);
 
-            var result =await _sender.Send(command);
+            var result = await _sender.Send(command);
 
             return HandleResult(result);
         }
 
-        
+
         [HttpPut("UpdateStepTrack")]
         public async Task<IActionResult> PutStepTrack(UpdateStepTrackRequest request)
         {

@@ -1,15 +1,14 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PSManagement.Api.Controllers.ApiBase;
 using PSManagement.Application.Contracts.Authorization;
+using PSManagement.Presentation.Controllers.ApiBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PSManagement.Api.Controllers.Roles
+namespace PSManagement.Presentation.Controllers.Roles
 {
     [Route("api/[controller]")]
     public class UserRolesController : APIController

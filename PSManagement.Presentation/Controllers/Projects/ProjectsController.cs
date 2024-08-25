@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PSManagement.Api.Controllers.ApiBase;
 using PSManagement.Application.Projects.UseCases.Commands.AddAttachment;
 using PSManagement.Application.Projects.UseCases.Commands.CreateProject;
 using PSManagement.Application.Projects.UseCases.Queries.GetProject;
@@ -24,8 +23,9 @@ using PSManagement.Application.Projects.UseCases.Commands.CompletePlaningProject
 using PSManagement.Application.Contracts.Providers;
 using PSManagement.Application.Projects.UseCases.Commands.CancelProject;
 using PSManagement.Application.Projects.UseCases.Commands.ChangeProjectManager;
+using PSManagement.Presentation.Controllers.ApiBase;
 
-namespace PSManagement.Api.Controllers.Projects
+namespace PSManagement.Presentation.Controllers.Projects
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -48,9 +48,9 @@ namespace PSManagement.Api.Controllers.Projects
 
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]ListAllProjectsRequest request)
+        public async Task<IActionResult> Get([FromQuery] ListAllProjectsRequest request)
         {
-            var query =  _mapper.Map<ListAllProjectsQuery>(request);
+            var query = _mapper.Map<ListAllProjectsQuery>(request);
 
             var result = _mapper.Map<Result<IEnumerable<ProjectDetailsResponse>>>(await _sender.Send(query));
 
@@ -67,9 +67,9 @@ namespace PSManagement.Api.Controllers.Projects
 
             return HandleResult(_mapper.Map<Result<IEnumerable<ProjectDetailsResponse>>>(result));
         }
-    
+
         [HttpGet("ByProjectManager")]
-        public async Task<IActionResult> GetByPojectManager([FromQuery] GetProjectsByProjectManagerRequest request )
+        public async Task<IActionResult> GetByPojectManager([FromQuery] GetProjectsByProjectManagerRequest request)
         {
             GetProjectsByFilterQuery query = _mapper.Map<GetProjectsByFilterQuery>(request);
 
@@ -81,11 +81,11 @@ namespace PSManagement.Api.Controllers.Projects
         [HttpGet("GetParticipants/{id}")]
         public async Task<IActionResult> GetParticipants(int id)
         {
-            GetProjectParticipantsQuery query = new (id);
+            GetProjectParticipantsQuery query = new(id);
 
             var result = await _sender.Send(query);
 
-            return HandleResult( _mapper.Map<Result<IEnumerable<EmployeeParticipateResponse>>>(result));
+            return HandleResult(_mapper.Map<Result<IEnumerable<EmployeeParticipateResponse>>>(result));
         }
 
 
@@ -155,13 +155,14 @@ namespace PSManagement.Api.Controllers.Projects
         }
 
         [HttpPost("CancelProject/{id}")]
-        public async Task<IActionResult> PostCancelProjectRequest(int id )
+        public async Task<IActionResult> PostCancelProjectRequest(int id)
         {
-            if (_currentUserProvider.EmployeeId is not null) {
+            if (_currentUserProvider.EmployeeId is not null)
+            {
 
                 int employeeId = _currentUserProvider.EmployeeId.Value;
 
-                var query = new CancelProjectCommand(id,employeeId);
+                var query = new CancelProjectCommand(id, employeeId);
 
                 var result = await _sender.Send(query);
 
@@ -183,7 +184,7 @@ namespace PSManagement.Api.Controllers.Projects
         }
 
         [HttpPost("CompleteProject")]
-        public async Task<IActionResult> PostCompleteProjectRequest(CompleteProjectRequest request )
+        public async Task<IActionResult> PostCompleteProjectRequest(CompleteProjectRequest request)
         {
             var query = _mapper.Map<CompleteProjectCommand>(request);
 
@@ -231,16 +232,17 @@ namespace PSManagement.Api.Controllers.Projects
                 return HandleResult(_mapper.Map<Result<ProjectDetailsResponse>>(response));
 
             }
-            else {
+            else
+            {
 
                 return HandleResult(result);
-            
+
             }
-        
+
         }
 
         [HttpPost("AddAttachment")]
-        public async Task<IActionResult> PostAddAttachment( [FromForm]AddAttachmentRequest request)
+        public async Task<IActionResult> PostAddAttachment([FromForm] AddAttachmentRequest request)
         {
             var command = _mapper.Map<AddAttachmentCommand>(request);
             var result = await _sender.Send(command);
@@ -248,7 +250,7 @@ namespace PSManagement.Api.Controllers.Projects
 
         }
         [HttpGet("Attachments/{id}")]
-        public async Task<IActionResult> GetAttachments([FromQuery]GetProjectAttachmentsRequest request)
+        public async Task<IActionResult> GetAttachments([FromQuery] GetProjectAttachmentsRequest request)
         {
             var query = _mapper.Map<GetProjectAttachmentsQuery>(request);
             var result = await _sender.Send(query);

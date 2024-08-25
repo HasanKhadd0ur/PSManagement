@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PSManagement.Api.Controllers.ApiBase
+namespace PSManagement.Presentation.Controllers.ApiBase
 {
     [Route("api/[controller]")]
     [ApiController]

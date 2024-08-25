@@ -1,14 +1,14 @@
 ﻿using System.Linq;
 using Ardalis.Result;
 using Microsoft.AspNetCore.Mvc;
-using PSManagement.Api.Controllers.ApiBase;
 using PSManagement.Application.Contracts.Authentication;
 using PSManagement.Contracts.Authentication;
 using System.Threading.Tasks;
 using AuthenticationResponse = PSManagement.Contracts.Authentication.AuthenticationResponse;
 using AutoMapper;
+using PSManagement.Presentation.Controllers.ApiBase;
 
-namespace PSManagement.Api.Controllers.Authentication
+namespace PSManagement.Presentation.Controllers.Authentication
 {
     [Route("api/[controller]")]
     public class AuthenticationController : APIController
@@ -32,17 +32,17 @@ namespace PSManagement.Api.Controllers.Authentication
 
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody]  RegisterRequest registerRequest)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest registerRequest)
         {
 
             Result<AuthenticationResult> result = await _authenticationService.Register(
                     registerRequest.Email,
                     registerRequest.Email,
                     registerRequest.Password);
-            
+
             if (result.IsSuccess)
             {
-                AuthenticationResponse response = new (
+                AuthenticationResponse response = new(
                         result.Value.EmployeeId,
                         result.Value.FirstName,
                         result.Value.LastName,
@@ -52,7 +52,7 @@ namespace PSManagement.Api.Controllers.Authentication
                 return Ok(response);
             }
 
-            return Problem(title: "An Errorr Occured " , detail:"", statusCode: 400);
+            return Problem(title: "An Errorr Occured ", detail: "", statusCode: 400);
         }
 
     }

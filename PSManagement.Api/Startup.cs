@@ -38,7 +38,9 @@ namespace PSManagement.Api
                 .AddApplication()
                 .AddPersistence(Configuration)
                 .AddInfrastructure(Configuration);
-            
+            services
+                .AddControllers()
+                .AddApplicationPart(Presentation.AssemblyReference.Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

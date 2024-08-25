@@ -16,11 +16,11 @@ using PSManagement.Application.Customers.UseCases.Commands.UpdateCustomer;
 using PSManagement.Application.Customers.UseCases.Queries.ListAllCustomers;
 using PSManagement.Contracts.Customers.Responses;
 using PSManagement.Application.Customers.UseCases.Queries.GetCustomer;
-using PSManagement.Api.Controllers.ApiBase;
 using Ardalis.Result;
 using PSManagement.Application.Customers.UseCases.Commands.RemoveContactInfo;
+using PSManagement.Presentation.Controllers.ApiBase;
 
-namespace PSManagement.Api.Controllers.Customers
+namespace PSManagement.Presentation.Controllers.Customers
 {
     [Route("api/[controller]")]
     [Authorize]
@@ -29,7 +29,7 @@ namespace PSManagement.Api.Controllers.Customers
         private readonly IMediator _sender;
         private readonly IMapper _mapper;
 
-        public CustomersController(IMediator sender, IMapper mapper )
+        public CustomersController(IMediator sender, IMapper mapper)
         {
             _sender = sender;
             _mapper = mapper;
@@ -40,13 +40,13 @@ namespace PSManagement.Api.Controllers.Customers
         {
             var query = new ListAllCustomersQuery();
 
-            var result = _mapper.Map<Result<IEnumerable<CustomerResponse>>>( await _sender.Send(query));
-         
+            var result = _mapper.Map<Result<IEnumerable<CustomerResponse>>>(await _sender.Send(query));
+
             return HandleResult(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id )
+        public async Task<IActionResult> Get(int id)
         {
             var query = new GetCustomerQuery(id);
 
@@ -80,7 +80,7 @@ namespace PSManagement.Api.Controllers.Customers
             }
 
         }
-        
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -93,9 +93,10 @@ namespace PSManagement.Api.Controllers.Customers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id ,UpdateCustomerRequest request)
+        public async Task<IActionResult> Put(int id, UpdateCustomerRequest request)
         {
-            if(id != request.CustomerId){
+            if (id != request.CustomerId)
+            {
                 return Problem();
             }
             var command = _mapper.Map<UpdateCustomerCommand>(request);
