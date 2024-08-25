@@ -31,14 +31,16 @@ namespace PSManagement.Infrastructure.DI
             services
                 .AddAuthentication(configuration)
                 .AddAuthorization()
-                .AddServices()
+                .AddServices(configuration)
                 .AddBackgroundServices(configuration);
 
             
             return services;
         }
-        private static IServiceCollection AddServices(this IServiceCollection services)
+        private static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<FileServiceSettings>(configuration.GetSection(FileServiceSettings.SectionName));
+
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             services.AddScoped<IEmployeesProvider, EmployeesProvider>();
             services.AddScoped<ICurrentUserProvider,CurrentUserProvider>();
@@ -54,7 +56,7 @@ namespace PSManagement.Infrastructure.DI
 
             services.AddScoped<ISyncEmployeesService, SyncEmployeesService>();
             services.AddScoped<IOccupancySystemNotifier,OccupancySystemNotifier>();   
-            services.AddHostedService<BackgroundJobSyncEmployees>();
+            services.AddHostedService<CronJobSyncEmployees>();
 
             return services;
         }
@@ -71,6 +73,7 @@ namespace PSManagement.Infrastructure.DI
         private static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtSetting>(configuration.GetSection(JwtSetting.Section));
+
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();

@@ -34,7 +34,8 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
             );
 
             builder.HasOne(e => e.ProjectType)
-                .WithMany();
+                .WithMany()
+                .HasForeignKey(e=>e.ProjectTypeId);
 
 
 
@@ -93,6 +94,7 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
         {
             builder.HasOne(e => e.Project)
                .WithOne(e => e.ProjectCompletion)
+               
             ;
         }
     }

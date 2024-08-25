@@ -38,7 +38,8 @@ namespace PSManagement.Infrastructure.Persistence.DI
             services.AddScoped<IEmployeesRepository, EmployeesRespository>();
             services.AddScoped<IStepsRepository, StepsRepository>();
             services.AddScoped<IFinancialSpendingRepository, FinancialSpendingRepository>();
-            services.AddScoped<ITracksRepository, TracksRepository>();             
+            services.AddScoped<ITracksRepository, TracksRepository>();
+            services.AddScoped<IProjectTypesRepository, ProjectsTypesRepository>();
 
             services.AddScoped<ProjectBuilder>();
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));

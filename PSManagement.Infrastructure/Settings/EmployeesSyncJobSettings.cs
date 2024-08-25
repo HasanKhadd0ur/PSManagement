@@ -4,5 +4,4 @@
     {
         public int SyncIntervalInMinutes { get; set; }
     }
-
 }

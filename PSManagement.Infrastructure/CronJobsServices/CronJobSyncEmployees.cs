@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Infrastructure.BackgroundServcies
 {
-    public class BackgroundJobSyncEmployees: BackgroundService
+    public class CronJobSyncEmployees: BackgroundService
     {
 
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly int _syncIntervalInMinutes;
-        public BackgroundJobSyncEmployees(
+        public CronJobSyncEmployees(
             IOptions<EmployeesSyncJobSettings> settings,
             IServiceScopeFactory scopeFactory)
         {
