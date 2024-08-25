@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <Folder Include="Behaviors\AuthorizationBehavior\" />
-    <Folder Include="Projects\UseCases\Commands\ChangeParticipantPartialTime\" />
+    <Folder Include="Projects\UseCases\Commands\ChangeParticiptionInfo\" />
     <Folder Include="Tracks\UseCaes\Queries\GetUncompletedTracks\" />
   </ItemGroup>
 

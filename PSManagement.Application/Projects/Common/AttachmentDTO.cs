@@ -8,4 +8,5 @@
         public string AttachmentName { get; set; }
         public string AttachmentDescription { get; set; }
     }
+
 }

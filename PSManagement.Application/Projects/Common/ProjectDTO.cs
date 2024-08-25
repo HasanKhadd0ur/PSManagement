@@ -1,5 +1,6 @@
 ﻿using PSManagement.Application.Employees.Common;
 using PSManagement.Application.FinancialSpends.Common;
+using PSManagement.Application.ProjectsTypes.Common;
 using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.Projects.Entities;
@@ -15,6 +16,7 @@ namespace PSManagement.Application.Projects.Common
         public ProposalInfo ProposalInfo { get; set; }
         public ProjectClassification ProjectClassification { get; set; }
         public ProjectInfo ProjectInfo { get; set; }
+        public ProjectTypeDTO ProjectType { get; set; }
         public string CurrentState { get; set; }
         public Aggreement ProjectAggreement { get; set; }
         public int TeamLeaderId { get; set; }
