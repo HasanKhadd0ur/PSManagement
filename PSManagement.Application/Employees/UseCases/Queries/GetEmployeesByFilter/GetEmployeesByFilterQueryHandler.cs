@@ -29,9 +29,7 @@ namespace PSManagement.Application.Employees.UseCases.Queries.GetEmployeesByFilt
 
         public async Task<Result<IEnumerable<EmployeeDTO>>> Handle(GetEmployeesByFilterQuery request, CancellationToken cancellationToken)
         {
-            int pageNumber = request.PageNumber.HasValue && request.PageNumber.Value > 0 ? request.PageNumber.Value : 1;
-            int pageSize = request.PageSize.HasValue && request.PageSize.Value > 0 && request.PageSize.Value <= 30 ? request.PageSize.Value : 30;
-            _specification.ApplyPaging((pageNumber - 1) * pageSize, pageSize);
+            _specification.ApplyOptionalPagination(request.PageSize, request.PageNumber);
 
             _specification.AddInclude(e=>e.Department);
             _specification.AddInclude(e => e.User);

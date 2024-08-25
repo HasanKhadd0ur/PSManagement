@@ -46,5 +46,16 @@ namespace PSManagement.SharedKernel.Specification
             OrderByDescending = orderByDescendingExpression;
         }
 
+        public  void ApplyOptionalPagination(int? pageSize , int? pageNumber ) {
+
+            int actPageNumber = pageNumber.HasValue && pageNumber.Value > 0 ? pageNumber.Value : 1;
+            int actPageSize = pageSize.HasValue && pageSize.Value > 0 && pageSize.Value <= 30 ? pageSize.Value : 30;
+
+            if (pageNumber.HasValue && pageSize.HasValue) {
+               ApplyPaging((actPageNumber - 1) * actPageSize, actPageSize);
+            }
+
+
+        }
     }
 }

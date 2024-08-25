@@ -29,9 +29,7 @@ namespace PSManagement.Application.Projects.UseCases.Queries.ListAllProject
 
         public async Task<Result<IEnumerable<ProjectDetailsDTO>>> Handle(ListAllProjectsQuery request, CancellationToken cancellationToken)
         {
-            int pageNumber=request.PageNumber.HasValue && request.PageNumber.Value > 0 ? request.PageNumber.Value : 1;
-            int pageSize = request.PageSize.HasValue && request.PageSize.Value > 0 && request.PageSize.Value <= 30 ? request.PageSize.Value : 30;
-            
+            _specification.ApplyOptionalPagination(request.PageSize, request.PageNumber);
             _specification.AddInclude(e => e.ProjectManager);
             _specification.AddInclude(e => e.Proposer);
             _specification.AddInclude(e => e.TeamLeader);
@@ -39,8 +37,7 @@ namespace PSManagement.Application.Projects.UseCases.Queries.ListAllProject
 
 
 
-            _specification.ApplyPaging((pageNumber - 1) * pageSize, pageSize);
-
+            
             var projects = await _projectsRepository.ListAsync(_specification);
 
             return Result.Success(_mapper.Map<IEnumerable<ProjectDetailsDTO>>(projects));    

@@ -32,7 +32,15 @@ namespace PSManagement.Application.Projects.UseCases.Queries.GetProjectAttachmen
 
 
             var attachments = await _attachmentRepository.ListAsync();
-            attachments = attachments.Where(e => e.ProjectId == request.ProjectId).Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            if (request.PageSize.HasValue && request.PageNumber.HasValue)
+            {
+                attachments = attachments.Where(e => e.ProjectId == request.ProjectId).Skip((pageNumber - 1) * pageSize).Take(pageSize);
+
+            }
+            else {
+                attachments = attachments.Where(e => e.ProjectId == request.ProjectId);
+
+            }
 
             return Result.Success(_mapper.Map<IEnumerable<AttachmentDTO>>(attachments));
         }
