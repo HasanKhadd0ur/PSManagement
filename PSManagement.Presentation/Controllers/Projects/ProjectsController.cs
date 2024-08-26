@@ -24,6 +24,7 @@ using PSManagement.Application.Contracts.Providers;
 using PSManagement.Application.Projects.UseCases.Commands.CancelProject;
 using PSManagement.Application.Projects.UseCases.Commands.ChangeProjectManager;
 using PSManagement.Presentation.Controllers.ApiBase;
+using PSManagement.Application.Projects.UseCases.Queries.GetParticipationChangeHistory;
 
 namespace PSManagement.Presentation.Controllers.Projects
 {
@@ -55,6 +56,16 @@ namespace PSManagement.Presentation.Controllers.Projects
             var result = _mapper.Map<Result<IEnumerable<ProjectDetailsResponse>>>(await _sender.Send(query));
 
             return HandleResult(result);
+        }
+
+        [HttpGet("ParticipationChangeHistory")]
+        public async Task<IActionResult> GetPartiipationChangesHistory(int id )
+        {
+            var query = new GetParticipationChangeHistoryQuery(id);
+
+            var result = await _sender.Send(query);
+
+            return HandleResult(_mapper.Map<Result<IEnumerable<ParticipationChange>>>(result));
         }
 
 

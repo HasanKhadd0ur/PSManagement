@@ -12,4 +12,5 @@ namespace PSManagement.Application.Projects.Common
         public int PartialTimeRatio { get; set; }
         public string Role { get; set; }
     }
+
 }

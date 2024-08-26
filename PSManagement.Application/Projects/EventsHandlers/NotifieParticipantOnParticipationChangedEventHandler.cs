@@ -1,6 +1,7 @@
 ﻿using PSManagement.Application.Contracts.Email;
 using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.Employees.Repositories;
+using PSManagement.Domain.Employees.Specification;
 using PSManagement.Domain.Projects.DomainEvents;
 using PSManagement.SharedKernel.DomainEvents;
 using PSManagement.SharedKernel.Specification;
@@ -19,6 +20,7 @@ namespace PSManagement.Application.Projects.EventsHandlers
         {
             _emailService = emailService;
             _employeeRepository = employeeRepository;
+            _specification = new EmployeesSpecification();
         }
 
         public async Task Handle(ParticipationChangedEvent notification, CancellationToken cancellationToken)

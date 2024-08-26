@@ -40,19 +40,8 @@ namespace PSManagement.Presentation.Controllers.Authentication
                     registerRequest.Email,
                     registerRequest.Password);
 
-            if (result.IsSuccess)
-            {
-                AuthenticationResponse response = new(
-                        result.Value.EmployeeId,
-                        result.Value.FirstName,
-                        result.Value.LastName,
-                        result.Value.Email,
-                        result.Value.Roles,
-                        result.Value.Token);
-                return Ok(response);
-            }
+            return HandleResult(_mapper.Map<Result<AuthenticationResponse>>(result));
 
-            return Problem(title: "An Errorr Occured ", detail: "", statusCode: 400);
         }
 
     }

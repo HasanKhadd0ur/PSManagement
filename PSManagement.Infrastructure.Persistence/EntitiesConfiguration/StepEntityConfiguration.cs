@@ -18,6 +18,7 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                     p.Property(e => e.StepName).HasColumnName("StepName");
                     p.Property(e => e.StartDate).HasColumnName("StartDate");
                     p.Property(e => e.Duration).HasColumnName("Duration");
+                    p.Property(e => e.NumberOfWorker).HasColumnName("NumberOfWorker");
                 }
             );
 

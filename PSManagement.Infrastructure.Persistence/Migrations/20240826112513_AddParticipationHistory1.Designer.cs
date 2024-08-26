@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PSManagement.Infrastructure.Persistence;
 
 namespace PSManagement.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240826112513_AddParticipationHistory1")]
+    partial class AddParticipationHistory1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1011,8 +1013,7 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                                 .HasColumnName("Duration");
 
                             b1.Property<int>("NumberOfWorker")
-                                .HasColumnType("int")
-                                .HasColumnName("NumberOfWorker");
+                                .HasColumnType("int");
 
                             b1.Property<DateTime>("StartDate")
                                 .HasColumnType("datetime2")

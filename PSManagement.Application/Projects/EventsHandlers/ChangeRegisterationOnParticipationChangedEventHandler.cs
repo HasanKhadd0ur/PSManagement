@@ -35,8 +35,6 @@ namespace PSManagement.Application.Projects.EventsHandlers
                 });
 
 
-            await _unitOfWork.SaveChangesAsync();
-
 
         }
     }

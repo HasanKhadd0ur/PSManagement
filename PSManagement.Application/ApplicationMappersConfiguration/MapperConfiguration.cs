@@ -2,8 +2,6 @@
 using PSManagement.Application.Contracts.Authentication;
 using PSManagement.Application.Customers.Common;
 using PSManagement.Application.Employees.Common;
-using PSManagement.Application.FinancialSpends.Common;
-using PSManagement.Application.FinancialSpends.UseCases.Commands.CreateFinancialSpendItem;
 using PSManagement.Application.Projects.Common;
 using PSManagement.Application.Projects.UseCases.Commands.CompleteProgressProject;
 using PSManagement.Application.ProjectsTypes.UseCases.Commands.CreateNewType;
@@ -16,7 +14,6 @@ using PSManagement.Application.Tracks.UseCaes.Commands.CreateTrack;
 using PSManagement.Domain.Customers.Entities;
 using PSManagement.Domain.Customers.ValueObjects;
 using PSManagement.Domain.Employees.Entities;
-using PSManagement.Domain.FinancialSpends.Entities;
 using PSManagement.Domain.Identity.Entities;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.ValueObjects;
@@ -91,32 +88,10 @@ namespace PSManagement.Application.Mappers
 
             CreateMap<CreateNewTypeCommand, ProjectType>();
             CreateMap<UpdateTypeCommand, ProjectType>();
+
+            CreateMap<ParticipationChange, ParticipationChangeDTO>().ReverseMap();
+
             CreateMap <CompleteProjectCommand, ProjectCompletion>();
-
-        }
-    }
-
-    public class FinanialSpendingDTOMapperConfiguration : Profile {
-
-
-        public FinanialSpendingDTOMapperConfiguration()
-        {
-            CreateMap<FinancialSpendingDTO, FinancialSpending>().ReverseMap();
-
-
-
-            CreateMap<CreateFinancialSpendItemCommand, FinancialSpending>()
-                .ForMember(d => d.Id, op => op.Ignore())
-                .ForMember(d => d.Events, op => op.Ignore())
-                .ConstructUsing(src => new FinancialSpending(
-                    src.ProjectId,
-                    src.LocalPurchase,
-                    src.ExternalPurchase,
-                    src.CostType,
-                    src.Description,
-                    src.ExpectedSpendingDate
-                ))
-                ;
 
         }
     }

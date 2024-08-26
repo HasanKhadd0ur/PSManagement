@@ -1,8 +1,10 @@
-﻿using PSManagement.Contracts.Customers.Responses;
+﻿using PSManagement.Application.Projects.Common;
+using PSManagement.Contracts.Customers.Responses;
 using PSManagement.Contracts.ProjectsTypes.Request;
 using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.ValueObjects;
+using System;
 using System.Collections.Generic;
 
 namespace PSManagement.Contracts.Projects.Response
@@ -28,7 +30,7 @@ namespace PSManagement.Contracts.Projects.Response
         public int ProposerId { get; private set; }
         public CustomerResponse Proposer { get; set; }
         public ICollection<StepResponse> Steps { get; set; }
-        public ICollection<Attachment> Attachments { get; set; }
+        public ICollection<AttachmentReponse> Attachments { get; set; }
 
         public FinancialFund FinancialFund { get; set; }
         public ICollection<FinancialSpendingResponse> FinancialSpending { get; set; }
@@ -36,4 +38,20 @@ namespace PSManagement.Contracts.Projects.Response
         public ICollection<EmployeeParticipateResponse> EmployeeParticipates { get; set; }
 
     }
+
+    public class ParticipationChange
+    {
+
+        public int EmployeeId { get; set; }
+        public int ProjectId { get; set; }
+        public int PartialTimeBefore { get; set; }
+        public int PartialTimeAfter { get; set; }
+        public string RoleBefore { get; set; }
+        public string RoleAfter { get; set; }
+        public DateTime ChangeDate { get; set; }
+ 
+
+
     }
+
+}

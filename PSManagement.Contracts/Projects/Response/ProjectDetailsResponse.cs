@@ -15,7 +15,7 @@ namespace PSManagement.Contracts.Projects.Response
         public ProjectClassification ProjectClassification { get; set; }
         public EmployeeResponse TeamLeader { get; set; }
         public EmployeeResponse ProjectManager { get; set; }
-        public Department Executer { get; set; }
+        public DepartmentResponse Executer { get; set; }
 
         public CustomerResponse Proposer { get; set; }
         
