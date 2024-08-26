@@ -37,6 +37,8 @@ namespace PSManagement.Infrastructure.DI
             
             return services;
         }
+
+        #region Add Servcies 
         private static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<FileServiceSettings>(configuration.GetSection(FileServiceSettings.SectionName));
@@ -49,9 +51,13 @@ namespace PSManagement.Infrastructure.DI
             services.AddScoped<IEmailService,EmailService>();
             return services;
         }
+
+        #endregion Add Servcies 
+
+        #region Background jobs 
         private static IServiceCollection AddBackgroundServices(this IServiceCollection services,IConfiguration configuration)
         {
-            services.Configure<EmployeesSyncJobSettings>(configuration.GetSection("EmpoyeesSyncJobSettings"));
+            services.Configure<EmployeesSyncJobSettings>(configuration.GetSection(EmployeesSyncJobSettings.SectionName));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<ISyncEmployeesService, SyncEmployeesService>();
@@ -61,7 +67,9 @@ namespace PSManagement.Infrastructure.DI
             return services;
         }
 
+        #endregion Background jobs 
 
+        #region Authorization 
         private static IServiceCollection AddAuthorization(this IServiceCollection services)
         {
             services.AddScoped<IUserRoleService, UserRolesService>();
@@ -69,7 +77,9 @@ namespace PSManagement.Infrastructure.DI
 
             return services;
         }
+        #endregion Authorization 
 
+        #region Authentication 
         private static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtSetting>(configuration.GetSection(JwtSetting.Section));
@@ -84,5 +94,6 @@ namespace PSManagement.Infrastructure.DI
 
             return services;
         }
+        #endregion Authentication 
     }
 }

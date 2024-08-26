@@ -27,10 +27,39 @@ namespace PSManagement.Infrastructure.Persistence.DI
         
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AppDbContext>(options => {
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-            });
+            services
+                .AddBuilders()
+                .AddDataContext(configuration)
+                .AddRepositories()
+                .AddUOW();
 
+            return services;
+        }
+
+        #region Register Builders 
+        private static IServiceCollection AddBuilders(this IServiceCollection services)
+        {
+
+            services.AddScoped<ProjectBuilder>();
+            return services;
+
+        }
+        #endregion Register Builders 
+
+        #region Register UOW 
+
+        private static IServiceCollection AddUOW(this IServiceCollection services) {
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            return services;        
+        }
+        #endregion Register UOW 
+
+        #region Register Repositories
+        private static IServiceCollection AddRepositories(this IServiceCollection services) {
+
+            services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<ICustomersRepository, CustomersReposiotry>();
             services.AddScoped<IProjectsRepository, ProjectsRepository>();
@@ -41,12 +70,23 @@ namespace PSManagement.Infrastructure.Persistence.DI
             services.AddScoped<ITracksRepository, TracksRepository>();
             services.AddScoped<IProjectTypesRepository, ProjectsTypesRepository>();
 
-            services.AddScoped<ProjectBuilder>();
-            services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
+        
         }
 
-        
+        #endregion Register Repositoryies
+
+        #region Register Data context 
+        private static IServiceCollection AddDataContext(this IServiceCollection services ,IConfiguration configuration) {
+
+            services.AddDbContext<AppDbContext>(options => {
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            return services;
+
+        }
+
+        #endregion Register Data Context 
     }
 }

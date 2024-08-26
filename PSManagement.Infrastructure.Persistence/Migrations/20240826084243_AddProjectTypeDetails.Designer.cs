@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PSManagement.Infrastructure.Persistence;
 
 namespace PSManagement.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240826084243_AddProjectTypeDetails")]
+    partial class AddProjectTypeDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -297,45 +299,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("EmployeeParticipate");
-                });
-
-            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.ParticipationChange", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("ChangeDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PartialTimeAfter")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PartialTimeBefore")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RoleAfter")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleBefore")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique();
-
-                    b.HasIndex("ProjectId")
-                        .IsUnique();
-
-                    b.ToTable("ParticipationChanges");
                 });
 
             modelBuilder.Entity("PSManagement.Domain.Projects.Entities.Project", b =>
@@ -765,25 +728,6 @@ namespace PSManagement.Infrastructure.Persistence.Migrations
                     b.HasOne("PSManagement.Domain.Projects.Entities.Project", "Project")
                         .WithMany("EmployeeParticipates")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("PSManagement.Domain.Projects.Entities.ParticipationChange", b =>
-                {
-                    b.HasOne("PSManagement.Domain.Employees.Entities.Employee", "Employee")
-                        .WithOne()
-                        .HasForeignKey("PSManagement.Domain.Projects.Entities.ParticipationChange", "EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PSManagement.Domain.Projects.Entities.Project", "Project")
-                        .WithOne()
-                        .HasForeignKey("PSManagement.Domain.Projects.Entities.ParticipationChange", "ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

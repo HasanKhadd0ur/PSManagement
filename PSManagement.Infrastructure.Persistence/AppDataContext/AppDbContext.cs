@@ -19,6 +19,7 @@ namespace PSManagement.Infrastructure.Persistence
 
         }
 
+        public DbSet<ParticipationChange> ParticipationChanges { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Permission> Permission { get; set; }
@@ -42,8 +43,7 @@ namespace PSManagement.Infrastructure.Persistence
         {
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
-     //       modelBuilder.Entity<BaseEntity>().Ignore(e => e.Events);
-            
+         
             SeedData.SeedAsync(modelBuilder).Wait();
 
             base.OnModelCreating(modelBuilder);

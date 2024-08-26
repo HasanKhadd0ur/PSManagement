@@ -19,6 +19,8 @@ namespace PSManagement.Infrastructure.Persistence.SeedDataContext
             SeedRoles(builder);
             return Task.CompletedTask;
         }
+
+        #region Configure Departments 
         public static void SeedDepartments(ModelBuilder builder) {
 
             builder.Entity<Department>().HasData(
@@ -33,17 +35,25 @@ namespace PSManagement.Infrastructure.Persistence.SeedDataContext
                 ) ;
         
         }
+        #endregion Configure Departments 
+
+        #region Seed Roles 
         public static void SeedRoles(ModelBuilder builder)
         {
 
             builder.Entity<Role>().HasData(
                 new Role {Id=1, Name = "Admin" },
                 new Role {Id = 2, Name = "Employee" },
-                new Role {Id = 4, Name = "Scientific-Deputy" }
+                new Role {Id = 4, Name = "Scientific-Deputy" },
+                new Role { Id = 5, Name = "Planner" }
 
                 );
 
         }
+
+        #endregion Seed Roles 
+
+        #region Configure Admin 
         public static void SeedAdmin(ModelBuilder builder)
         {
 
@@ -56,5 +66,7 @@ namespace PSManagement.Infrastructure.Persistence.SeedDataContext
             );
 
         }
+
+        #endregion Configure Admin 
     }
 }

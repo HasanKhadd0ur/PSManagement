@@ -44,11 +44,15 @@ namespace PSManagement.Infrastructure.BackgroundServcies
         public async Task<SyncResponse> SyncEmployees(IEmployeesProvider employeesProvider)
         {
             IEnumerable<Employee> NewestEmployees = await _employeesProviders.FetchEmployees();
+
             int count = 0;
             
             foreach (Employee employee in NewestEmployees) {
+
                 _specification.Criteria = empl => empl.HIASTId == employee.HIASTId;
+                
                 Employee emp = _employeesRepository.ListAsync(_specification).Result.FirstOrDefault();
+                
                 if (emp is null) {
                     emp =await _employeesRepository.AddAsync(employee);
 

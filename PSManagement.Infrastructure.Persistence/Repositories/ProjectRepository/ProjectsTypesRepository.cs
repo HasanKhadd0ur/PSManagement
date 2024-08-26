@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.Repositories;
+using PSManagement.Domain.ProjectsTypes.Entites;
 using PSManagement.Infrastructure.Persistence.Repositories.Base;
 using PSManagement.SharedKernel.Interfaces;
 using System.Collections.Generic;

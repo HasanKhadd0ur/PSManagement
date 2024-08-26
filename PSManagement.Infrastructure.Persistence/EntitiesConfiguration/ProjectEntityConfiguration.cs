@@ -97,6 +97,21 @@ namespace PSManagement.Infrastructure.Persistence.EntitiesConfiguration
                
             ;
         }
+
+
+    }
+    public class participationChangesConfiguration : IEntityTypeConfiguration<ParticipationChange>
+    {
+        public void Configure(EntityTypeBuilder<ParticipationChange> builder)
+        {
+            builder
+                .HasOne(e => e.Employee)
+                .WithOne();
+            builder
+                .HasOne(e => e.Project)
+                .WithOne()
+            ;
+        }
     }
 
 }

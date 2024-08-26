@@ -20,7 +20,11 @@ namespace PSManagement.Infrastructure.Services.Authentication
         private readonly IUsersRepository _userRepository;
         private readonly BaseSpecification<User> _specification;
         private readonly IMapper _mapper;
-        public AuthenticationService(IJwtTokenGenerator jwtTokenGenerator, IUsersRepository userRepository, IMapper mapper)
+        public AuthenticationService(
+            IJwtTokenGenerator jwtTokenGenerator,
+            IUsersRepository userRepository,
+            IMapper mapper
+            )
         {
             _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userRepository;
@@ -28,15 +32,21 @@ namespace PSManagement.Infrastructure.Services.Authentication
             _mapper = mapper;
         }
 
+        #region Login 
+
         public async Task<Result<AuthenticationResult>>  Login(String email, String password) {
+        
             _specification.AddInclude(e => e.Employee);
             _specification.AddInclude(e=> e.Roles);
 
             User u = await _userRepository.GetByEmail(email,_specification);
-            if (u is null || u.HashedPassword != password) {
+            
+            if (u is null || u.HashedPassword != hashPassword(password)) {
+             
                 return Result.Invalid(UserErrors.InvalidLoginAttempt);
 
             }
+            
             String token = _jwtTokenGenerator.GenerateToken(u);
             
             return  new AuthenticationResult {
@@ -47,12 +57,18 @@ namespace PSManagement.Infrastructure.Services.Authentication
                        Roles=_mapper.Map<ICollection<RoleDTO>>(u.Roles),
                        Token=token};
         }
+        #endregion Login
+
+        #region Registeration 
         public async Task<Result<AuthenticationResult>> Register(String email, String userName, String password) {
+        
             // check if the user exist 
             var u = await _userRepository.GetByEmail(email);
+            
             if (u is not null) {
                 return Result.Invalid(UserErrors.AlreadyUserExist);
             }
+            
             var user = await _userRepository.AddAsync(
                 new User{
                     Email=email ,
@@ -74,6 +90,14 @@ namespace PSManagement.Infrastructure.Services.Authentication
             
         }
 
+        #endregion Registeration
+
+        #region Password Hasher 
+        private string hashPassword(string passsword) {
+
+            return passsword;
+        }
+        #endregion Password Hasher 
 
     }
 
