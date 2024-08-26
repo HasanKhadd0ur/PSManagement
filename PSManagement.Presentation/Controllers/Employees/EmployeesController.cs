@@ -76,7 +76,7 @@ namespace PSManagement.Presentation.Controllers.Employees
             return HandleResult(_mapper.Map<Result<IEnumerable<EmployeeResponse>>>(result));
         }
 
-        [HttpGet("Departments")]
+        [HttpGet("GetDepartments")]
         public async Task<IActionResult> GetDepartments()
         {
             var query = new GetDepartmentsQuery();

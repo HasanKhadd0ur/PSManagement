@@ -22,7 +22,11 @@ namespace PSManagement.Presentation.Controllers.ApiBase
             }
             else
             {
-                return Problem(detail: result.Errors.FirstOrDefault(), statusCode: StatusCodes.Status400BadRequest);
+                return Problem(
+                    detail: result.ValidationErrors.FirstOrDefault().ErrorMessage,
+                    statusCode: StatusCodes.Status400BadRequest,
+                    title:result.ValidationErrors.FirstOrDefault().ErrorCode
+                    );
             }
         }
 
