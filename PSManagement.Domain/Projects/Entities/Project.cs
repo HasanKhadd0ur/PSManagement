@@ -221,7 +221,7 @@ namespace PSManagement.Domain.Projects.Entities
         public void ChangeParticipant(int participantId, int partialTimeRation, string role)
         {
             var participate = EmployeeParticipates.Where(e => e.EmployeeId == participantId).FirstOrDefault();
-            AddDomainEvent(new ParticipationChanged(
+            AddDomainEvent(new ParticipationChangedEvent(
                 participantId,
                 participate.PartialTimeRatio,partialTimeRation,
                 role,participate.Role, Id, DateTime.Now));

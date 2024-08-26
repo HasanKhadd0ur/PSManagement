@@ -3,7 +3,7 @@ using System;
 
 namespace PSManagement.Domain.Projects.DomainEvents
 {
-    public record ParticipationChanged(
+    public record ParticipationChangedEvent(
         int ParticipantId,
         int PartialTimeRatioBefore,
         int PartialTimeRatioAfter,
