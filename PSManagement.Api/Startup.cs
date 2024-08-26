@@ -31,16 +31,12 @@ namespace PSManagement.Api
         public void ConfigureServices(IServiceCollection services)
         {
             // adding dependency injection 
-
             services
                 .AddAPI()
                 .AddPresentation()
                 .AddApplication()
                 .AddPersistence(Configuration)
                 .AddInfrastructure(Configuration);
-            services
-                .AddControllers()
-                .AddApplicationPart(Presentation.AssemblyReference.Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

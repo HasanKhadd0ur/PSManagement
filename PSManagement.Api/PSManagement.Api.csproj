@@ -26,4 +26,8 @@
     <ProjectReference Include="..\PSManagement.SharedKernel\PSManagement.SharedKernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middleware\ExceptionHandling\" />
+  </ItemGroup>
+
 </Project>
