@@ -16,7 +16,7 @@ namespace PSManagement.Contracts.Projects.Response
         public ProjectTypeResponse ProjectType { get; set; }
         public Aggreement ProjectAggreement { get; set; }
         public int TeamLeaderId { get; set; }
-        public int ProjecTypeId { get; set; }
+        public int ProjectTypeId { get; set; }
 
         public ProjectClassification ProjectClassification { get; set; }
         public EmployeeResponse TeamLeader { get; set; }
