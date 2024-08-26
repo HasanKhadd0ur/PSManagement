@@ -24,4 +24,8 @@
     <ProjectReference Include="..\PSManagement.SharedKernel\PSManagement.SharedKernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Projects\UseCases\Queries\GetParticipationChangeHistory\" />
+  </ItemGroup>
+
 </Project>

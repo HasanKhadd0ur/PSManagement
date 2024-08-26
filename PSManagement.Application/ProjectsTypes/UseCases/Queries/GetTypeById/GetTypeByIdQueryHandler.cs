@@ -25,12 +25,12 @@ namespace PSManagement.Application.ProjectsTypes.UseCases.Queries.GetTypeById
 
         public async Task<Result<ProjectTypeDTO>> Handle(GetTypeByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _projectTypesRepository.ListAsync();
+            var result = await _projectTypesRepository.GetByIdAsync(request.TypeId);
 
             if (result is null)
             {
 
-                return Result.Invalid(PrjectTypesErrors.InvalidEntryError);
+                return Result.Invalid(ProjectTypesErrors.InvalidEntryError);
             }
 
             return Result.Success(_mapper.Map<ProjectTypeDTO>(result)); ;

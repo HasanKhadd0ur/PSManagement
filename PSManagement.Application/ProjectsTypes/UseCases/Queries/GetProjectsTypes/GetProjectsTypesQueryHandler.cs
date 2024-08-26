@@ -1,8 +1,8 @@
 ﻿using Ardalis.Result;
 using AutoMapper;
 using PSManagement.Application.ProjectsTypes.Common;
-using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.Repositories;
+using PSManagement.Domain.ProjectsTypes.Entites;
 using PSManagement.SharedKernel.CQRS.Query;
 using PSManagement.SharedKernel.Specification;
 using System.Collections.Generic;

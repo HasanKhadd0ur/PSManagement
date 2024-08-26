@@ -1,8 +1,8 @@
 ﻿using Ardalis.Result;
 using AutoMapper;
 using PSManagement.Domain.Projects.DomainErrors;
-using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.Repositories;
+using PSManagement.Domain.ProjectsTypes.Entites;
 using PSManagement.SharedKernel.CQRS.Command;
 using System.Linq;
 using System.Threading;

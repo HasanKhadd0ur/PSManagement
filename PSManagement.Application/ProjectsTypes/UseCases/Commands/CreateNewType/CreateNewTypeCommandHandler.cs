@@ -1,8 +1,8 @@
 ﻿using Ardalis.Result;
 using AutoMapper;
 using PSManagement.Domain.Projects.DomainErrors;
-using PSManagement.Domain.Projects.Entities;
 using PSManagement.Domain.Projects.Repositories;
+using PSManagement.Domain.ProjectsTypes.Entites;
 using PSManagement.SharedKernel.CQRS.Command;
 using System.Linq;
 using System.Threading;
@@ -29,7 +29,7 @@ namespace PSManagement.Application.ProjectsTypes.UseCases.Commands.CreateNewType
 
             if (result.Count() !=0 )
             {
-                return Result.Invalid(PrjectTypesErrors.InvalidName);
+                return Result.Invalid(ProjectTypesErrors.InvalidName);
             }
             
             var projectType = await _projectTypesRepository.AddAsync(_mapper.Map<ProjectType>(request));

@@ -37,7 +37,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
             var type = await _projectTypesRepository.GetByIdAsync(request.ProjectTypeId);
             if (type is null) { 
             
-                return Result.Invalid(PrjectTypesErrors.InvalidEntryError);
+                return Result.Invalid(ProjectTypesErrors.InvalidEntryError);
             }
 
             Project project = _projectBuilder

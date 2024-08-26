@@ -8,6 +8,8 @@ using PSManagement.Application.Projects.Common;
 using PSManagement.Application.Projects.UseCases.Commands.CompleteProgressProject;
 using PSManagement.Application.ProjectsTypes.UseCases.Commands.CreateNewType;
 using PSManagement.Application.Tracks.Common;
+using PSManagement.Application.ProjectsTypes.Common;
+
 using PSManagement.Application.Tracks.UseCaes.Commands.AddEmployeeTrack;
 using PSManagement.Application.Tracks.UseCaes.Commands.AddStepTrack;
 using PSManagement.Application.Tracks.UseCaes.Commands.CreateTrack;
@@ -25,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PSManagement.Domain.ProjectsTypes.Entites;
 
 namespace PSManagement.Application.Mappers
 {
@@ -34,7 +37,7 @@ namespace PSManagement.Application.Mappers
         {
             CreateMap<CustomerDTO, Customer>().ReverseMap();
             CreateMap<ContactInfoDTO, ContactInfo>().ReverseMap();
-
+           CreateMap<ProjectType, ProjectTypeDTO>().ReverseMap();
             CreateMap<Step, StepDTO>()
              ;
 
@@ -74,6 +77,7 @@ namespace PSManagement.Application.Mappers
 
             CreateMap<Project, ProjectDTO>().ReverseMap();
             CreateMap<Project, ProjectDetailsDTO>().ReverseMap();
+           CreateMap<ProjectType, ProjectTypeDTO>().ReverseMap();
 
             CreateMap<Project, ProjectInfo>()
                 .ConvertUsing(project => project.ProjectInfo);
