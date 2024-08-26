@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Identity\ValueObjects\" />
+    <Folder Include="ProjectsTypes\Entites\" />
+    <Folder Include="ProjectsTypes\Specification\" />
+    <Folder Include="ProjectsTypes\Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PSManagement.SharedKernel\PSManagement.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>

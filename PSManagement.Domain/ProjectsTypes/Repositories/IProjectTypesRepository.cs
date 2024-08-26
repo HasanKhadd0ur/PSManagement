@@ -1,4 +1,4 @@
-﻿using PSManagement.Domain.Projects.Entities;
+﻿using PSManagement.Domain.ProjectsTypes.Entites;
 using PSManagement.SharedKernel.Interfaces;
 using PSManagement.SharedKernel.Repositories;
 using System.Collections.Generic;

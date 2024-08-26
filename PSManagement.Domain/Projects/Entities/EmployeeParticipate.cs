@@ -1,6 +1,5 @@
 ﻿using PSManagement.Domain.Employees.Entities;
 using PSManagement.SharedKernel.Entities;
-using System;
 
 namespace PSManagement.Domain.Projects.Entities
 {

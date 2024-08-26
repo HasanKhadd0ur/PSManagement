@@ -47,7 +47,7 @@ namespace PSManagement.Domain.Employees.Entities
         }
         #endregion  Constructors
 
-
+        #region business logic encapsulation 
         public void UpdateWorkHours(int workingHour)
         {
 
@@ -61,5 +61,6 @@ namespace PSManagement.Domain.Employees.Entities
 
             
         }
+        #endregion business logic encapsulation 
     }
-}
+    }

@@ -1,4 +1,4 @@
-﻿using PSManagement.Domain.Projects.Entities;
+﻿using PSManagement.Domain.ProjectsTypes.Entites;
 using PSManagement.SharedKernel.Specification;
 using System;
 using System.Linq.Expressions;

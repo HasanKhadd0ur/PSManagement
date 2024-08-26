@@ -6,7 +6,9 @@ namespace PSManagement.Domain.Projects.ValueObjects
         string StepName,
         string Description,
         DateTime StartDate,
-        int Duration
+        int Duration,
+        int NumberOfWorker 
+
      );
 
 }
