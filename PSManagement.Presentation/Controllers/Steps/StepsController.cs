@@ -17,20 +17,27 @@ using System.Linq;
 using System.Threading.Tasks;
 using PSManagement.Contracts.Tracks.Response;
 using PSManagement.Presentation.Controllers.ApiBase;
+using PSManagement.Application.Steps.UseCases.Commands.UpdateStepInformaion;
 
 namespace PSManagement.Presentation.Controllers.Steps
 {
     [Route("api/[controller]")]
     public class StepsController : APIController
     {
+        #region Dependency 
         private readonly IMapper _mapper;
         private readonly IMediator _sender;
+        #endregion Dependency 
 
+        #region Constructors
         public StepsController(IMediator sender, IMapper mapper)
         {
             _sender = sender;
             _mapper = mapper;
         }
+        #endregion Constructors
+
+        #region Queries
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
@@ -52,6 +59,10 @@ namespace PSManagement.Presentation.Controllers.Steps
             return HandleResult(result);
         }
 
+        #endregion Queries
+
+        #region Update 
+
         [HttpPut("ChangeStepWeight/{id}")]
         public async Task<IActionResult> PutChangeStepWeight(ChangeStepWeightRequest request, [FromRoute] int id)
         {
@@ -61,18 +72,18 @@ namespace PSManagement.Presentation.Controllers.Steps
             }
             var query = _mapper.Map<ChangeStepWeightCommand>(request); ;
 
-            var result = _mapper.Map<Result>(await _sender.Send(query));
+            var result = await _sender.Send(query);
 
             return HandleResult(result);
         }
 
-
-        [HttpGet("StepTrackHistory")]
-        public async Task<IActionResult> Get([FromQuery] GetStepTrackHistoryRequest request)
+        [HttpPut("UpdateStepInfo/{id}")]
+        public async Task<IActionResult> PutChangeStepInfo(ChangeStepInfoRequest request )
         {
-            var query = _mapper.Map<GetStepTrackHistoryQuery>(request);
 
-            var result = _mapper.Map<Result<IEnumerable<StepTrackResponse>>>(await _sender.Send(query));
+            var query = _mapper.Map<UpdateStepInformationCommand>(request); ;
+
+            var result = _mapper.Map<Result>(await _sender.Send(query));
 
             return HandleResult(result);
         }
@@ -87,6 +98,23 @@ namespace PSManagement.Presentation.Controllers.Steps
             return HandleResult(result);
         }
 
+        #endregion Update 
+
+        #region Track History 
+
+        [HttpGet("StepTrackHistory")]
+        public async Task<IActionResult> Get([FromQuery] GetStepTrackHistoryRequest request)
+        {
+            var query = _mapper.Map<GetStepTrackHistoryQuery>(request);
+
+            var result = _mapper.Map<Result<IEnumerable<StepTrackResponse>>>(await _sender.Send(query));
+
+            return HandleResult(result);
+        }
+
+        #endregion Track History 
+
+        #region Delete 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
@@ -96,5 +124,6 @@ namespace PSManagement.Presentation.Controllers.Steps
 
             return HandleResult(result);
         }
+        #endregion Delete 
     }
 }

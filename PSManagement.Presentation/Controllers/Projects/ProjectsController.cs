@@ -25,6 +25,8 @@ using PSManagement.Application.Projects.UseCases.Commands.CancelProject;
 using PSManagement.Application.Projects.UseCases.Commands.ChangeProjectManager;
 using PSManagement.Presentation.Controllers.ApiBase;
 using PSManagement.Application.Projects.UseCases.Queries.GetParticipationChangeHistory;
+using PSManagement.Application.Projects.UseCases.Queries.GetCompletionContribution;
+using PSManagement.Application.Projects.UseCases.Commands.RemoveAttachment;
 
 namespace PSManagement.Presentation.Controllers.Projects
 {
@@ -32,10 +34,15 @@ namespace PSManagement.Presentation.Controllers.Projects
     [ApiController]
     public class ProjectsController : APIController
     {
+        #region Dependency 
+        
         private readonly IMediator _sender;
         private readonly IMapper _mapper;
         private readonly ICurrentUserProvider _currentUserProvider;
+       
+        #endregion Dependency 
 
+        #region Construtor
         public ProjectsController(
             IMapper mapper,
             IMediator sender,
@@ -47,7 +54,9 @@ namespace PSManagement.Presentation.Controllers.Projects
             _currentUserProvider = currentUserProvider;
         }
 
+        #endregion Construtor
 
+        #region Queries 
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] ListAllProjectsRequest request)
         {
@@ -57,6 +66,19 @@ namespace PSManagement.Presentation.Controllers.Projects
 
             return HandleResult(result);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var query = new GetProjectByIdQuery(id);
+
+            var result = await _sender.Send(query);
+
+            return HandleResult(_mapper.Map<Result<ProjectResponse>>(result));
+        }
+
+
+
 
         [HttpGet("ParticipationChangeHistory/{id}")]
         public async Task<IActionResult> GetPartiipationChangesHistory(int id )
@@ -79,6 +101,8 @@ namespace PSManagement.Presentation.Controllers.Projects
             return HandleResult(_mapper.Map<Result<IEnumerable<ProjectDetailsResponse>>>(result));
         }
 
+
+
         [HttpGet("ByProjectManager")]
         public async Task<IActionResult> GetByPojectManager([FromQuery] GetProjectsByProjectManagerRequest request)
         {
@@ -88,17 +112,9 @@ namespace PSManagement.Presentation.Controllers.Projects
 
             return HandleResult(_mapper.Map<Result<IEnumerable<ProjectDetailsResponse>>>(result));
         }
-
-        [HttpGet("GetParticipants/{id}")]
-        public async Task<IActionResult> GetParticipants(int id)
-        {
-            GetProjectParticipantsQuery query = new(id);
-
-            var result = await _sender.Send(query);
-
-            return HandleResult(_mapper.Map<Result<IEnumerable<EmployeeParticipateResponse>>>(result));
-        }
-
+        #endregion Queries
+      
+        #region Project Management 
 
         [HttpPut("ChangeTeamLeader")]
         public async Task<IActionResult> PuttChangeTeamLeader(ChangeProjectTeamLeaderRequest request)
@@ -120,6 +136,10 @@ namespace PSManagement.Presentation.Controllers.Projects
             return HandleResult(result);
         }
 
+        #endregion Project Management 
+
+        #region Step Management 
+
 
         [HttpPost("AddProjectStep")]
         public async Task<IActionResult> PostAddParticipant(AddProjectStepRequest request)
@@ -131,29 +151,11 @@ namespace PSManagement.Presentation.Controllers.Projects
             return HandleResult(result);
         }
 
+        
 
-        [HttpPost("RemoveParticipant")]
-        public async Task<IActionResult> PostRemoveParticipant(RemoveParticipantRequest request)
-        {
-            var query = _mapper.Map<RemoveParticipantCommand>(request);
+        #endregion Step Management 
 
-            var result = await _sender.Send(query);
-
-            return HandleResult(result);
-        }
-
-
-        [HttpPost("AddParticipant")]
-        public async Task<IActionResult> PostAddParticipant(AddParticipantRequest request)
-        {
-            var query = _mapper.Map<AddParticipantCommand>(request);
-
-            var result = await _sender.Send(query);
-
-            return HandleResult(result);
-        }
-
-        #region project state operations
+        #region Project State Operations
 
         [HttpPost("ApproveProject")]
         public async Task<IActionResult> PostApproveProjectRequest(ApproveProjectRequest request)
@@ -205,7 +207,53 @@ namespace PSManagement.Presentation.Controllers.Projects
         }
 
 
-        #endregion project state operations
+        #endregion Project State Operations
+
+        #region Participation Management 
+
+        [HttpGet("CompletionContributions/{id}")]
+        public async Task<IActionResult> GetCompletionContribution(int id)
+        {
+
+            var query = new GetCompletionContributionQuery(id);
+
+            var result = await _sender.Send(query);
+
+            return HandleResult(_mapper.Map<Result<IEnumerable<EmployeeContributionReponse>>>(result));
+        }
+
+        [HttpGet("GetParticipants/{id}")]
+        public async Task<IActionResult> GetParticipants(int id)
+        {
+            GetProjectParticipantsQuery query = new(id);
+
+            var result = await _sender.Send(query);
+
+            return HandleResult(_mapper.Map<Result<IEnumerable<EmployeeParticipateResponse>>>(result));
+        }
+
+
+        [HttpPost("RemoveParticipant")]
+        public async Task<IActionResult> PostRemoveParticipant(RemoveParticipantRequest request)
+        {
+            var query = _mapper.Map<RemoveParticipantCommand>(request);
+
+            var result = await _sender.Send(query);
+
+            return HandleResult(result);
+        }
+
+        [HttpPost("AddParticipant")]
+        public async Task<IActionResult> PostAddParticipant(AddParticipantRequest request)
+        {
+            var query = _mapper.Map<AddParticipantCommand>(request);
+
+            var result = await _sender.Send(query);
+
+            return HandleResult(result);
+        }
+
+
         [HttpPost("ChangeParticipation")]
         public async Task<IActionResult> PostChangePArticipation(ChangeEmployeeParticipationRequest request)
         {
@@ -216,17 +264,9 @@ namespace PSManagement.Presentation.Controllers.Projects
             return HandleResult(result);
         }
 
+        #endregion Participation Management 
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            var query = new GetProjectByIdQuery(id);
-
-            var result = await _sender.Send(query);
-
-            return HandleResult(_mapper.Map<Result<ProjectResponse>>(result));
-        }
-
+        #region Propose 
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateProjectRequest request)
@@ -252,6 +292,10 @@ namespace PSManagement.Presentation.Controllers.Projects
 
         }
 
+        #endregion Propose
+
+        #region Attachments Management 
+
         [HttpPost("AddAttachment")]
         public async Task<IActionResult> PostAddAttachment([FromForm] AddAttachmentRequest request)
         {
@@ -260,6 +304,16 @@ namespace PSManagement.Presentation.Controllers.Projects
             return HandleResult(result);
 
         }
+
+        [HttpPost("RemoveAttachment")]
+        public async Task<IActionResult> PostRemoveAttachment( RemoveAttachmentRequest request)
+        {
+            var command = _mapper.Map<RemoveAttachmentCommand>(request);
+            var result = await _sender.Send(command);
+            return HandleResult(result);
+
+        }
+
         [HttpGet("Attachments")]
         public async Task<IActionResult> GetAttachments([FromQuery] GetProjectAttachmentsRequest request)
         {
@@ -269,6 +323,6 @@ namespace PSManagement.Presentation.Controllers.Projects
             return HandleResult(_mapper.Map<Result<IEnumerable<AttachmentReponse>>>(result));
 
         }
-
+        #endregion Attachments Management 
     }
 }

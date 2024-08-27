@@ -119,7 +119,7 @@ namespace PSManagement.Presentation.Controllers.Customers
         }
 
 
-        [HttpDelete("RemoveContactInfo")]
+        [HttpPost("RemoveContactInfo")]
         public async Task<IActionResult> DeleteContactInfo(RemoveContactInfoRequest request)
         {
             var command = _mapper.Map<RemoveContactInfoCommand>(request);

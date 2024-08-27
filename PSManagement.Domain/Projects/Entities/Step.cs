@@ -4,6 +4,7 @@ using PSManagement.Domain.Tracking;
 using PSManagement.Domain.Tracking.Entities;
 using PSManagement.SharedKernel.Aggregate;
 using PSManagement.SharedKernel.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,15 @@ namespace PSManagement.Domain.Projects.Entities
         }
 
         #endregion Constructors
+
+
+
+        public void ChangeInfo(StepInfo stepInfo)
+        {
+            this.StepInfo = new (stepInfo.StepName,stepInfo.Description,stepInfo.StartDate,stepInfo.Duration,stepInfo.NumberOfWorker);
+
+        }
+
     }
 
 }

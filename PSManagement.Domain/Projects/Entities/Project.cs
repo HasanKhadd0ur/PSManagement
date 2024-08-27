@@ -135,6 +135,18 @@ namespace PSManagement.Domain.Projects.Entities
 
         }
 
+        public void DropAttachment(int attachmentId)
+        {
+
+            var attachment = Attachments.Where(e => e.Id == attachmentId).FirstOrDefault();
+            Attachments.Remove(attachment);
+        }
+
+        public bool HasAttachment(int attachmentId)
+        {
+            return Attachments.Where(e => e.Id == attachmentId).FirstOrDefault() is null;
+        }
+
         public void AddParticipation(int participantId, int projectId, string role, int partialTimeRatio)
         {
             this.EmployeeParticipates.Add(new (participantId,projectId,role, partialTimeRatio));
