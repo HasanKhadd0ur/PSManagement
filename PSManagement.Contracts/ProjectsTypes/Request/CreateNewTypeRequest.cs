@@ -9,8 +9,9 @@ namespace PSManagement.Contracts.ProjectsTypes.Request
     public record CreateNewTypeRequest(
          string TypeName,
          string Description,
-         int ExpectedEffort
-
+         int ExpectedEffort,
+         int ExpectedNumberOfWorker
+    
      );
     
 }

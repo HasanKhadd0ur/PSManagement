@@ -58,7 +58,7 @@ namespace PSManagement.Presentation.Controllers.Projects
             return HandleResult(result);
         }
 
-        [HttpGet("ParticipationChangeHistory")]
+        [HttpGet("ParticipationChangeHistory/{id}")]
         public async Task<IActionResult> GetPartiipationChangesHistory(int id )
         {
             var query = new GetParticipationChangeHistoryQuery(id);
@@ -260,7 +260,7 @@ namespace PSManagement.Presentation.Controllers.Projects
             return HandleResult(result);
 
         }
-        [HttpGet("Attachments/{id}")]
+        [HttpGet("Attachments")]
         public async Task<IActionResult> GetAttachments([FromQuery] GetProjectAttachmentsRequest request)
         {
             var query = _mapper.Map<GetProjectAttachmentsQuery>(request);

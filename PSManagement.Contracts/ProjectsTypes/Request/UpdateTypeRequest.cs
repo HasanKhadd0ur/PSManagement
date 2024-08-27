@@ -4,7 +4,8 @@
     int Id,
     string TypeName,
     string Description,
-    int ExpectedEffort
-
+    int ExpectedEffort,
+    int ExpectedNumberOfWorker
+    
 );
 }

@@ -7,8 +7,9 @@ namespace PSManagement.Application.ProjectsTypes.UseCases.Commands.CreateNewType
     public record CreateNewTypeCommand(
         string TypeName,
         string Description,
-        int ExpectedEffort
-
+        int ExpectedEffort,
+        int ExpectedNumberOfWorker
+    
     ) : ILoggableCommand<Result<int>>;
 
 }
