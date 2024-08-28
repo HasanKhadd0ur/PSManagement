@@ -26,14 +26,14 @@ namespace PSManagement.Infrastructure.DI
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services,IConfiguration configuration)
+        public static IServiceCollection AddInfrastructureSevices(this IServiceCollection services,IConfiguration configuration)
         {
             services
                 .AddAuthentication(configuration)
                 .AddAuthorization()
                 .AddServices(configuration)
-                .AddBackgroundServices(configuration);
-
+                .AddBackgroundServices(configuration)
+                .AddCronJobs();
             
             return services;
         }
@@ -95,5 +95,13 @@ namespace PSManagement.Infrastructure.DI
             return services;
         }
         #endregion Authentication 
+
+        #region Cron Jobs
+        private static IServiceCollection AddCronJobs(this IServiceCollection services) {
+
+            return services;
+        
+        }
+        #endregion
     }
 }

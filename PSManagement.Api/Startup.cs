@@ -36,7 +36,7 @@ namespace PSManagement.Api
                 .AddPresentation()
                 .AddApplication()
                 .AddPersistence(Configuration)
-                .AddInfrastructure(Configuration);
+                .AddInfrastructureSevices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

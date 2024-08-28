@@ -10,6 +10,7 @@
     <Folder Include="FinancialSpends\ValueObjects\" />
     <Folder Include="Identity\ValueObjects\" />
     <Folder Include="ProjectsTypes\ValueObjects\" />
+    <Folder Include="Steps\DomainEvents\" />
   </ItemGroup>
 
   <ItemGroup>
