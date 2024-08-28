@@ -32,7 +32,7 @@ namespace PSManagement.Application.Steps.UseCases.Commands.UpdateCompletionRatio
                     return Result.Invalid(StepsErrors.InvalidCompletionRatioError);
                 }
 
-                step.CurrentCompletionRatio = request.CompletionRatio;
+                step.ChangeCompletionRatio(request.CompletionRatio);
                 await _stepsRepository.UpdateAsync(step);
 
 

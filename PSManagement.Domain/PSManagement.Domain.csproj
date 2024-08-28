@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="FinancialSpends\DomainErrors\" />
+    <Folder Include="FinancialSpends\DomainEvents\" />
+    <Folder Include="FinancialSpends\ValueObjects\" />
     <Folder Include="Identity\ValueObjects\" />
+    <Folder Include="ProjectsTypes\ValueObjects\" />
   </ItemGroup>
 
   <ItemGroup>

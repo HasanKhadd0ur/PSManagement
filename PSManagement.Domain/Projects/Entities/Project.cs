@@ -65,7 +65,7 @@ namespace PSManagement.Domain.Projects.Entities
         public string CurrentState { get; private set; }  // Persisted in the database
 
         [NotMapped]
-        private IProjectState _state ;
+        private IProjectState _state;
 
         [NotMapped]
         public IProjectState State {
@@ -77,7 +77,7 @@ namespace PSManagement.Domain.Projects.Entities
 
                 return _state;
             }
-            
+
             set => _state = value;
         }
 
@@ -144,20 +144,20 @@ namespace PSManagement.Domain.Projects.Entities
 
         public bool HasAttachment(int attachmentId)
         {
-            return Attachments.Where(e => e.Id == attachmentId).FirstOrDefault() is null;
+            return Attachments.Where(e => e.Id == attachmentId).FirstOrDefault() is not null;
         }
 
         public void AddParticipation(int participantId, int projectId, string role, int partialTimeRatio)
         {
-            this.EmployeeParticipates.Add(new (participantId,projectId,role, partialTimeRatio));
+            this.EmployeeParticipates.Add(new(participantId, projectId, role, partialTimeRatio));
 
-            AddDomainEvent(new ParticipantAddedEvent(participantId, projectId,partialTimeRatio, role));
+            AddDomainEvent(new ParticipantAddedEvent(participantId, projectId, partialTimeRatio, role));
 
         }
 
-        public void AddAttachment(string attachmentUrl,string attachmentName,string attachmentDescription,int projectId)
+        public void AddAttachment(string attachmentUrl, string attachmentName, string attachmentDescription, int projectId)
         {
-            Attachment attachment = new(attachmentUrl, attachmentName,attachmentDescription, projectId);
+            Attachment attachment = new(attachmentUrl, attachmentName, attachmentDescription, projectId);
 
             Attachments.Add(attachment);
 
@@ -175,6 +175,46 @@ namespace PSManagement.Domain.Projects.Entities
 
         #endregion Encapsulating the collection operations 
 
+        //  this methods encaplsulate the way to calcs the 
+        //  total contributions of the employees overall the tracks 
+        //  
+        #region Encapsulate Complteion Rules  
+        public IEnumerable<ParticipantContribution> CalculateContributions() {
+
+            
+            // Dictionary to accumulate contributions by employee
+            var contributionsByEmployee = new Dictionary<int, ParticipantContribution>();
+
+            foreach (Track track in Tracks)
+            {
+                foreach (EmployeeTrack employeeTrack in track.EmployeeTracks)
+                {
+                    // to aggreagte the employees based on there ids 
+                    var employeeId = employeeTrack.Employee.Id;
+                    
+                    var contributionRatio = employeeTrack.EmployeeWork.ContributingRatio;
+
+                    // If employee already has contributions, sum them up
+                    if (contributionsByEmployee.ContainsKey(employeeId))
+                    {
+                        contributionsByEmployee[employeeId].ContributionRatio += contributionRatio;
+                    }
+                    else
+                    {
+                        // Otherwise, add a new entry for the employee
+                        contributionsByEmployee[employeeId] = new ParticipantContribution(contributionRatio,employeeTrack.Employee);
+                    }
+                }
+            }
+
+            // Convert the dictionary values to a list for the final result
+            var contributions = contributionsByEmployee.Values.ToList();
+
+            return contributions.AsEnumerable();
+        }
+
+        #endregion Encapsulate Completion Rules
+
 
         // the transition of the project state 
         // each handler (stated transition) move the project state form one ot other 
@@ -182,10 +222,10 @@ namespace PSManagement.Domain.Projects.Entities
 
         #region State Transitions
 
-        public Result Complete(ProjectCompletion projectCompletion) 
+        public Result Complete(ProjectCompletion projectCompletion)
         {
-            return State.Complete(this, projectCompletion );
-        
+            return State.Complete(this, projectCompletion);
+
         }
         public Result Plan()
         {
@@ -199,7 +239,7 @@ namespace PSManagement.Domain.Projects.Entities
         }
         public Result Cancel(DateTime canellationTime)
         {
-            return State.Cancel(this,canellationTime);
+            return State.Cancel(this, canellationTime);
 
         }
         public Result Propose()
@@ -235,16 +275,16 @@ namespace PSManagement.Domain.Projects.Entities
             var participate = EmployeeParticipates.Where(e => e.EmployeeId == participantId).FirstOrDefault();
             AddDomainEvent(new ParticipationChangedEvent(
                 participantId,
-                participate.PartialTimeRatio,partialTimeRation,
-                role,participate.Role, Id, DateTime.Now));
+                participate.PartialTimeRatio, partialTimeRation,
+                role, participate.Role, Id, DateTime.Now));
 
             participate.Role = role;
-        
+
             participate.PartialTimeRatio = partialTimeRation;
         }
         public bool HasParticipant(int participantId)
         {
-            return EmployeeParticipates.Where(e => e.EmployeeId ==participantId).FirstOrDefault() is not null;
+            return EmployeeParticipates.Where(e => e.EmployeeId == participantId).FirstOrDefault() is not null;
         }
         #endregion Busines rules validators 
 
@@ -318,5 +358,4 @@ namespace PSManagement.Domain.Projects.Entities
         #endregion state extracting from state name 
 
     }
-   
 }

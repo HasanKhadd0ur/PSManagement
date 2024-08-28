@@ -42,11 +42,10 @@ namespace PSManagement.Application.Projects.UseCases.Queries.GetCompletionContri
 
         public async Task<Result<IEnumerable<EmployeeContributionDTO>>> Handle(GetCompletionContributionQuery request, CancellationToken cancellationToken)
         {
-            _trackSpecification.AddInclude(e => e.EmployeeTracks);
-            _trackSpecification.AddInclude("EmployeeTracks.Employee");
-            _trackSpecification.Criteria = e => e.ProjectId == request.ProjectId;
-
+            _projectSpecification.AddInclude(e=> e.Tracks);
+            _projectSpecification.AddInclude("Tracks.EmployeeTracks.Employee");
             _projectSpecification.AddInclude(e=>e.ProjectCompletion);
+
             Project project = await _projectsRepository.GetByIdAsync(request.ProjectId, _projectSpecification);
            
             if (project is null)
@@ -61,49 +60,9 @@ namespace PSManagement.Application.Projects.UseCases.Queries.GetCompletionContri
                     return Result.Invalid(ProjectsErrors.UnCompletedError);
                 }
 
-
-                var tracks = await _tracksRepository.ListAsync(_trackSpecification);
-
-                // Dictionary to accumulate contributions by employee
-                var contributionsByEmployee = new Dictionary<int, EmployeeContributionDTO>();
-
-                foreach (Track track in tracks)
-                {
-                    foreach (EmployeeTrack employeeTrack in track.EmployeeTracks)
-                    {
-                        var employeeId = employeeTrack.Employee.Id; // Assuming Employee has an Id property
-                        var contributionRatio = employeeTrack.EmployeeWork.ContributingRatio;
-
-                        // If employee already has contributions, sum them up
-                        if (contributionsByEmployee.ContainsKey(employeeId))
-                        {
-                            contributionsByEmployee[employeeId].ContributionRatio += contributionRatio;
-                        }
-                        else
-                        {
-                            // Otherwise, add a new entry for the employee
-                            contributionsByEmployee[employeeId] = new EmployeeContributionDTO(contributionRatio, _mapper.Map<EmployeeDTO>(employeeTrack.Employee));
-                        }
-                    }
-                }
-
-                // Convert the dictionary values to a list for the final result
-                var contributions = contributionsByEmployee.Values.ToList();
-
-
-                //var tracks = await _tracksRepository.ListAsync(_trackSpecification);
-
-                //var contributions = new List<EmployeeContributionDTO>();
-                //foreach (Track track in tracks) {
-
-                //    foreach (EmployeeTrack employeeTrack in track.EmployeeTracks) {
-                //        // need to fix 
-                //        contributions.Add(
-                //         new  (employeeTrack.EmployeeWork.ContributingRatio,employeeTrack.Employee));
-                //    }
-
-                //}
-                return Result.Success(contributions.AsEnumerable());
+                IEnumerable<ParticipantContribution> contributions = project.CalculateContributions();
+           
+                return Result.Success(_mapper.Map<IEnumerable<EmployeeContributionDTO>>(contributions));
 
 
             }

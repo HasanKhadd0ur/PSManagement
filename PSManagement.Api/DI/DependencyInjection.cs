@@ -84,6 +84,14 @@ namespace PSManagement.Api.DI
                         .AllowAnyMethod()
                         .AllowCredentials());
 
+                options.AddPolicy("AllowHiast",
+                    builder => builder
+                        .WithOrigins("**.hiast.edu.sy/") // Add your frontend URL here
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials());
+                        
+
             });
 
 

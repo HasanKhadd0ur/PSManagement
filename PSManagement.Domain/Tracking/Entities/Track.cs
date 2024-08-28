@@ -13,6 +13,12 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Domain.Tracking
 {
+    /// <summary>
+    /// Track Class 
+    /// </summary>
+    /// this class represent the track action 
+    /// on a specific project 
+    /// 
     public class Track : BaseEntity
     {
         public TrackInfo TrackInfo { get; set; }
@@ -36,6 +42,7 @@ namespace PSManagement.Domain.Tracking
 
         #endregion  Constructors
 
+        #region Encapsulation 
 
         // this method hide the publishing of the domain events 
         public void Complete(DateTime completionDate)
@@ -45,5 +52,31 @@ namespace PSManagement.Domain.Tracking
             AddDomainEvent(new TrackCompletedEvent(ProjectId, Id, completionDate));
 
         }
+
+        public bool IsCompleted()
+        {
+            return TrackInfo.IsCompleted;
+                
+        }
+
+        public bool HasEmployee(int employeeId)
+        {
+            return EmployeeTracks.Any(e => e.EmployeeId == employeeId);
+        }
+
+        public void AddEmployeeTrack(int employeeId, EmployeeWork employeeWork, EmployeeWorkInfo employeeWorkInfo, string notes)
+        {
+
+            EmployeeTracks.Add(new EmployeeTrack { 
+                EmployeeWork=employeeWork,
+                EmployeeWorkInfo=employeeWorkInfo,
+                EmployeeId=employeeId,
+                TrackId=Id,
+                Notes=notes
+            
+            });
+
+        }
+        #endregion Encapsulation 
     }
 }

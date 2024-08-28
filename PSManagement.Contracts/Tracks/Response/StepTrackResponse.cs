@@ -12,7 +12,7 @@ namespace PSManagement.Contracts.Tracks.Response
         TrackInfo TrackInfo,
         String ExecutionState,
         int TrackExecutionRatio,
-        int OldExecutionRatio
-
+        int OldExecutionRatio,
+        int StepWeight 
     );
 }

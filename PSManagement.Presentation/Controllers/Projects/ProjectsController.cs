@@ -79,7 +79,7 @@ namespace PSManagement.Presentation.Controllers.Projects
         }
 
 
-        [HttpGet("Completion{id}")]
+        [HttpGet("Completion/{id}")]
         public async Task<IActionResult> GetProjectCompletion(int id)
         {
             var query = new GetProjectCompletionQuery(id);

@@ -48,21 +48,22 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.AddEmployeeTrack
 
             }
 
-            if (track.TrackInfo.IsCompleted)
+            if (track.IsCompleted())
             {
 
                 return Result.Invalid(TracksErrors.TrackCompletedUpdateError);
             }
 
-            if (track.EmployeeTracks.Any(e => e.EmployeeId == request.EmployeeId)) {
+            if (track.HasEmployee(request.EmployeeId)) {
 
                 return Result.Invalid(TracksErrors.ParticipantTrackExistError);
             
             }
-            var r =_mapper.Map<EmployeeTrack>(request);
-            //Console.WriteLine(r.EmloyeeId);
-            EmployeeTrack employeeTrack = await _employeeTracksRepository.AddAsync(_mapper.Map<EmployeeTrack>(request));
 
+            var employeeTrack =_mapper.Map<EmployeeTrack>(request);
+
+            track.AddEmployeeTrack(request.EmployeeId,request.EmployeeWork,request.EmployeeWorkInfo,request.Notes);
+           
             await _unitOfWork.SaveChangesAsync();
 
             return Result.Success(employeeTrack.Id);

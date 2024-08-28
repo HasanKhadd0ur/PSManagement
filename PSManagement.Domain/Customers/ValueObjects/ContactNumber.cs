@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Domain.Customers.ValueObjects
 {
+    /// <summary>
+    /// this is a value object to hide the contact number 
+    /// its old and deprected 
+    /// i use the record instead
+    /// </summary>
     public sealed class ContactNumber : ValueObject
     {
         public int Number { get; private set; }

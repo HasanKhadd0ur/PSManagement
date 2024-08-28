@@ -10,6 +10,7 @@ namespace PSManagement.Application.Tracks.Common
         public int Id { get; set; }
         public int StepId { get; set; }
         public int TrackId { get; set; }
+        public int StepWeight { get; set; }
         public StepInfo StepInfo { get; set; }
 
         public TrackInfo TrackInfo { get; set; }

@@ -10,6 +10,8 @@ namespace PSManagement.Domain.Employees.Entities
     public class Department : BaseEntity
     {
         public string Name { get; set; }
+
+        #region Constructors
         public Department(string name)
         {
             Name = name;
@@ -18,5 +20,6 @@ namespace PSManagement.Domain.Employees.Entities
         {
 
         }
+        #endregion Constructors
     }
 }

@@ -14,15 +14,23 @@ namespace PSManagement.Domain.Projects.Entities
 {
     public class Step : BaseEntity
     {
-        
+        // value object represent the subjective information of the step
         public StepInfo StepInfo { get; set; }
+
         // this field can be calculated from the track 
         // but we use it for performance matter 
         public int CurrentCompletionRatio { get; set; }
+        
+        // 
         public int Weight { get; set; }
+
+        #region Association
+
         public int ProjectId { get; set; }
         public Project Project { get; set; }
         public ICollection<StepTrack> StepTracks { get; set; }
+
+        #endregion Association
 
         #region Constructors
         public Step()
@@ -38,8 +46,20 @@ namespace PSManagement.Domain.Projects.Entities
             Weight = weight;
         }
 
+
         #endregion Constructors
 
+        #region Encpasulate Business Rules 
+        public void UpdateWeight(int weight)
+        {
+            Weight = weight;
+        }
+
+        public void ChangeCompletionRatio(int completionRatio)
+        {
+
+            CurrentCompletionRatio = completionRatio;
+        }
 
 
         public void ChangeInfo(StepInfo stepInfo)
@@ -47,6 +67,7 @@ namespace PSManagement.Domain.Projects.Entities
             this.StepInfo = new (stepInfo.StepName,stepInfo.Description,stepInfo.StartDate,stepInfo.Duration,stepInfo.NumberOfWorker);
 
         }
+        #endregion Encpasulate Business Rules 
 
     }
 

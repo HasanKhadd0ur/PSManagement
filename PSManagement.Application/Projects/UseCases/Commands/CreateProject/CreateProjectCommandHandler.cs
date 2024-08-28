@@ -52,6 +52,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
                 .WithClassification(request.ProjectClassification)
                 .Build();
 
+
             project.ProjectTypeId = request.ProjectTypeId;
 
             project.Propose();
@@ -60,7 +61,9 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
            
 
             project.AddDomainEvent(new ProjectCreatedEvent(project.Id,project.TeamLeaderId,project.ProjectManagerId));
+            
             await _unitOfWork.SaveChangesAsync();
+            
             return Result.Success(project.Id);
 
         }

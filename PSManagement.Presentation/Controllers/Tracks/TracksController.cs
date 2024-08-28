@@ -19,7 +19,7 @@ using PSManagement.Contracts.Tracks.Response;
 using PSManagement.Presentation.Controllers.ApiBase;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using PSManagement.Application.Tracks.UseCaes.Queries.GetTracksByFilter;
 namespace PSManagement.Presentation.Controllers.Tracks
 {
     [Route("api/[controller]")]
@@ -54,6 +54,19 @@ namespace PSManagement.Presentation.Controllers.Tracks
 
             return HandleResult(result);
         }
+
+        [HttpGet("ByFilter")]
+        public async Task<IActionResult> GeTracksByFilter([FromQuery] GetTracksByFilterRequest request)
+        {
+            var query = _mapper.Map<GetTracksByFilterQuery>(request);
+
+            var result = _mapper.Map<Result<IEnumerable<TrackResponse>>>(await _sender.Send(query));
+
+            return HandleResult(result);
+        }
+
+
+
         [HttpGet("UnCompleted")]
         public async Task<IActionResult> GetUnCompleted()
         {

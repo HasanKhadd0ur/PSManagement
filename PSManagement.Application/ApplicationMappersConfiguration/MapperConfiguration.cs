@@ -46,6 +46,8 @@ namespace PSManagement.Application.Mappers
             CreateMap<StepTrack, StepTrackDTO>()
                 .ForMember(d => d.StepInfo, opt => opt.MapFrom(s => s.Step.StepInfo))
                 .ForMember(d => d.TrackInfo, op => op.MapFrom(e => e.Track.TrackInfo))
+                .ForMember(d => d.StepWeight, op => op.MapFrom(e => e.Step.Weight))
+                
                 ;
             CreateMap<EmployeeTrack, EmployeeTrackDTO>()
                 .ForMember(d => d.TrackInfo, op => op.MapFrom(e => e.Track.TrackInfo))

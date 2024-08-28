@@ -31,7 +31,7 @@ namespace PSManagement.Application.Steps.UseCases.Commands.ChangeStepWeight
                     return Result.Invalid(StepsErrors.InvalidWeightError);
                 }
 
-                step.Weight = request.Weight;
+                step.UpdateWeight(request.Weight);
                 await _stepsRepository.UpdateAsync(step);
 
                 

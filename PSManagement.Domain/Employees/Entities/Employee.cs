@@ -13,6 +13,13 @@ using System.Threading.Tasks;
 
 namespace PSManagement.Domain.Employees.Entities
 {
+    /// <summary>
+    ///  Employee Class 
+    /// 
+    /// </summary>
+    /// this class represent an employee that work and manage and lead a project
+    /// in this class we abstract the employee data and take 
+    /// the only needed data in our problem 
     public class Employee : BaseEntity
     {
         public int HIASTId { get; set; }
@@ -22,6 +29,10 @@ namespace PSManagement.Domain.Employees.Entities
         public Department Department { get; set; }
         public PersonalInfo PersonalInfo { get; set; }
         public WorkInfo WorkInfo { get; set; }
+
+        // the availablity value object
+        // we only care about the working hours 
+        // any other inof can be hide in it 
         public Availability Availability { get; set; }
 
 

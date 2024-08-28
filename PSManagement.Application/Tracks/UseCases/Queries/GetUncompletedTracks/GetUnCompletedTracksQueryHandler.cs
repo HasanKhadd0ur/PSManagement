@@ -1,7 +1,6 @@
 ﻿using Ardalis.Result;
 using AutoMapper;
 using PSManagement.Application.Tracks.Common;
-using PSManagement.Domain.Projects.Repositories;
 using PSManagement.Domain.Steps.Repositories;
 using PSManagement.Domain.Tracking;
 using PSManagement.Domain.Tracking.Specification;
@@ -11,31 +10,30 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PSManagement.Application.Tracks.UseCaes.Queries.GetTracksByFilter
+namespace PSManagement.Application.Tracks.UseCaes.Queries.GetUncompletedTracks
 {
-    public class GetTracksByFilterQueryHandler : IQueryHandler<GetTracksByFilterQuery, Result<IEnumerable<TrackDTO>>>
+    public class GetUnCompletedTracksQueryHandler : IQueryHandler<GetUnCompletedTracksQuery, Result<IEnumerable<TrackDTO>>>
     {
-        private readonly IProjectsRepository _projectsRepository;
         private readonly ITracksRepository _tracksRepository;
         private readonly IMapper _mapper;
         private readonly BaseSpecification<Track> _specification;
 
-        public GetTracksByFilterQueryHandler(
+        public GetUnCompletedTracksQueryHandler(
             IMapper mapper,
-            IProjectsRepository projectsRepository,
             ITracksRepository tracksRepository)
         {
             _mapper = mapper;
-            _projectsRepository = projectsRepository;
-            _specification = new TrackSpecification();
             _tracksRepository = tracksRepository;
+            _specification = new TrackSpecification();
         }
 
-        public async Task<Result<IEnumerable<TrackDTO>>> Handle(GetTracksByFilterQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<TrackDTO>>> Handle(GetUnCompletedTracksQuery request, CancellationToken cancellationToken)
         {
-            _specification.ApplyOptionalPagination(request.PageSize, request.PageNumber);
 
+            _specification.Criteria = c => c.TrackInfo.IsCompleted == false;
+            _specification.AddInclude(e => e.Project);
             var tracks = await _tracksRepository.ListAsync(_specification);
+
 
             return Result.Success(_mapper.Map<IEnumerable<TrackDTO>>(tracks));
 
