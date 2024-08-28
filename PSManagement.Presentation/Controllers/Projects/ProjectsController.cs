@@ -27,6 +27,7 @@ using PSManagement.Presentation.Controllers.ApiBase;
 using PSManagement.Application.Projects.UseCases.Queries.GetParticipationChangeHistory;
 using PSManagement.Application.Projects.UseCases.Queries.GetCompletionContribution;
 using PSManagement.Application.Projects.UseCases.Commands.RemoveAttachment;
+using PSManagement.Application.Projects.UseCases.Queries.GetProjectCompletion;
 
 namespace PSManagement.Presentation.Controllers.Projects
 {
@@ -78,6 +79,16 @@ namespace PSManagement.Presentation.Controllers.Projects
         }
 
 
+        [HttpGet("Completion{id}")]
+        public async Task<IActionResult> GetProjectCompletion(int id)
+        {
+            var query = new GetProjectCompletionQuery(id);
+
+            var result = await _sender.Send(query);
+
+            return HandleResult(_mapper.Map<Result<ProjectCompletionResponse>>(result));
+
+        }
 
 
         [HttpGet("ParticipationChangeHistory/{id}")]

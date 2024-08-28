@@ -46,7 +46,7 @@ namespace PSManagement.Application.Projects.UseCases.Queries.GetCompletionContri
             _trackSpecification.AddInclude("EmployeeTracks.Employee");
             _trackSpecification.Criteria = e => e.ProjectId == request.ProjectId;
 
-
+            _projectSpecification.AddInclude(e=>e.ProjectCompletion);
             Project project = await _projectsRepository.GetByIdAsync(request.ProjectId, _projectSpecification);
            
             if (project is null)
