@@ -77,6 +77,19 @@ namespace PSManagement.Domain.Tracking
             });
 
         }
+
+        public bool CheckEmployeeTrack()
+        {
+            int contributions = 0;
+            
+            foreach (EmployeeTrack employeeTrack in EmployeeTracks) {
+                contributions += employeeTrack.EmployeeWork.ContributingRatio;
+            
+            }
+
+            return contributions == 100;
+
+        }
         #endregion Encapsulation 
     }
 }

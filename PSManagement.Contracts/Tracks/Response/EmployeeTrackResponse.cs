@@ -5,7 +5,7 @@ using PSManagement.Contracts.Projects.Response;
 namespace PSManagement.Contracts.Tracks.Response
 {
     public record EmployeeTrackResponse(
-        int EmloyeeId,
+        int EmployeeId,
         int TrackId,
         EmployeeResponse Employee,
         TrackInfo TrackInfo,

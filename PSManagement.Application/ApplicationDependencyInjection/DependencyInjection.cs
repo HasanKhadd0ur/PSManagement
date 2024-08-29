@@ -25,6 +25,7 @@ namespace PSManagement.Application.DI
             return services;
         }
 
+        #region Mediator
         private static IServiceCollection AddMyMediatR(this IServiceCollection services) {
 
             services.AddMediatR(typeof(DependencyInjection).Assembly);
@@ -35,7 +36,10 @@ namespace PSManagement.Application.DI
 
             return services;
         }
+        #endregion Mediator
 
+
+        #region Mappers 
         private static IServiceCollection AddMappers(this IServiceCollection services)
         {
 
@@ -50,6 +54,7 @@ namespace PSManagement.Application.DI
             return services;
         }
 
+        #endregion Mappers
 
     }
 }

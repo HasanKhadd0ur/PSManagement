@@ -77,23 +77,23 @@ namespace PSManagement.Presentation.Controllers.Steps
             return HandleResult(result);
         }
 
-        [HttpPut("UpdateStepInfo/{id}")]
+        [HttpPut("UpdateStepInfo")]
         public async Task<IActionResult> PutChangeStepInfo(ChangeStepInfoRequest request )
         {
 
             var query = _mapper.Map<UpdateStepInformationCommand>(request); ;
 
-            var result = _mapper.Map<Result>(await _sender.Send(query));
+            var result =await _sender.Send(query);
 
             return HandleResult(result);
         }
 
-        [HttpPut("ChangeCompletionRatio/{id}")]
+        [HttpPut("ChangeCompletionRatio")]
         public async Task<IActionResult> PutCompletionRatio(UpdateCompletionRatioRequest request)
         {
             var query = _mapper.Map<UpdateCompletionRatioCommand>(request);
 
-            var result = _mapper.Map<Result>(await _sender.Send(query));
+            var result =await _sender.Send(query);
 
             return HandleResult(result);
         }

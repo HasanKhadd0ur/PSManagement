@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Middleware\ExceptionHandling\" />
+    <Folder Include="Middleware\ExceptionHandler\" />
   </ItemGroup>
 
 </Project>

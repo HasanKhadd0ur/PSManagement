@@ -3,8 +3,6 @@ using PSManagement.Application.Contracts.Authentication;
 using PSManagement.Application.Customers.Common;
 using PSManagement.Application.Employees.Common;
 using PSManagement.Application.Projects.Common;
-using PSManagement.Application.Projects.UseCases.Commands.CompleteProgressProject;
-using PSManagement.Application.ProjectsTypes.UseCases.Commands.CreateNewType;
 using PSManagement.Application.Tracks.Common;
 using PSManagement.Application.ProjectsTypes.Common;
 
@@ -16,7 +14,6 @@ using PSManagement.Domain.Customers.ValueObjects;
 using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.Identity.Entities;
 using PSManagement.Domain.Projects.Entities;
-using PSManagement.Domain.Projects.ValueObjects;
 using PSManagement.Domain.Tracking;
 using PSManagement.Domain.Tracking.Entities;
 using System;
@@ -65,35 +62,6 @@ namespace PSManagement.Application.Mappers
 
             
             CreateMap<Role,RoleDTO>().ReverseMap();
-
-        }
-    }
-
-    public class ProjectDTOMapperConfiguration : Profile {
-
-        public ProjectDTOMapperConfiguration()
-        {
-
-            CreateMap<Project, ProjectDTO>().ReverseMap();
-            CreateMap<Project, ProjectDetailsDTO>().ReverseMap();
-           CreateMap<ProjectType, ProjectTypeDTO>().ReverseMap();
-
-            CreateMap<Project, ProjectInfo>()
-                .ConvertUsing(project => project.ProjectInfo);
-
-
-            CreateMap<EmployeeParticipate, EmployeeParticipateDTO>()
-                .ForMember(d => d.ProjectInfo, opt => opt.MapFrom(s => s.Project.ProjectInfo))
-                .ForMember(d => d.Employee, op => op.MapFrom(e => e.Employee))
-
-                ;
-
-            CreateMap<CreateNewTypeCommand, ProjectType>();
-            CreateMap<UpdateTypeCommand, ProjectType>();
-
-            CreateMap<ParticipationChange, ParticipationChangeDTO>().ReverseMap();
-
-            CreateMap <CompleteProjectCommand, ProjectCompletion>();
 
         }
     }

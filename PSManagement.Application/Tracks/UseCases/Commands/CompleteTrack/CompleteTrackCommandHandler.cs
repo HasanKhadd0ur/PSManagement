@@ -56,6 +56,11 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.CompleteTrack
 
             }
 
+            if (track.CheckEmployeeTrack()) {
+
+                return Result.Invalid(TracksErrors.InvailEmployeeTrack);
+            }
+
             foreach (StepTrack stepTrack in track?.StepTracks) {
 
                 Step step =await _stepsRepository.GetByIdAsync(stepTrack.StepId);

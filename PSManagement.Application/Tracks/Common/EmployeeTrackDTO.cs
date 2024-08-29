@@ -6,7 +6,7 @@ namespace PSManagement.Application.Tracks.Common
     public class EmployeeTrackDTO
     {
         public int Id { get; set; }
-        public int EmloyeeId { get; set; }
+        public int EmployeeId { get; set; }
         public EmployeeDTO Employee { get; set; }
         public int TrackId { get; set; }
         public TrackInfo TrackInfo { get; set; }

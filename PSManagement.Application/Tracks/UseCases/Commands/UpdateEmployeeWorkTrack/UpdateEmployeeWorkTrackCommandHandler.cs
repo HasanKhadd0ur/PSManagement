@@ -52,10 +52,11 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.UpdateEmployeeWorkTra
 
                 return Result.Invalid(TracksErrors.InvalidEntryError);
             }
+            employeeTrack.UpdateEmployeeWork(request.EmployeeWork);
+            employeeTrack.UpdateEmployeeWorkInfo(request.EmployeeWorkInfo);
+            employeeTrack.UpdateNotes(request.Notes);
 
-            employeeTrack.EmployeeWork = request.EmployeeWork;
-            employeeTrack.EmployeeWorkInfo = request.EmployeeWorkInfo;
-            employeeTrack.Notes = request.Notes;
+
 
             await _employeeTracksRepository.UpdateAsync(employeeTrack);
 

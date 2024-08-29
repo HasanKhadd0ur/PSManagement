@@ -1,6 +1,7 @@
 ﻿using PSManagement.Domain.Employees.Entities;
 using PSManagement.Domain.Tracking.ValueObjects;
 using PSManagement.SharedKernel.Entities;
+using System;
 
 namespace PSManagement.Domain.Tracking
 {
@@ -13,5 +14,23 @@ namespace PSManagement.Domain.Tracking
         public EmployeeWorkInfo EmployeeWorkInfo { get; set; }
         public EmployeeWork EmployeeWork { get; set; }
         public string Notes { get; set; }
+
+        #region Encapsulation 
+        public void UpdateEmployeeWork(EmployeeWork employeeWork)
+        {
+            EmployeeWork = employeeWork;
+        }
+
+
+        public void UpdateEmployeeWorkInfo(EmployeeWorkInfo employeeWorkInfo)
+        {
+            EmployeeWorkInfo = employeeWorkInfo;
+        }
+
+        public void UpdateNotes(string notes)
+        {
+            Notes = notes;
+        }
+        #endregion Encapsulation 
     }
 }
