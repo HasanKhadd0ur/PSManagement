@@ -28,6 +28,7 @@ namespace PSManagement.Api
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+       
         public void ConfigureServices(IServiceCollection services)
         {
             // adding dependency injection 
@@ -38,6 +39,7 @@ namespace PSManagement.Api
                 .AddPersistence(Configuration)
                 .AddInfrastructureSevices(Configuration);
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

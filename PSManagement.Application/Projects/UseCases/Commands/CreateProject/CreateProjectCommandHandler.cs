@@ -40,6 +40,9 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
                 return Result.Invalid(ProjectTypesErrors.InvalidEntryError);
             }
 
+
+            //using builder  from domain layer to build the project 
+
             Project project = _projectBuilder
                 .WithProjectAggreement(request.ProjectAggreement)
                 .WithProjectInfo(request.ProjectInfo)

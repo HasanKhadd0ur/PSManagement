@@ -1,0 +1,29 @@
+﻿
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="6.11.0" />
+    <PackageReference Include="NetArchTest.Rules" Version="1.3.2" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PSManagement.Api\PSManagement.Api.csproj" />
+    <ProjectReference Include="..\PSManagement.Application\PSManagement.Application.csproj" />
+    <ProjectReference Include="..\PSManagement.Contracts\PSManagement.Contracts.csproj" />
+    <ProjectReference Include="..\PSManagement.Domain\PSManagement.Domain.csproj" />
+    <ProjectReference Include="..\PSManagement.Infrastructure.Persistence\PSManagement.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\PSManagement.Infrastructure\PSManagement.Infrastructure.Services.csproj" />
+    <ProjectReference Include="..\PSManagement.Presentation\PSManagement.Presentation.csproj" />
+    <ProjectReference Include="..\PSManagement.SharedKernel\PSManagement.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>

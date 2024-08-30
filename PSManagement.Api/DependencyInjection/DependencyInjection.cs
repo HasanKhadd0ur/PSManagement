@@ -14,27 +14,16 @@ namespace PSManagement.Api.DI
     {
         public static IServiceCollection AddAPI(this IServiceCollection services)
         {
-            
+
             services
                 .AddApiSwagger()
                 .AddApiCors()
-                .AddMapper()
-                .AddMyControllers();
+                ;
 
             return services;
         }
 
-        #region Configure controllers 
-        private static IServiceCollection AddMyControllers(this IServiceCollection services) {
-
-            services
-                .AddControllers()
-                .AddApplicationPart(Presentation.AssemblyReference.Assembly);
-
-            return services;
-        }
-        #endregion Configure controllers
-
+        
         #region Api Docs Swagger
         private static IServiceCollection AddApiSwagger(this IServiceCollection services)
         {
@@ -99,25 +88,7 @@ namespace PSManagement.Api.DI
         }
         #endregion Cors
 
-        #region Mappers 
-        private static IServiceCollection AddMapper(this IServiceCollection services ) {
 
-            services.AddScoped<Mapper>();
-
-            services.AddAutoMapper(cfg => {
-
-                cfg.AddProfile<CustomerMapperConfiguration>();
-                cfg.AddProfile<ProjectMapperConfiguration>();
-                cfg.AddProfile<MappersConfigurations>();
-                cfg.AddProfile<EmployeeMapperConfiguration>();
-            });
-
-
-            return services;
-        
-        }
-
-        #endregion Mappers 
     }
 
 

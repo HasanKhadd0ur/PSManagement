@@ -207,9 +207,20 @@ namespace PSManagement.Domain.Projects.Entities
                 }
             }
 
+
             // Convert the dictionary values to a list for the final result
             var contributions = contributionsByEmployee.Values.ToList();
+            
+            // normalize the values
+            var totalContribution= Tracks.Count() ;
 
+            foreach(var contr in contributions ){
+
+                contr.ContributionRatio=contr.ContributionRatio/totalContribution;   
+
+            }
+
+            
             return contributions.AsEnumerable();
         }
 
