@@ -6,7 +6,6 @@ using System.Reflection;
 using Microsoft.OpenApi.Models;
 using System;
 using AutoMapper;
-using PSManagement.Api.Mappers;
 
 namespace PSManagement.Api.DI
 {

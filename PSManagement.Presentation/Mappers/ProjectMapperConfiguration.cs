@@ -12,7 +12,7 @@ using PSManagement.Contracts.Projects.Requests;
 using PSManagement.Contracts.Projects.Response;
 using PSManagement.Contracts.Tracks.Response;
 
-namespace PSManagement.Api.Mappers
+namespace PSManagement.Presentation.Mappers
 {
     public class ProjectMapperConfiguration : Profile
     {
@@ -25,12 +25,12 @@ namespace PSManagement.Api.Mappers
             CreateMap<AddProjectStepRequest, AddProjectStepCommand>().ReverseMap();
             CreateMap<ChangeProjectTeamLeaderRequest, ChangeProjectTeamLeaderCommand>().ReverseMap();
             CreateMap<RemoveParticipantRequest, RemoveParticipantCommand>().ReverseMap();
-            CreateMap<ProjectDTO,ProjectResponse>().ReverseMap();
-            CreateMap<GetProjectsByProjectManagerRequest,GetProjectsByFilterQuery>().ConstructUsing(
-                s => new GetProjectsByFilterQuery(null,null,null,null,s.ProjectManagerId,null,null,null)
+            CreateMap<ProjectDTO, ProjectResponse>().ReverseMap();
+            CreateMap<GetProjectsByProjectManagerRequest, GetProjectsByFilterQuery>().ConstructUsing(
+                s => new GetProjectsByFilterQuery(null, null, null, null, s.ProjectManagerId, null, null, null)
             );
-            
-            
+
+
             CreateMap<TrackDTO, TrackResponse>().ReverseMap();
 
         }

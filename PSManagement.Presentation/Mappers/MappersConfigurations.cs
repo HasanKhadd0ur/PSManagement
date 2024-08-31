@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PSManagement.Api.Mappers
+namespace PSManagement.Presentation.Mappers
 {
-    public class MappersConfigurations :Profile
+    public class MappersConfigurations : Profile
     {
         public MappersConfigurations()
         {

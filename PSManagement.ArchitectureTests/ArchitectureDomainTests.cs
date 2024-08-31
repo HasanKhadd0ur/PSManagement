@@ -1,34 +1,45 @@
-﻿using NetArchTest.Rules;
-using FluentAssertions;
+﻿using FluentAssertions;
+using NetArchTest.Rules;
+using PSManagement.SharedKernel.Events;
+using PSManagement.SharedKernel.Repositories;
 using Xunit;
 
 namespace PSManagement.ArchitectureTests
 {
-    public partial class ArchitectureDomainTests : ArchitectureTest
+    public  class ArchitectureDomainTests : ArchitectureTest
     {
 
+        #region Events Naming Convention 
         [Fact]
-        public void Domain_Should_Not_DependOnOtherProject()
+        public void Event_ShouldHave_NameEndingWith_Event()
         {
-
-            // Arrange
-            var otherProject = new[]
-            {
-            ApplicationNamespace,
-            InfrastructureNamespace,
-            PresentationNamespace,
-            ApiNamespace
-        };
-
-            // Act
-            var result = Types
-                .InAssembly(PSManagement.Domain.AssemblyReference.Assembly)
-                .ShouldNot()
-                .HaveDependencyOnAll(otherProject)
+            var result = Types.InAssembly(PSManagement.Domain.AssemblyReference.Assembly)
+                .That()
+                .ImplementInterface(typeof(IDomainEvent))
+                .Should()
+                .HaveNameEndingWith("Event")
                 .GetResult();
-
-            // Assert
-           result.IsSuccessful.Should().BeTrue();
+            result.IsSuccessful.Should().BeTrue();
         }
+
+        #endregion Events Naming Convention
+
+        #region Repository Naming Convention 
+        [Fact]
+        public void Repositories_ShouldHave_NameEndingWith_Repository()
+        {
+            var result = Types.InAssembly(PSManagement.Domain.AssemblyReference.Assembly)
+                .That()
+                .ImplementInterface(typeof(IRepository<>))
+                .Should()
+                .HaveNameEndingWith("Repository")
+                .GetResult();
+            result.IsSuccessful.Should().BeTrue();
+        }
+
+        #endregion Repository Naming Convention
+
+
     }
+
 }

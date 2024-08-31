@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PSManagement.Api.Mappers;
+using PSManagement.Presentation.Mappers;
 
-namespace PSManagement.Presentaion.DI
+namespace PSManagement.Presentation.DependencyInjection
 {
     public static class DependencyInjection
     {
@@ -23,7 +23,7 @@ namespace PSManagement.Presentaion.DI
 
             services
                 .AddControllers()
-                .AddApplicationPart(Presentation.AssemblyReference.Assembly);
+                .AddApplicationPart(AssemblyReference.Assembly);
 
             return services;
         }
@@ -35,7 +35,8 @@ namespace PSManagement.Presentaion.DI
 
             services.AddScoped<Mapper>();
 
-            services.AddAutoMapper(cfg => {
+            services.AddAutoMapper(cfg =>
+            {
 
                 cfg.AddProfile<CustomerMapperConfiguration>();
                 cfg.AddProfile<ProjectMapperConfiguration>();

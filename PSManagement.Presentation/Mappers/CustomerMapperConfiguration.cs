@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PSManagement.Api.Mappers
+namespace PSManagement.Presentation.Mappers
 {
     public class CustomerMapperConfiguration : Profile
     {
@@ -27,11 +27,11 @@ namespace PSManagement.Api.Mappers
             CreateMap<ContactInfoDTO, ContactInfoResponse>();
 
             CreateMap<CustomerResponse, CustomerDTO>().ReverseMap();
-            
+
             CreateMap<IEnumerable<CustomerResponse>, ListCustomersResponse>()
                     .ConstructUsing(src => new ListCustomersResponse(src));
 
-            CreateMap<AuthenticationResult,AuthenticationResponse>().ReverseMap();
+            CreateMap<AuthenticationResult, AuthenticationResponse>().ReverseMap();
         }
     }
 }

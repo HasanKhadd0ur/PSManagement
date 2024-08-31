@@ -3,7 +3,7 @@ using PSManagement.Application.Employees.Common;
 using PSManagement.Application.Projects.Common;
 using PSManagement.Contracts.Projects.Response;
 
-namespace PSManagement.Api.Mappers
+namespace PSManagement.Presentation.Mappers
 {
     public class EmployeeMapperConfiguration : Profile
     {

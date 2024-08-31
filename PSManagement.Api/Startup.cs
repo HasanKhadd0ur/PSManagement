@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PSManagement.Presentaion.DI;
 using PSManagement.Infrastructure.DI;
 using PSManagement.Application.DI;
 using Microsoft.OpenApi.Models;
@@ -15,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PSManagement.Infrastructure.Persistence.DI;
 using PSManagement.Api.DI;
+using PSManagement.Presentation.DependencyInjection;
 
 namespace PSManagement.Api
 {
