@@ -266,6 +266,33 @@ namespace PSManagement.Domain.Projects.Entities
 
         #endregion State Transitions
 
+
+
+        // this methods encapsulate participation change  
+        // its publis a domain event 
+
+        #region Participation Change Encapsulation 
+
+        public void ChangeParticipant(int participantId, int partialTimeRation, string role)
+        {
+            var participate = EmployeeParticipates.Where(e => e.EmployeeId == participantId).FirstOrDefault();
+            AddDomainEvent(new ParticipationChangedEvent(
+                participantId,
+                participate.PartialTimeRatio, partialTimeRation,
+                role, participate.Role, Id, DateTime.Now));
+
+            participate.Role = role;
+
+            participate.PartialTimeRatio = partialTimeRation;
+
+            participate.Employee.IncreaseWorkHours(partialTimeRation);
+
+            participate.Employee.DecreaseWorkHours(participate.PartialTimeRatio);
+
+        }
+
+        #endregion Participation Change Encapsulation  
+
         // validating data 
         // this methods help to hide the buissness rules 
         // and encapsulate it 
@@ -279,19 +306,6 @@ namespace PSManagement.Domain.Projects.Entities
             }
             return weightSum == 100;
 
-        }
-
-        public void ChangeParticipant(int participantId, int partialTimeRation, string role)
-        {
-            var participate = EmployeeParticipates.Where(e => e.EmployeeId == participantId).FirstOrDefault();
-            AddDomainEvent(new ParticipationChangedEvent(
-                participantId,
-                participate.PartialTimeRatio, partialTimeRation,
-                role, participate.Role, Id, DateTime.Now));
-
-            participate.Role = role;
-
-            participate.PartialTimeRatio = partialTimeRation;
         }
         public bool HasParticipant(int participantId)
         {

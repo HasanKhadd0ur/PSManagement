@@ -56,9 +56,21 @@ namespace PSManagement.Domain.Employees.Entities
             PersonalInfo = personalInfo;
             HIASTId = hiastId;
         }
+
         #endregion  Constructors
 
         #region business logic encapsulation 
+
+        public void IncreaseWorkHours(int workHours)
+        {
+            UpdateWorkHours(Availability.CurrentWorkingHours + workHours);
+        }
+
+        public void DecreaseWorkHours(int workHours)
+        {
+            UpdateWorkHours(Availability.CurrentWorkingHours - workHours);
+        }
+
         public void UpdateWorkHours(int workingHour)
         {
 

@@ -35,7 +35,7 @@ namespace PSManagement.Application.Projects.EventsHandlers
             
             Employee employee = await _employeesRepository.GetByIdAsync(notification.EmployeeId ,_specification);
             Project project = await _projectsRepository.GetByIdAsync(notification.ProjectId);
-
+            
             await _emailService
                         .SendAsync(
                                 employee.User.Email,

@@ -35,6 +35,8 @@ namespace PSManagement.Application.Projects.UseCases.Commands.RemoveParticipant
         public async Task<Result> Handle(RemoveParticipantCommand request, CancellationToken cancellationToken)
         {
             _specification.AddInclude(e => e.EmployeeParticipates);
+            _specification.AddInclude("EmployeeParticipates.Employee");
+
 
             Project project = await _projectsRepository.GetByIdAsync(request.ProjectId,_specification);
             if (project is null)
@@ -55,8 +57,10 @@ namespace PSManagement.Application.Projects.UseCases.Commands.RemoveParticipant
                     return Result.Invalid(ProjectsErrors.ParticipantUnExistError);
                 }
 
-                
-               await _employeeParticipateRepository.DeleteAsync(employeeParticipate);
+                employeeParticipate.Employee.DecreaseWorkHours(employeeParticipate.PartialTimeRatio);
+
+
+                await _employeeParticipateRepository.DeleteAsync(employeeParticipate);
      
                project.AddDomainEvent(new ParticipantRemovedEvent(request.ParticipantId, request.ProjectId));
 

@@ -17,6 +17,8 @@ namespace PSManagement.Application.Projects.UseCases.Commands.ChangeProjectManag
         private readonly IProjectsRepository _projectsRepository;
         private readonly BaseSpecification<Project> _specification;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmployeesRepository _employeesRepository;
+
 
         public ChangeEmployeeParticipationCommandHandler(
             IProjectsRepository projectsRepository,
@@ -32,6 +34,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.ChangeProjectManag
         public async Task<Result> Handle(ChangeEmployeeParticipationCommand request, CancellationToken cancellationToken)
         {
             _specification.AddInclude(e => e.EmployeeParticipates);
+            _specification.AddInclude("EmployeeParticipates.Employee");
 
             Project project = await _projectsRepository.GetByIdAsync(request.ProjectId,_specification);
 
@@ -46,6 +49,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.ChangeProjectManag
                     return Result.Invalid(ProjectsErrors.ParticipantUnExistError);
 
                 }
+
 
                 project.ChangeParticipant(request.ParticipantId,request.PartialTimeRation,request.Role);
 
