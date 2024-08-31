@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PSManagement.Application.Contracts.Authorization;
+using PSManagement.Domain.Identity.Constants;
 using PSManagement.Presentation.Controllers.ApiBase;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace PSManagement.Presentation.Controllers.Roles
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = RolesNames.ADMIN)]
     public class UserRolesController : APIController
     {
         private readonly IUserRoleService _userRoleService;

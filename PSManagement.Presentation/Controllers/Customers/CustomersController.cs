@@ -19,10 +19,12 @@ using PSManagement.Application.Customers.UseCases.Queries.GetCustomer;
 using Ardalis.Result;
 using PSManagement.Application.Customers.UseCases.Commands.RemoveContactInfo;
 using PSManagement.Presentation.Controllers.ApiBase;
+using PSManagement.Domain.Identity.Constants;
 
 namespace PSManagement.Presentation.Controllers.Customers
 {
     [Route("api/[controller]")]
+   
     [Authorize]
     public class CustomersController : APIController
     {
@@ -55,7 +57,10 @@ namespace PSManagement.Presentation.Controllers.Customers
 
             return HandleResult(_mapper.Map<Result<CustomerResponse>>(result));
         }
+
         [HttpPost]
+        [Authorize(Roles=RolesNames.CUSTOMERS_PLANNER)]
+
         public async Task<IActionResult> Post(CreateCustomerRequest request)
         {
             var command = _mapper.Map<CreateCustomerCommand>(request);
@@ -81,6 +86,7 @@ namespace PSManagement.Presentation.Controllers.Customers
 
         }
 
+        [Authorize(Roles = RolesNames.CUSTOMERS_PLANNER)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -92,6 +98,7 @@ namespace PSManagement.Presentation.Controllers.Customers
 
         }
 
+        [Authorize(Roles = RolesNames.CUSTOMERS_PLANNER)]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, UpdateCustomerRequest request)
         {
@@ -108,7 +115,9 @@ namespace PSManagement.Presentation.Controllers.Customers
         }
 
 
+
         [HttpPost("AddContactInfo")]
+        [Authorize(Roles = RolesNames.CUSTOMERS_PLANNER)]
         public async Task<IActionResult> PostContactInfo(AddContactInfoRequest request)
         {
             var command = _mapper.Map<AddContactInfoCommand>(request);
@@ -120,6 +129,7 @@ namespace PSManagement.Presentation.Controllers.Customers
 
 
         [HttpPost("RemoveContactInfo")]
+        [Authorize(Roles = RolesNames.CUSTOMERS_PLANNER)]
         public async Task<IActionResult> DeleteContactInfo(RemoveContactInfoRequest request)
         {
             var command = _mapper.Map<RemoveContactInfoCommand>(request);

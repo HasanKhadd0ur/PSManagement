@@ -28,6 +28,8 @@ using PSManagement.Application.Projects.UseCases.Queries.GetParticipationChangeH
 using PSManagement.Application.Projects.UseCases.Queries.GetCompletionContribution;
 using PSManagement.Application.Projects.UseCases.Commands.RemoveAttachment;
 using PSManagement.Application.Projects.UseCases.Queries.GetProjectCompletion;
+using PSManagement.Domain.Identity.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PSManagement.Presentation.Controllers.Projects
 {
@@ -280,6 +282,7 @@ namespace PSManagement.Presentation.Controllers.Projects
         #region Propose 
 
         [HttpPost]
+        [Authorize(Roles = RolesNames.SCIENTIFIC_DEPUTY)]
         public async Task<IActionResult> Post([FromBody] CreateProjectRequest request)
         {
             var command = _mapper.Map<CreateProjectCommand>(request);

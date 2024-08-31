@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PSManagement.Domain.Employees.Entities;
+using PSManagement.Domain.Identity.Constants;
 using PSManagement.Domain.Identity.Entities;
 using System;
 using System.Collections.Generic;
@@ -42,10 +43,12 @@ namespace PSManagement.Infrastructure.Persistence.SeedDataContext
         {
 
             builder.Entity<Role>().HasData(
-                new Role {Id=1, Name = "Admin" },
-                new Role {Id = 2, Name = "Employee" },
-                new Role {Id = 4, Name = "Scientific-Deputy" },
-                new Role { Id = 5, Name = "Planner" }
+                new Role {Id=1, Name = RolesNames.ADMIN },
+                new Role {Id = 2, Name = RolesNames.EMPLOYEE},
+                new Role {Id = 4, Name = RolesNames.PROJECTS_PLANNER },
+                new Role { Id = 5, Name =RolesNames.SCIENTIFIC_DEPUTY},
+                new Role { Id = 6, Name = RolesNames.CUSTOMERS_PLANNER }
+
 
                 );
 
