@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
 using PSManagement.SharedKernel.CQRS.Command;
+using PSManagement.SharedKernel.CQRS.Query;
 
 namespace PSManagement.Application.Behaviors.LoggingBehavior
 {
