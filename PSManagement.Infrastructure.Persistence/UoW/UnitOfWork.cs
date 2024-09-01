@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore.Storage;
 using PSManagement.SharedKernel.Entities;
 using PSManagement.SharedKernel.Events;
 using PSManagement.SharedKernel.Interfaces;
@@ -17,6 +18,7 @@ namespace PSManagement.Infrastructure.Persistence.UoW
        
         private readonly AppDbContext _dbContext;
         private readonly IMediator _mediator;
+        private IDbContextTransaction _transaction;
 
         #endregion Dependencies
 
@@ -29,13 +31,45 @@ namespace PSManagement.Infrastructure.Persistence.UoW
 
         #endregion Constructor
 
+        #region UOW Operations
         public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             await DispatchEventsAsync();
-            
+
             await _dbContext.SaveChangesAsync(cancellationToken);
+
+            try
+            {
+                _transaction?.Commit();
+            }
+            catch
+            {
+                await Rollback();
+               // throw;
+            }
+            finally
+            {
+                DisposeTransaction();
+            }
+        }
+        public void BeginTransaction()
+        {
+             _transaction =_dbContext.Database.BeginTransaction();
         }
 
+        public async Task Rollback()
+        {
+            await _transaction.RollbackAsync();
+        }
+        private void DisposeTransaction()
+        {
+            if (_transaction != null)
+            {
+                _transaction.Dispose();
+                _transaction = null;
+            }
+        }
+        #endregion UOW Operations
         #region Process  Events 
         private async Task DispatchEventsAsync()
         {
@@ -112,6 +146,7 @@ namespace PSManagement.Infrastructure.Persistence.UoW
         {
             _dbContext.Dispose();
         }
+
         #endregion Clear And Dispose 
     }
 }

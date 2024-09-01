@@ -10,5 +10,8 @@ namespace PSManagement.SharedKernel.Interfaces
     public interface IUnitOfWork
     {
         Task SaveChangesAsync(CancellationToken cancellationToken = default);
+        void BeginTransaction();
+        Task Rollback();
     }
+
 }
