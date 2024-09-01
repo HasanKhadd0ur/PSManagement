@@ -8,5 +8,4 @@ namespace PSManagement.Application.Projects.UseCases.Queries.GetParticipants
     public record GetProjectParticipantsQuery(
         int ProjectId
         ) : IQuery<Result<IEnumerable<EmployeeParticipateDTO>>>;
-
 }

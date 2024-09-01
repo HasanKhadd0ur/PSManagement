@@ -53,12 +53,15 @@ namespace PSManagement.Domain.Tracking
 
         }
 
+        // this method check if the track is completed
         public bool IsCompleted()
         {
             return TrackInfo.IsCompleted;
                 
         }
 
+        // this method check for the exitence of an employee in the track
+        // 
         public bool HasEmployee(int employeeId)
         {
             return EmployeeTracks.Any(e => e.EmployeeId == employeeId);
@@ -80,13 +83,17 @@ namespace PSManagement.Domain.Tracking
 
         public bool CheckEmployeeTrack()
         {
+            // 
             int contributions = 0;
             
+            // calculate the total contribution of participatns in the tracks
             foreach (EmployeeTrack employeeTrack in EmployeeTracks) {
+
                 contributions += employeeTrack.EmployeeWork.ContributingRatio;
             
             }
-
+          
+            // the track can be completed only if the contribution are equal to 100
             return contributions == 100;
 
         }

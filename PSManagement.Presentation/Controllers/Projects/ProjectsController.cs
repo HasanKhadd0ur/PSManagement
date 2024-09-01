@@ -30,6 +30,7 @@ using PSManagement.Application.Projects.UseCases.Commands.RemoveAttachment;
 using PSManagement.Application.Projects.UseCases.Queries.GetProjectCompletion;
 using PSManagement.Domain.Identity.Constants;
 using Microsoft.AspNetCore.Authorization;
+using PSManagement.Application.Projects.UseCases.Queries.GetFileByUrl;
 
 namespace PSManagement.Presentation.Controllers.Projects
 {
@@ -335,6 +336,15 @@ namespace PSManagement.Presentation.Controllers.Projects
             var result = await _sender.Send(query);
 
             return HandleResult(_mapper.Map<Result<IEnumerable<AttachmentReponse>>>(result));
+
+        }
+        [HttpGet("Attachment")]
+        public async Task<IActionResult> GetAttachments([FromQuery] GetFileByUrlRequest request)
+        {
+            var query = _mapper.Map<GetFileByUrlQuery>(request);
+            var result = await _sender.Send(query);
+
+            return HandleResult(_mapper.Map<Result<FileAttachmentResponse>>(result));
 
         }
         #endregion Attachments Management 

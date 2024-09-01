@@ -15,7 +15,7 @@ namespace PSManagement.Api
         public static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Information()
+            .MinimumLevel.Warning()
             .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
             .CreateLogger();
 

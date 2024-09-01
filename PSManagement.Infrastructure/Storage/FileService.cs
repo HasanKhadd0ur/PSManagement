@@ -41,5 +41,38 @@ namespace PSManagement.Infrastructure.Services.Storage
             }
             return Result.Success(fileName);
         }
+
+
+
+        public async Task<Result<IFormFile>> RetreiveFile(string fileUrl)
+        {
+            if (string.IsNullOrWhiteSpace(fileUrl))
+            {
+                return Result.Invalid(new ValidationError("File URL couldn't be empty."));
+            }
+
+            var filePath = Path.Combine("wwwroot\\uploads", fileUrl);
+
+            if (!File.Exists(filePath))
+            {
+                return Result.Invalid(new ValidationError("File not found."));
+            }
+
+            var memoryStream = new MemoryStream();
+            using (var stream = new FileStream(filePath, FileMode.Open))
+            {
+                await stream.CopyToAsync(memoryStream);
+            }
+            memoryStream.Position = 0; // Reset the stream position to the beginning
+
+            // Create a new form file to return
+            IFormFile formFile = new FormFile(memoryStream, 0, memoryStream.Length, null, Path.GetFileName(filePath))
+            {
+                Headers = new HeaderDictionary(),
+                ContentType = "application/octet-stream"
+            };
+
+            return Result.Success(formFile);
+        }
     }
 }

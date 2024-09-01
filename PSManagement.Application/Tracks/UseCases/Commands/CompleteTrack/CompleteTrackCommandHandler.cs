@@ -56,7 +56,7 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.CompleteTrack
 
             }
 
-            if (track.CheckEmployeeTrack()) {
+            if (!track.CheckEmployeeTrack()) {
 
                 return Result.Invalid(TracksErrors.InvailEmployeeTrack);
             }

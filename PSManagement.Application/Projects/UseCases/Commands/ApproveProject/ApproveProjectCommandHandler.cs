@@ -32,7 +32,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.ApproveProject
         {
             _specification.AddInclude(e => e.Steps);
 
-            Project project = await _projectsRepository.GetByIdAsync(request.ProjectId);
+            Project project = await _projectsRepository.GetByIdAsync(request.ProjectId,_specification);
             
             if (project is null)
             {

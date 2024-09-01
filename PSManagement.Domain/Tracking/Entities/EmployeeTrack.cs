@@ -18,13 +18,13 @@ namespace PSManagement.Domain.Tracking
         #region Encapsulation 
         public void UpdateEmployeeWork(EmployeeWork employeeWork)
         {
-            EmployeeWork = employeeWork;
+            EmployeeWork = new(employeeWork.AssignedWorkingHours,employeeWork.WorkedHours,employeeWork.ContributingRatio);
         }
 
 
         public void UpdateEmployeeWorkInfo(EmployeeWorkInfo employeeWorkInfo)
         {
-            EmployeeWorkInfo = employeeWorkInfo;
+            EmployeeWorkInfo = new (employeeWorkInfo.AssignedWork,employeeWorkInfo.PerformedWork,employeeWorkInfo.AssignedWorkEnd);
         }
 
         public void UpdateNotes(string notes)

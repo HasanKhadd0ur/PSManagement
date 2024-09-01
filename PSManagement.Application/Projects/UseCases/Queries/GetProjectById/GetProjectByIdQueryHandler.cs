@@ -30,6 +30,8 @@ namespace PSManagement.Application.Projects.UseCases.Queries.GetProject
         public async Task<Result<ProjectDTO>> Handle(GetProjectByIdQuery request, CancellationToken cancellationToken)
         {
             _specification.Includes.Add(p=> p.EmployeeParticipates);
+            _specification.AddInclude("EmployeeParticipates.Employee");
+            
             _specification.Includes.Add(p => p.FinancialSpending);
             _specification.Includes.Add(p => p.ProjectManager.Department);
             _specification.Includes.Add(p => p.Attachments);

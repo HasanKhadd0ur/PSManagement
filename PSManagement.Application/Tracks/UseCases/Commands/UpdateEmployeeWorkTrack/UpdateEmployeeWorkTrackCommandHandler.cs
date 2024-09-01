@@ -56,6 +56,7 @@ namespace PSManagement.Application.Tracks.UseCaes.Commands.UpdateEmployeeWorkTra
             employeeTrack.UpdateEmployeeWorkInfo(request.EmployeeWorkInfo);
             employeeTrack.UpdateNotes(request.Notes);
 
+            System.Console.WriteLine(employeeTrack.EmployeeWork);
 
 
             await _employeeTracksRepository.UpdateAsync(employeeTrack);
