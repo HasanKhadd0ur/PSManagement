@@ -2,6 +2,7 @@
 using PSManagement.Application.FinancialSpends.Common;
 using PSManagement.Application.FinancialSpends.UseCases.Commands.CreateFinancialSpendItem;
 using PSManagement.Domain.FinancialSpends.Entities;
+using PSManagement.Application.FinancialSpends.UseCases.Commands.UpateFinancialSpendingItem;
 
 namespace PSManagement.Application.Mappers
 {
@@ -25,6 +26,10 @@ namespace PSManagement.Application.Mappers
                     src.Description,
                     src.ExpectedSpendingDate
                 ))
+                ;
+
+
+            CreateMap<UpdateFinancialSpendItemCommand, FinancialSpending>()
                 ;
 
         }

@@ -41,6 +41,8 @@ namespace PSManagement.Application.Projects.UseCases.Commands.AddParticipant
 
         public async Task<Result> Handle(AddParticipantCommand request, CancellationToken cancellationToken)
         {
+            _unitOfWork.BeginTransaction();
+
             _specification.AddInclude(e => e.EmployeeParticipates);
 
             Project project =await _projectsRepository.GetByIdAsync(request.ProjectId,_specification);
@@ -51,7 +53,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.AddParticipant
 
                 if (project.HasParticipant(request.ParticipantId))
                 {
-
+                    await _unitOfWork.Rollback();
                     return Result.Invalid(ProjectsErrors.ParticipantExistError);
                 }
                 else {

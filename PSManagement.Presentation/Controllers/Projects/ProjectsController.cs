@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc;
 using PSManagement.Application.Projects.UseCases.Commands.AddAttachment;
 using PSManagement.Application.Projects.UseCases.Commands.CreateProject;
@@ -343,9 +346,20 @@ namespace PSManagement.Presentation.Controllers.Projects
         {
             var query = _mapper.Map<GetFileByUrlQuery>(request);
             var result = await _sender.Send(query);
+            if(result.IsSuccess){
 
-            return HandleResult(_mapper.Map<Result<FileAttachmentResponse>>(result));
+                var fileAttachment = result.Value;
+                // Return the file with the correct content type and file name
+               var memoryStream = new MemoryStream();
+                await fileAttachment.File.CopyToAsync(memoryStream);
+                memoryStream.Position = 0; // Reset the stream position to the beginning
 
+                // Return the file with the correct content type and file name
+                return File(memoryStream, fileAttachment.File.ContentType, fileAttachment.AttachmentName);
+   
+            }
+
+            return BadRequest();
         }
         #endregion Attachments Management 
     }

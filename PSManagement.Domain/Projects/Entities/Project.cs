@@ -278,8 +278,12 @@ namespace PSManagement.Domain.Projects.Entities
             var participate = EmployeeParticipates.Where(e => e.EmployeeId == participantId).FirstOrDefault();
             AddDomainEvent(new ParticipationChangedEvent(
                 participantId,
-                participate.PartialTimeRatio, partialTimeRation,
-                role, participate.Role, Id, DateTime.Now));
+                participate.PartialTimeRatio,
+                partialTimeRation,
+                participate.Role,
+                role,
+                Id, 
+                DateTime.Now));
 
             participate.Role = role;
 

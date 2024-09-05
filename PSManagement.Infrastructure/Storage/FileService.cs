@@ -57,6 +57,8 @@ namespace PSManagement.Infrastructure.Services.Storage
             {
                 return Result.Invalid(new ValidationError("File not found."));
             }
+            // Get the content type based on the file extension
+            var contentType = GetContentType(filePath);
 
             var memoryStream = new MemoryStream();
             using (var stream = new FileStream(filePath, FileMode.Open))
@@ -69,10 +71,28 @@ namespace PSManagement.Infrastructure.Services.Storage
             IFormFile formFile = new FormFile(memoryStream, 0, memoryStream.Length, null, Path.GetFileName(filePath))
             {
                 Headers = new HeaderDictionary(),
-                ContentType = "application/octet-stream"
+                ContentType = contentType
             };
 
+
             return Result.Success(formFile);
+        }
+
+
+
+        private string GetContentType(string filePath)
+        {
+            var extension = Path.GetExtension(filePath).ToLowerInvariant();
+            return extension switch
+            {
+                ".pdf" => "application/pdf",
+                ".jpg" or ".jpeg" => "image/jpeg",
+                ".png" => "image/png",
+                ".doc" or ".docx" => "application/msword",
+                ".xls" or ".xlsx" => "application/vnd.ms-excel",
+                ".txt" => "text/plain",
+                _ => "application/octet-stream",
+            };
         }
     }
 }

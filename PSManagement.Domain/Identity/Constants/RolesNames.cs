@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace PSManagement.Domain.Identity.Constants
 {
     /// <summary>
-    /// Provide a role nmaes  
+    /// Provide a role names  
     /// </summary>
     /// this classs provide a contant role names 
     /// gathering the  roles source in a one place make change roles  easier

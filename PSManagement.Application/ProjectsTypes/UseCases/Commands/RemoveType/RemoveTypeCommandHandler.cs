@@ -8,6 +8,7 @@ using PSManagement.SharedKernel.CQRS.Command;
 using PSManagement.SharedKernel.Specification;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace PSManagement.Application.ProjectsTypes.UseCases.Commands.CreateNewType
 {
@@ -27,15 +28,17 @@ namespace PSManagement.Application.ProjectsTypes.UseCases.Commands.CreateNewType
 
         public async Task<Result> Handle(RemoveTypeCommand request, CancellationToken cancellationToken)
         {
+            _specification.AddInclude(e => e.Projects);
+
             var result = await _projectTypesRepository.GetByIdAsync(request.typeId ,_specification);
 
             if (result is null)
             {
                 return Result.Invalid(ProjectTypesErrors.InvalidEntryError);
             }
-            if (result.Projects is not null )
+            if (result.Projects.Count()!=0 )
             {
-                return Result.Invalid(ProjectTypesErrors.InvalidEntryError);
+                return Result.Invalid(ProjectTypesErrors.UnEmptyProjects);
             }
 
             await _projectTypesRepository.DeleteAsync(result);

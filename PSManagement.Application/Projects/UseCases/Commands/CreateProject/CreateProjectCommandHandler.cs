@@ -33,6 +33,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
 
         public async Task<Result<int>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
+            _unitOfWork.BeginTransaction();
 
             var type = await _projectTypesRepository.GetByIdAsync(request.ProjectTypeId);
             if (type is null) { 
@@ -66,6 +67,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.CreateProject
             project.AddDomainEvent(new ProjectCreatedEvent(project.Id,project.TeamLeaderId,project.ProjectManagerId));
             
             await _unitOfWork.SaveChangesAsync();
+            
             
             return Result.Success(project.Id);
 

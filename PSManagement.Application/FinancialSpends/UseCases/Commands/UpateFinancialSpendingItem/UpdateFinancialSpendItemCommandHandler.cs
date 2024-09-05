@@ -50,7 +50,15 @@ namespace PSManagement.Application.FinancialSpends.UseCases.Commands.UpateFinanc
                 {
                     return Result.NotFound();
                 }
-                await _spendRepository.UpdateAsync(_mapper.Map<FinancialSpending>(request));
+              //  System.Console.WriteLine(request);
+                spending.ExternalPurchase=request.ExternalPurchase;
+                spending.LocalPurchase=request.LocalPurchase;
+                spending.CostType=request.CostType;
+                spending.Description=request.Description;
+                spending.ExpectedSpendingDate=request.ExpectedSpendingDate;
+                
+                
+                await _spendRepository.UpdateAsync(spending);
                 await _unitOfWork.SaveChangesAsync();
                 return Result.Success();
 

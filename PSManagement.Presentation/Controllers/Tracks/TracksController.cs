@@ -22,19 +22,25 @@ using System.Threading.Tasks;
 using PSManagement.Application.Tracks.UseCaes.Queries.GetTracksByFilter;
 namespace PSManagement.Presentation.Controllers.Tracks
 {
+    
     [Route("api/[controller]")]
     public class TracksController : APIController
     {
+        #region Dependencies
 
         private readonly IMapper _mapper;
         private readonly IMediator _sender;
+        #endregion Dependencies
 
+        #region Constructor
         public TracksController(IMediator sender, IMapper mapper)
         {
             _sender = sender;
             _mapper = mapper;
         }
+        #endregion Constructor
 
+        #region  Queries On Tracks 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -97,7 +103,9 @@ namespace PSManagement.Presentation.Controllers.Tracks
 
             return HandleResult(result);
         }
+        #endregion  Queries On Tracks
 
+        #region  Step Tracks 
         [HttpPost("AddStepTrack")]
         public async Task<IActionResult> PostStepTrack(AddStepTrackRequest request)
         {
@@ -108,6 +116,21 @@ namespace PSManagement.Presentation.Controllers.Tracks
             return HandleResult(result);
         }
 
+        [HttpPut("UpdateStepTrack")]
+        public async Task<IActionResult> PutStepTrack(UpdateStepTrackRequest request)
+        {
+            var command = _mapper.Map<UpdateStepTrackCommand>(request);
+
+            var result = await _sender.Send(command);
+
+            return HandleResult(result);
+        }
+
+
+        #endregion  Step Tracks 
+       
+        #region  Employee Tracks 
+
         [HttpPost("AddEmployeeTrack")]
         public async Task<IActionResult> PostEmployeeTrack(AddEmployeeTrackRequest request)
         {
@@ -117,6 +140,23 @@ namespace PSManagement.Presentation.Controllers.Tracks
 
             return HandleResult(result);
         }
+
+        [HttpPut("UpdateEmployeeWorkTrack")]
+        public async Task<IActionResult> PutEmployeeWorkTrack(UpdateEmployeeWorkTrackRequest request)
+        {
+            var command = _mapper.Map<UpdateEmployeeWorkTrackCommand>(request);
+
+            var result = await _sender.Send(command);
+
+            return HandleResult(result);
+        }
+
+
+
+        #endregion  Employee Tracks 
+
+
+        #region Tracks  Management
 
         [HttpPost("CompleteTrack")]
         public async Task<IActionResult> PostCompleteTrack(CompleteTrackRequest request)
@@ -161,28 +201,7 @@ namespace PSManagement.Presentation.Controllers.Tracks
 
             }
         }
-
-        [HttpPut("UpdateEmployeeWorkTrack")]
-        public async Task<IActionResult> PutEmployeeWorkTrack(UpdateEmployeeWorkTrackRequest request)
-        {
-            var command = _mapper.Map<UpdateEmployeeWorkTrackCommand>(request);
-
-            var result = await _sender.Send(command);
-
-            return HandleResult(result);
-        }
-
-
-        [HttpPut("UpdateStepTrack")]
-        public async Task<IActionResult> PutStepTrack(UpdateStepTrackRequest request)
-        {
-            var command = _mapper.Map<UpdateStepTrackCommand>(request);
-
-            var result = await _sender.Send(command);
-
-            return HandleResult(result);
-        }
-
+        #endregion Tracks  Management
 
     }
 }

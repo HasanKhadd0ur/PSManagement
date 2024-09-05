@@ -17,6 +17,7 @@ namespace PSManagement.Api.DI
             services
                 .AddApiSwagger()
                 .AddApiCors()
+                .AddMyMiddlewares()
                 ;
 
             return services;
@@ -86,6 +87,14 @@ namespace PSManagement.Api.DI
             return services;
         }
         #endregion Cors
+
+        #region Middlewares 
+
+        private static IServiceCollection AddMyMiddlewares(this IServiceCollection services) {
+
+            return services;
+        }
+        #endregion Middlewares 
 
 
     }

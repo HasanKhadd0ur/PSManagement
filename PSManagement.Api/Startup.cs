@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using PSManagement.Infrastructure.Persistence.DI;
 using PSManagement.Api.DI;
 using PSManagement.Presentation.DependencyInjection;
+using PSManagement.Api.Middleware.ExceptionHandler;
 
 namespace PSManagement.Api
 {
@@ -49,6 +50,10 @@ namespace PSManagement.Api
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PSManagement.Api v1"));
+            }
+            else {
+
+                app.UseMiddleware<ExceptionHandlingMidllerware>();
             }
 
             app.UseHttpsRedirection();

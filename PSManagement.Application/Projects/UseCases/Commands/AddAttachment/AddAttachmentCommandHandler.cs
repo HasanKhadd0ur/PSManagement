@@ -37,6 +37,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.AddAttachment
 
         public async Task<Result<int>> Handle(AddAttachmentCommand request, CancellationToken cancellationToken)
         {
+            _unitOfWork.BeginTransaction();
             _specification.AddInclude(e => e.Attachments);
 
             // save the file on the uploaded files
@@ -52,7 +53,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.AddAttachment
                 // checking if the project exist
                 if (project is null)
                 {
-
+                    await _unitOfWork.Rollback();
                     return Result.Invalid(ProjectsErrors.InvalidEntryError);
                 }
 
@@ -65,6 +66,7 @@ namespace PSManagement.Application.Projects.UseCases.Commands.AddAttachment
             }
             else {
 
+                await _unitOfWork.Rollback();
                 return Result.Invalid(pathResult.ValidationErrors);
             }
         }
