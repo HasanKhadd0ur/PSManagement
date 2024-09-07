@@ -6,17 +6,18 @@ using System.Reflection;
 using Microsoft.OpenApi.Models;
 using System;
 using AutoMapper;
+using PSManagement.Api.Settings;
 
 namespace PSManagement.Api.DI
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddAPI(this IServiceCollection services)
+        public static IServiceCollection AddAPI(this IServiceCollection services, IConfiguration configuration)
         {
 
             services
                 .AddApiSwagger()
-                .AddApiCors()
+                .AddApiCors(configuration)
                 .AddMyMiddlewares()
                 ;
 
@@ -61,25 +62,23 @@ namespace PSManagement.Api.DI
         #endregion  Api Docs Swagger
 
         #region Cors
-        private static IServiceCollection AddApiCors(this IServiceCollection services)
+        private static IServiceCollection AddApiCors(this IServiceCollection services,IConfiguration configuration)
         {
+            services.Configure<CorsSettings>(configuration.GetSection(CorsSettings.SectionName));
+
             services.AddCors(options =>
             {
+                CorsSettings corsSettings = configuration.GetSection(CorsSettings.SectionName).Get<CorsSettings>();
 
-                options.AddPolicy("AllowFrontend",
-                    builder => builder
-                        .WithOrigins("http://localhost:4200") // Add your frontend URL here
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials());
+                foreach (Policy policy in corsSettings.Policies) {
+                    options.AddPolicy(policy.PolicyName,
+                        builder => builder
+                            .WithOrigins(policy.AllowedOrigins) // Add your frontend URL here
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials());
 
-                options.AddPolicy("AllowHiast",
-                    builder => builder
-                        .WithOrigins("**.hiast.edu.sy/") // Add your frontend URL here
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials());
-                        
+                }
 
             });
 

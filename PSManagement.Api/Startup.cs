@@ -16,6 +16,8 @@ using PSManagement.Infrastructure.Persistence.DI;
 using PSManagement.Api.DI;
 using PSManagement.Presentation.DependencyInjection;
 using PSManagement.Api.Middleware.ExceptionHandler;
+using PSManagement.Api.Settings;
+using PSManagement.Api.Configurations;
 
 namespace PSManagement.Api
 {
@@ -34,7 +36,7 @@ namespace PSManagement.Api
         {
             // adding dependency injection 
             services
-                .AddAPI()
+                .AddAPI(Configuration)
                 .AddPresentation()
                 .AddApplication()
                 .AddPersistence(Configuration)
@@ -59,7 +61,9 @@ namespace PSManagement.Api
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseCors("AllowFrontend");
+            
+            app.UseMyCors();
+
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
@@ -67,5 +71,7 @@ namespace PSManagement.Api
                 endpoints.MapControllers();
             });
         }
+
+
     }
 }
