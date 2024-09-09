@@ -62,8 +62,9 @@ namespace PSManagement.Api
             app.UseStaticFiles();
             app.UseRouting();
             
-            app.UseMyCors();
+//            app.UseMyCors();
 
+            app.UseCors("AllowHiast");
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

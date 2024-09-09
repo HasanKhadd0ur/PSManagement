@@ -14,8 +14,8 @@ namespace PSManagement.Api.Settings
     public class Policy
     {
 
-        public string PolicyName { get; set; }
-        public string AllowedOrigins { get; set; }
+        public string PolicyName { get; set; }= string.Empty;
+        public string AllowedOrigins { get; set; }= string.Empty;
         
     }
 }

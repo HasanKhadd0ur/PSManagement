@@ -74,6 +74,7 @@ namespace PSManagement.Api.DI
                     options.AddPolicy(policy.PolicyName,
                         builder => builder
                             .WithOrigins(policy.AllowedOrigins) // Add your frontend URL here
+                            .SetIsOriginAllowedToAllowWildcardSubdomains()
                             .AllowAnyHeader()
                             .AllowAnyMethod()
                             .AllowCredentials());
