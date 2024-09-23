@@ -16,9 +16,8 @@ ___
 6. Infratstucture Layer 
 7. Presentaion Layer 
 8. Architecture Tests 
-9. Integeration With LDAP Explaination 
-10. Get Started 
-11. conclusion
+9. Get Started 
+10. conclusion
 
 ___
 
@@ -65,7 +64,10 @@ By adhering to this layered architecture, ASP.NET Core applications can achieve:
 - **Separation of Concerns**: Each layer has a clear responsibility, making the system easier to understand and maintain.
 - **Testability**: Core business logic is isolated from infrastructure concerns, allowing for easier unit testing.
 - **Flexibility**: Changes in one layer (e.g., switching from SQL Server to MongoDB) have minimal impact on other layers.
-![alt text](PSManagement.PSManagement.Assets/DFDSF.PNG)
+
+  
+
+![alt text](PSManagement.Assets/DF.png)
 
 ### **Domain-Driven Design (DDD) in ASP.NET Core**
 
