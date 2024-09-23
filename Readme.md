@@ -65,7 +65,7 @@ By adhering to this layered architecture, ASP.NET Core applications can achieve:
 - **Separation of Concerns**: Each layer has a clear responsibility, making the system easier to understand and maintain.
 - **Testability**: Core business logic is isolated from infrastructure concerns, allowing for easier unit testing.
 - **Flexibility**: Changes in one layer (e.g., switching from SQL Server to MongoDB) have minimal impact on other layers.
-![alt text](DFDSF.PNG)
+![alt text](PSManagement.PSManagement.Assets/DFDSF.PNG)
 
 ### **Domain-Driven Design (DDD) in ASP.NET Core**
 
@@ -106,12 +106,12 @@ By applying these methodologies in ASP.NET Core, developers can build applicatio
 ___
 ## Solution Components 
 ### General Overview 
-![alt text](assets/General.drawio.svg)
+![alt text](PSManagement.Assets/General.drawio.svg)
 
 ### Soltuion Architecture 
 the solution to achive the requirement has 8 projects 
 and one prpject for teting the architecture as shown below in  the figure 
-![alt text](<assets/Screenshot 2024-08-31 111558.png>)
+![alt text](<PSManagement.Assets/Screenshot 2024-08-31 111558.png>)
 
 the source code are as the follow : 
 1. Domain Layer achoved by domain project 
@@ -127,7 +127,7 @@ As its defined by " a concept from Domain-Driven Design (DDD) that refers to a p
 in our solution we use it to put our absttraction in its.
 this figure show it 
 
-![alt text](<assets/Screenshot 2024-08-29 221715.png>)
+![alt text](</PSManagement.Assets/Screenshot 2024-08-29 221715.png>)
 
 its contain the following folders 
 
@@ -167,14 +167,14 @@ so in the domain layer we have 7 folders one for each domain and we have a folde
 as shown in the figure below :
 
 
-![alt text](<assets/Screenshot 2024-08-29 212124.png>)
+![alt text](<PSManagement.Assets/Screenshot 2024-08-29 212124.png>)
 
 and as we say we have a similar archs in each folder becuse of the design principles 
 so the figure below show this arch in each domain:
 
 
 
-![alt text](<assets/Screenshot 2024-08-29 204830.png>)    
+![alt text](<PSManagement.Assets/Screenshot 2024-08-29 204830.png>)    
 
 so in each folder (mean a Domain we have the follwing folder )
 
@@ -228,7 +228,7 @@ this layer and as shown in the figure below have to main parts :
     this abstraction ahcived by  contracts fro this operation (Interfaces)
 
 
-   ![alt text](<assets/Screenshot 2024-08-29 182735.png>)
+   ![alt text](<PSManagement.Assets/Screenshot 2024-08-29 182735.png>)
 
 ### Use Cases Encapsulation 
 in this layer we use the follwoing  patternse :
@@ -263,19 +263,19 @@ and each domain consist of the folwoing architecture:
 
 as shown in figure below 
 
-![alt text](<assets/Screenshot 2024-08-29 182927.png>) 
+![alt text](<PSManagement.Assets/Screenshot 2024-08-29 182927.png>) 
 
 
 __
 
 the figure below show how we implement the CQRS
 
-![alt text](<assets/Screenshot 2024-08-29 183327.png>)
+![alt text](<PSManagement.Assets/Screenshot 2024-08-29 183327.png>)
 
 
 events handlers Ex.
 
-![alt text](<assets/Screenshot 2024-08-29 183414.png>)
+![alt text](<PSManagement.Assets/Screenshot 2024-08-29 183414.png>)
 __
 
 **Note**
@@ -314,7 +314,7 @@ this folder contain interfaces for the follwoing servise :
 the figure below show this folders 
 
 
-![alt text](<assets/Screenshot 2024-08-29 182850.png>)
+![alt text](<PSManagement.Assets/Screenshot 2024-08-29 182850.png>)
 
 ___
 
@@ -327,9 +327,9 @@ and the second for implement the contracts in the application layer and it shoul
 
 as shown in the figure below
 
-![alt text](<assets/Screenshot 2024-08-29 232828.png>) 
+![alt text](<PSManagement.Assets/Screenshot 2024-08-29 232828.png>) 
 
-![alt text](<assets/Screenshot 2024-08-29 232900.png>)
+![alt text](<PSManagement.Assets/Screenshot 2024-08-29 232900.png>)
 
 the service layer conatin a real implementation for the integration of the employee data  
 and contain only dummy implementation of bringing the data.
@@ -362,14 +362,14 @@ the presentaion layer contain three projects
 
 contracts project
 
-![alt text](assets/imageerdf.png)
+![alt text](PSManagement.Assets/imageerdf.png)
 
 Presentation proejct
 
-![alt text](assets/imageeer.png)
+![alt text](PSManagement.Assets/imageeer.png)
 
 API Dependency Config in its project
-![alt text](assets/image.png)
+![alt text](PSManagement.Assets/image.png)
 
 
 
@@ -401,18 +401,18 @@ Naming convention tests ensure that commands and queries are named descriptively
 ## for dependency test (layer test)
 we do the test that shown in the image and its success 
 
-![alt text](<assets/Screenshot 2024-08-31 090622.png>) 
+![alt text](<PSManagement.Assets/Screenshot 2024-08-31 090622.png>) 
 
 
 and we do test for tme naming convention inapplcation 
 like all command should have suffix command
 and the same for event query and its handlers
 
-![alt text](<assets/Screenshot 2024-08-31 090506.png>) 
+![alt text](<PSManagement.Assets/Screenshot 2024-08-31 090506.png>) 
 
 and a test for the doamin layer naming convention for events and repositories.
 
-![alt text](<assets/Screenshot 2024-08-31 090540.png>)
+![alt text](<PSManagement.Assets/Screenshot 2024-08-31 090540.png>)
 
 
 
